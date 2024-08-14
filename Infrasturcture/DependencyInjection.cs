@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Infrasturcture.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,8 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            Console.WriteLine("We are in InfrastructureService");
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionString));
             return services;
         }
     }
