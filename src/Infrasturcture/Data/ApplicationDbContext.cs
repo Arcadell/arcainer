@@ -11,7 +11,7 @@ namespace Infrasturcture.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public DbSet<Container> containers { get; set; }
+        public DbSet<Container> Containers { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 

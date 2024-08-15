@@ -1,5 +1,6 @@
 ﻿using Application.Containers.Interfaces;
 using Domain;
+using Infrasturcture.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,18 @@ namespace Infrasturcture.Repositories
 {
     public class ContainerRepository : IContainerRepository
     {
+        private readonly ApplicationDbContext _dbContext;
+
+        public ContainerRepository(ApplicationDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public List<Container> GetContainers()
         {
-            throw new NotImplementedException();
+            var containers = _dbContext.Containers.ToList();
+
+            return containers;
         }
     }
 }

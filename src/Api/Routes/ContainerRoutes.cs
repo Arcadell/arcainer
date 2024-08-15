@@ -1,4 +1,6 @@
 ﻿using Application.Containers;
+using Application.Containers.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Routes
 {
@@ -7,9 +9,10 @@ namespace Api.Routes
         public static RouteGroupBuilder MapContainerRoutes(this RouteGroupBuilder group)
         {
 
-            group.MapGet("/", () =>
+            group.MapGet("/", ([FromServices] IContainerService containerService) =>
             {
-                return Results.Ok();
+                var containers = containerService.GetContainers();
+                return Results.Ok(containers);
             });
 
             return group;
