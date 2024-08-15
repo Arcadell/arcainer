@@ -1,13 +1,9 @@
-﻿using Infrasturcture.Data;
+﻿using Application.Containers.Interfaces;
+using Infrasturcture.Data;
+using Infrasturcture.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -17,6 +13,9 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionString));
+
+            services.AddScoped<IContainerRepository, ContainerRepository>();
+
             return services;
         }
     }
