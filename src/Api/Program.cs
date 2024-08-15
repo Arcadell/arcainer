@@ -47,7 +47,9 @@ namespace Api
                 app.UseSwaggerUI();
             }
 
-            app.MapGroup("/identity").MapIdentityApi<IdentityUser>();
+            app.MapGroup("/identity")
+                .MapIdentityApi<IdentityUser>()
+                .WithTags("Identity");
 
             app.UseHttpsRedirection();
 
@@ -56,7 +58,7 @@ namespace Api
             app.MapGroup("/container")
                 .MapContainerRoutes()
                 .RequireAuthorization()
-                .WithOpenApi();
+                .WithTags("Container");
 
             app.Run();
         }
