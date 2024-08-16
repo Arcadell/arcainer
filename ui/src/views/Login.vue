@@ -4,7 +4,11 @@ import { toTypedSchema } from '@vee-validate/zod';
 import * as zod from 'zod';
 import { ref } from 'vue';
 
+import { useAuthStore } from '@/stores/auth';
+import type { RegisterDto } from '@/models/auth';
+
 const isLogin = ref(true);
+const authStore = useAuthStore();
 
 const loginValidationSchema = toTypedSchema(
   zod.object({
@@ -49,7 +53,12 @@ const onLoginSubmit = loginForm.handleSubmit(values => {
 })
 
 const onRegisterSubmit = registerForm.handleSubmit(values => {
-  alert(JSON.stringify(values, null, 2));
+  const registerDto: RegisterDto = {
+    email: values.email,
+    password: values.password
+  }
+
+  authStore.register(registerDto);
 })
 
 function switchToisLogin() {
