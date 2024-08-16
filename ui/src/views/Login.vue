@@ -127,7 +127,7 @@ function switchToisLogin() {
 
   justify-content: center;
   text-align: center;
-  gap: 0.5rem;
+  gap: 0.1rem;
 
   width: 300px;
 
@@ -145,7 +145,7 @@ function switchToisLogin() {
   }
 
   .divider {
-    margin: 0.5rem 0;
+    margin: 0.8rem 0;
   }
 }
 </style>
