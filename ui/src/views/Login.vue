@@ -2,6 +2,9 @@
 import { useField, useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import * as zod from 'zod';
+import { ref } from 'vue';
+
+const isLogin = ref(true);
 
 const loginValidationSchema = toTypedSchema(
   zod.object({
@@ -34,7 +37,6 @@ const registerForm = useForm({
   validationSchema: registerValidationSchema,
 });
 
-
 const { value: loginEmail } = useField('email', loginValidationSchema, { form: loginForm });
 const { value: loginPassword } = useField('password', loginValidationSchema, { form: loginForm });
 
@@ -50,6 +52,10 @@ const onRegisterSubmit = registerForm.handleSubmit(values => {
   alert(JSON.stringify(values, null, 2));
 })
 
+function switchToisLogin() {
+  isLogin.value = !isLogin.value;
+}
+
 </script>
 
 <template>
@@ -58,25 +64,35 @@ const onRegisterSubmit = registerForm.handleSubmit(values => {
 
     <div class="rigth-box">
       <div class="mini-box">
-        <h2>Login</h2>
-        <p>Enter your email and password</p>
-        <form @submit="onLoginSubmit">
-          <input name="loginEmail" v-model="loginEmail" type="email" />
-          <span>{{ loginForm.errors.value.email }}</span>
-          <input name="loginPassword" v-model="loginPassword" type="password" />
-          <span>{{ loginForm.errors.value.password }}</span>
-          <button>Submit</button>
-        </form>
+        <template v-if="isLogin">
+          <h2>Login</h2>
+          <p>Enter your email and password</p>
+          <form @submit="onLoginSubmit">
+            <input name="loginEmail" v-model="loginEmail" type="email" placeholder="Email" />
+            <span>{{ loginForm.errors.value.email }}</span>
+            <input name="loginPassword" v-model="loginPassword" type="password" placeholder="Password" />
+            <span>{{ loginForm.errors.value.password }}</span>
+            <button>Login</button>
+          </form>
+          <div class="divider">Don't have an account</div>
+          <button @click="switchToisLogin" class="btn-outline">Register</button>
+        </template>
 
-        <form @submit="onRegisterSubmit">
-          <input name="email" v-model="registerEmail" type="email" />
-          <span>{{ registerForm.errors.value.email }}</span>
-          <input name="password" v-model="registerPassword" type="password" />
-          <span>{{ registerForm.errors.value.password }}</span>
-          <input name="password" v-model="registerConfirmPassword" type="password" />
-          <span>{{ registerForm.errors.value.confirmPassword }}</span>
-          <button>Submit</button>
-        </form>
+        <template v-else>
+          <h2>Create account</h2>
+          <p>Enter your email and password</p>
+          <form @submit="onRegisterSubmit">
+            <input name="email" v-model="registerEmail" type="email" placeholder="Email" />
+            <span>{{ registerForm.errors.value.email }}</span>
+            <input name="password" v-model="registerPassword" type="password" placeholder="Password" />
+            <span>{{ registerForm.errors.value.password }}</span>
+            <input name="password" v-model="registerConfirmPassword" type="password" placeholder="Confirm password" />
+            <span>{{ registerForm.errors.value.confirmPassword }}</span>
+            <button>Create account</button>
+          </form>
+          <div class="divider">If you have an account</div>
+          <button @click="switchToisLogin" class="btn-outline">Login</button>
+        </template>
       </div>
     </div>
   </div>
@@ -110,9 +126,10 @@ const onRegisterSubmit = registerForm.handleSubmit(values => {
   flex-direction: column;
 
   justify-content: center;
-  align-items: center;
-
+  text-align: center;
   gap: 0.5rem;
+
+  width: 300px;
 
   p {
     opacity: 0.5;
@@ -120,10 +137,15 @@ const onRegisterSubmit = registerForm.handleSubmit(values => {
   }
 
   form {
+    margin-top: 1rem;
     display: flex;
     flex-direction: column;
 
     gap: 0.2rem;
+  }
+
+  .divider {
+    margin: 0.5rem 0;
   }
 }
 </style>

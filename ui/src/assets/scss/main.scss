@@ -1,7 +1,10 @@
-@import './reset.scss';
-@import './variables.scss';
-@import './fonts.scss';
-@import './icons.scss';
+@import 'reset.scss';
+@import 'variables.scss';
+@import 'fonts.scss';
+@import 'icons.scss';
+@import 'form.scss';
+@import 'button.scss';
+@import 'custom.scss';
 
 body {
     font-family: "Source Sans 3", sans-serif;

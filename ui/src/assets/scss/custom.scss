@@ -1,0 +1,15 @@
+.divider {
+    font-size: var(--mini-font-size);
+    opacity: 0.8;
+    display: flex;
+    align-items: center;
+}
+
+.divider::before,
+.divider::after {
+    flex: 1;
+    content: '';
+    padding: 0.5px;
+    background-color: var(--border-colour);
+    margin: 5px;
+}

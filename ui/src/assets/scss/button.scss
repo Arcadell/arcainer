@@ -1,0 +1,29 @@
+button,
+.btn {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 0.2rem;
+
+    padding: 10px 16px;
+    background-color: var(--primary-colour);
+    color: var(--primary-text-colour);
+
+    border-radius: var(--border-radius);
+    font-size: var(--mini-font-size);
+
+    box-shadow: var(--default-shadow);
+
+    cursor: pointer;
+
+    &.btn-outline {
+        background-color: transparent;
+        -webkit-box-shadow: inset 0px 0px 0px 2px var(--primary-colour);
+        -moz-box-shadow: inset 0px 0px 0px 2px var(--primary-colour);
+        box-shadow: inset 0px 0px 0px 2px var(--primary-colour);
+        color: var(--primary-colour);
+    }
+}
