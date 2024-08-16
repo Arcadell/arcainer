@@ -1,4 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+@font-face {
+    font-family: 'Source Sans 3';
+    font-style: normal;
+    font-weight: 200 900;
+    font-display: swap;
+    src: url('../fonts/source-sans-3/SourceSans3.woff2') format('woff2');
+}
 
 @font-face {
     font-family: 'remixicon';
