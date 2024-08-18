@@ -3,19 +3,19 @@ export class Me {
     accessToken: string | undefined;
 }
 
-export interface RegisterDto {
+export interface IRegisterDto {
     email: string;
     password: string;
 }
 
-export interface LoginDto {
+export interface ILoginDto {
     email: string;
     password: string;
     twoFactorCode: string,
     twoFactorRecoveryCode: string
 }
 
-export interface AuthErrorResponse {
+export interface IAuthErrorResponse {
     errors: {
         [key: string]: string[];
     };

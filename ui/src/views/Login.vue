@@ -5,10 +5,13 @@ import * as zod from 'zod';
 import { ref } from 'vue';
 
 import { useAuthStore } from '@/stores/auth';
-import type { RegisterDto } from '@/models/auth';
+import type { IRegisterDto } from '@/models/auth';
+import { useToastStore } from '@/stores/utils';
+
+const authStore = useAuthStore();
+const toastStore = useToastStore();
 
 const isLogin = ref(true);
-const authStore = useAuthStore();
 
 const loginValidationSchema = toTypedSchema(
   zod.object({
@@ -52,13 +55,14 @@ const onLoginSubmit = loginForm.handleSubmit(values => {
   alert(JSON.stringify(values, null, 2));
 })
 
-const onRegisterSubmit = registerForm.handleSubmit(values => {
-  const registerDto: RegisterDto = {
+const onRegisterSubmit = registerForm.handleSubmit(async values => {
+  const registerDto: IRegisterDto = {
     email: values.email,
     password: values.password
   }
 
-  authStore.register(registerDto);
+  const ok = await authStore.register(registerDto);
+  if (ok) { isLogin.value = true; }
 })
 
 function switchToisLogin() {

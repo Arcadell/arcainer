@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
+import Toast from './components/Toast.vue';
 </script>
 
 <template>
-  <header>
-  </header>
-
+  <Toast />
   <RouterView />
 </template>
 

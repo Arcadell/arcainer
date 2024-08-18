@@ -1,4 +1,4 @@
-import type { AuthErrorResponse, RegisterDto } from "@/models/auth";
+import type { IAuthErrorResponse, IRegisterDto } from "@/models/auth";
 import { defineStore } from "pinia";
 
 export const useAuthStore = defineStore("auth", {
@@ -12,7 +12,7 @@ export const useAuthStore = defineStore("auth", {
         logout() {
             this.loggedIn = false;
         },
-        async register(registerDto: RegisterDto) {
+        async register(registerDto: IRegisterDto) {
             try {
                 const response = await fetch('http://localhost:5210/identity/register', {
                     method: 'POST',
@@ -22,7 +22,7 @@ export const useAuthStore = defineStore("auth", {
                 });
 
                 if (!response.ok) {
-                    const trueResponse = await response.json() as AuthErrorResponse;
+                    const trueResponse = await response.json() as IAuthErrorResponse;
                     let message = '';
                     for (const [key, value] of Object.entries(trueResponse.errors)) {
                         console.error(key, value);
@@ -32,9 +32,10 @@ export const useAuthStore = defineStore("auth", {
                         });
                     }
 
-                    console.log(message);
                     throw new Error(message);
                 }
+
+                return true;
             } catch (e: Error | any) {
                 alert(e.message);
                 return false;
