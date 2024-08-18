@@ -62,7 +62,11 @@ const onRegisterSubmit = registerForm.handleSubmit(async values => {
   }
 
   const ok = await authStore.register(registerDto);
-  if (ok) { isLogin.value = true; }
+  if (ok) {
+    isLogin.value = true;
+    toastStore.success({ message: 'Register success' });
+  }
+
 })
 
 function switchToisLogin() {

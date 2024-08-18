@@ -1,6 +1,10 @@
 import type { IAuthErrorResponse, IRegisterDto } from "@/models/auth";
 import { defineStore } from "pinia";
 
+import { useToastStore } from "./utils";
+
+const toastStore = useToastStore();
+
 export const useAuthStore = defineStore("auth", {
     state: () => ({
         loggedIn: false,
@@ -37,7 +41,7 @@ export const useAuthStore = defineStore("auth", {
 
                 return true;
             } catch (e: Error | any) {
-                alert(e.message);
+                toastStore.error({ message: e.message });
                 return false;
             }
         }
