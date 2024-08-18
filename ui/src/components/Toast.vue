@@ -6,13 +6,15 @@ const toastStore = useToastStore();
 
 <template>
     <div class="toasts-container">
-        <div class="toast" v-for="toast in toastStore.toasts" :key="toast.id">
+        <div class="toast"
+            :class="{ 'toast-error': toast.status === 'error', 'toast-warning': toast.status === 'warning', }"
+            v-for="toast in toastStore.toasts" :key="toast.id">
             {{ toast.message }}
         </div>
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .toasts-container {
     position: fixed;
 
@@ -39,5 +41,13 @@ const toastStore = useToastStore();
     box-shadow: var(--default-shadow);
 
     background-color: var(--color-background);
+
+    &.toast-error {
+        border: solid 2px var(--error-colour);
+    }
+
+    &.toast-warning {
+        border: solid 2px var(--warning-colour);
+    }
 }
 </style>
