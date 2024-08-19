@@ -22,6 +22,11 @@ export interface ILoginResponse {
     refreshToken: string
 }
 
+export interface IAuth {
+    email: string,
+    loginResponse: ILoginResponse
+}
+
 export interface IAuthErrorResponse {
     errors: {
         [key: string]: string[];
