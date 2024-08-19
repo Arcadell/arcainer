@@ -58,11 +58,13 @@ const onLoginSubmit = loginForm.handleSubmit(async values => {
     password: values.password,
   }
 
-  const ok = await authStore.login(loginDto);
-  if (ok) {
+  const response = await authStore.login(loginDto);
+  if (response.ok) {
     isLogin.value = true;
     toastStore.success({ message: 'Login success' });
     router.push({ path: '/' })
+  } else {
+    toastStore.error({ message: response.error });
   }
 })
 
@@ -72,10 +74,12 @@ const onRegisterSubmit = registerForm.handleSubmit(async values => {
     password: values.password
   }
 
-  const ok = await authStore.register(registerDto);
-  if (ok) {
+  const response = await authStore.register(registerDto);
+  if (response.ok) {
     isLogin.value = true;
     toastStore.success({ message: 'Register success' });
+  } else {
+    toastStore.error({ message: response.error });
   }
 })
 

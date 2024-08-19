@@ -1,8 +1,5 @@
 import { Me, type IAuthErrorResponse, type IAuth, type ILoginDto, type ILoginResponse, type IRegisterDto } from "@/models/auth";
 import { defineStore } from "pinia";
-import { useToastStore } from "./utils";
-
-const toastStore = useToastStore();
 
 export const useAuthStore = defineStore("auth", {
     state: () => ({
@@ -27,8 +24,11 @@ export const useAuthStore = defineStore("auth", {
                     body: JSON.stringify(loginDto),
                 });
 
+                if (response.status === 401) { throw new Error('Invalid credentials'); }
+
                 if (!response.ok) {
                     const errorResponse = await response.json() as IAuthErrorResponse;
+                    console.error(JSON.stringify(errorResponse));
                     let message = '';
                     for (const [key, value] of Object.entries(errorResponse.errors)) {
                         console.error(key, value);
@@ -51,10 +51,9 @@ export const useAuthStore = defineStore("auth", {
                 this.me.accessToken = login.loginResponse.accessToken;
 
                 localStorage.setItem('auth', JSON.stringify(login));
-                return true;
+                return { ok: true, error: null };
             } catch (e: Error | any) {
-                toastStore.error({ message: e.message });
-                return false;
+                return { ok: false, error: e.message };
             }
         },
         logout() {
@@ -83,10 +82,9 @@ export const useAuthStore = defineStore("auth", {
                     throw new Error(message);
                 }
 
-                return true;
+                return { ok: true, error: null };
             } catch (e: Error | any) {
-                toastStore.error({ message: e.message });
-                return false;
+                return { ok: false, error: e.message };
             }
         }
     },
