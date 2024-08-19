@@ -5,8 +5,9 @@ import * as zod from 'zod';
 import { ref } from 'vue';
 
 import { useAuthStore } from '@/stores/auth';
-import type { IRegisterDto } from '@/models/auth';
+import type { ILoginDto, IRegisterDto } from '@/models/auth';
 import { useToastStore } from '@/stores/utils';
+import router from '@/router';
 
 const authStore = useAuthStore();
 const toastStore = useToastStore();
@@ -51,8 +52,18 @@ const { value: registerEmail } = useField('email', registerValidationSchema, { f
 const { value: registerPassword } = useField('password', registerValidationSchema, { form: registerForm });
 const { value: registerConfirmPassword } = useField('confirmPassword', registerValidationSchema, { form: registerForm });
 
-const onLoginSubmit = loginForm.handleSubmit(values => {
-  alert(JSON.stringify(values, null, 2));
+const onLoginSubmit = loginForm.handleSubmit(async values => {
+  const loginDto: ILoginDto = {
+    email: values.email,
+    password: values.password,
+  }
+
+  const ok = await authStore.login(loginDto);
+  if (ok) {
+    isLogin.value = true;
+    toastStore.success({ message: 'Login success' });
+    router.push({ path: '/' })
+  }
 })
 
 const onRegisterSubmit = registerForm.handleSubmit(async values => {
@@ -66,7 +77,6 @@ const onRegisterSubmit = registerForm.handleSubmit(async values => {
     isLogin.value = true;
     toastStore.success({ message: 'Register success' });
   }
-
 })
 
 function switchToisLogin() {
