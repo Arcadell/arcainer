@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain
+namespace Domain.Entities
 {
-    public class BaseEntity
+    public class Setting : BaseEntity
     {
-        public Guid Id { get; set; }
+        public bool DisableRegistration { get; set; } = false;
     }
 }

@@ -1,4 +1,4 @@
-﻿using Domain;
+﻿using Domain.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,7 +12,7 @@ namespace Infrasturcture.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
-        public DbSet<Container> Containers { get; set; }
+        public DbSet<Setting> Settings { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 

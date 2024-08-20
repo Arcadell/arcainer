@@ -1,4 +1,4 @@
-﻿using Domain;
+﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrasturcture.Data.Configurations
+namespace Infrastructure.Data.Configurations
 {
-    internal class ContainerConfiguration : IEntityTypeConfiguration<Container>
+    public class SettingConfiguration : IEntityTypeConfiguration<Setting>
     {
-        public void Configure(EntityTypeBuilder<Container> builder) { }
+        public void Configure(EntityTypeBuilder<Setting> builder) { }
     }
 }
