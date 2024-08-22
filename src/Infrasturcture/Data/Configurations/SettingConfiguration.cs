@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Data.Configurations
+namespace Persistence.Data.Configurations
 {
     public class SettingConfiguration : IEntityTypeConfiguration<Setting>
     {

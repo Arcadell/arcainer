@@ -9,7 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\Applicat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "src\Domain\Domain.csproj", "{441B501D-F6C6-4C4A-8D12-D996850BAC87}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Infrasturcture\Infrastructure.csproj", "{681D66AD-65CA-46A3-8E34-F582689123EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "src\Infrasturcture\Persistence.csproj", "{681D66AD-65CA-46A3-8E34-F582689123EE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{9F3CA81B-B115-4EA8-A41B-42D305583AA8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{0A99962B-5B74-4D30-AE2F-77FFF30D90BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{52053AB8-B49C-4CAD-87E7-0DD96F4C75C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +42,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{33CF8333-F451-4166-9D38-DE25BDCE0CF2} = {52053AB8-B49C-4CAD-87E7-0DD96F4C75C4}
+		{F0907CE1-1DE1-49AC-A3AD-FE3631E2BEE9} = {9F3CA81B-B115-4EA8-A41B-42D305583AA8}
+		{441B501D-F6C6-4C4A-8D12-D996850BAC87} = {9F3CA81B-B115-4EA8-A41B-42D305583AA8}
+		{681D66AD-65CA-46A3-8E34-F582689123EE} = {0A99962B-5B74-4D30-AE2F-77FFF30D90BF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D11F8EBA-2DA0-41DF-A0D6-A6177DBEB129}

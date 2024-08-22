@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrasturcture.Data
+namespace Persistence.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {

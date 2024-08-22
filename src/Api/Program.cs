@@ -1,7 +1,7 @@
 
 using Api.Routes;
 using Application.Containers.Interfaces;
-using Infrasturcture.Data;
+using Persistence.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
@@ -29,7 +29,7 @@ namespace Api
 
             builder.Services.AddApiServices();
             builder.Services.AddApplicationServices();
-            builder.Services.AddInfrastructureServices(builder.Configuration);
+            builder.Services.AddPersistenceServices(builder.Configuration);
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
