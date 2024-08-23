@@ -11,16 +11,16 @@ namespace Application.Containers
 {
     public class ContainerService : IContainerService
     {
-        private readonly IContainerRepository _containerRepository;
+        private readonly IContainerCommand _containerCommand;
 
-        public ContainerService(IContainerRepository containerRepository)
+        public ContainerService(IContainerCommand containerCommand)
         {
-            _containerRepository = containerRepository;
+            _containerCommand = containerCommand;
         }
 
         public List<Container> GetContainers()
         {
-            return _containerRepository.GetContainers();
+            return _containerCommand.GetContainers();
         }
     }
 }

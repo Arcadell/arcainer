@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Persistence.Repositories
+namespace Docker.Commands
 {
-    public class ContainerRepository : IContainerRepository
+    public class ContainerCommand : IContainerCommand
     {
         public List<Container> GetContainers()
         {

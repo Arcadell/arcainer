@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Containers.Interfaces
 {
-    public interface IContainerRepository
+    public interface IContainerCommand
     {
         List<Container> GetContainers();
     }
