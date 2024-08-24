@@ -22,5 +22,15 @@ namespace Application.Containers
         {
             return _containerCommand.GetContainers();
         }
+
+        public void StartContainers(List<string> Ids)
+        {
+            _containerCommand.StartContainers(Ids);
+        }
+
+        public void StopContainers(List<string> Ids)
+        {
+            _containerCommand.StopContainers(Ids);
+        }
     }
 }

@@ -10,5 +10,7 @@ namespace Application.Containers.Interfaces
     public interface IContainerService
     {
         List<Container> GetContainers();
+        void StopContainers(List<String> Ids);
+        void StartContainers(List<String> Ids);
     }
 }
