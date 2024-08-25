@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Entities;
+using Domain.Dtos;
 
 
 namespace Application.Containers
@@ -18,19 +19,24 @@ namespace Application.Containers
             _containerCommand = containerCommand;
         }
 
+        public void CreateContainer(CreateContainerDto createContainerDto)
+        {
+            _containerCommand.CreateContainer(createContainerDto);
+        }
+
         public List<Container> GetContainers()
         {
             return _containerCommand.GetContainers();
         }
 
-        public void StartContainers(List<string> Ids)
+        public void StartContainers(List<string> ids)
         {
-            _containerCommand.StartContainers(Ids);
+            _containerCommand.StartContainers(ids);
         }
 
-        public void StopContainers(List<string> Ids)
+        public void StopContainers(List<string> ids)
         {
-            _containerCommand.StopContainers(Ids);
+            _containerCommand.StopContainers(ids);
         }
     }
 }

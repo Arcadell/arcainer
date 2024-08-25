@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.Dtos;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,8 @@ namespace Application.Containers.Interfaces
     public interface IContainerCommand
     {
         List<Container> GetContainers();
-        void StopContainers(List<String> Ids);
-        void StartContainers(List<String> Ids);
+        void StopContainers(List<String> ids);
+        void StartContainers(List<String> ids);
+        void CreateContainer(CreateContainerDto dto);
     }
 }

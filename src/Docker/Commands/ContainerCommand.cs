@@ -1,6 +1,7 @@
 ﻿using Application.Containers.Interfaces;
 using Docker.DotNet;
 using Docker.DotNet.Models;
+using Domain.Dtos;
 using Domain.Entities;
 using Microsoft.Extensions.Logging;
 using System;
@@ -21,6 +22,14 @@ namespace Docker.Commands
             _logger = logger;
         }
 
+        public void CreateContainer(CreateContainerDto createContainerdto)
+        {
+            _client.Containers.CreateContainerAsync(new CreateContainerParameters() {
+                Image = createContainerdto.Image,
+                Name = createContainerdto.Name
+            });
+        }
+
         public List<Container> GetContainers()
         {
             IList<ContainerListResponse> containers = _client.Containers.ListContainersAsync(new ContainersListParameters() { Limit = 10 }).Result;
@@ -29,14 +38,14 @@ namespace Docker.Commands
             return list;
         }
 
-        public void StartContainers(List<string> Ids)
+        public void StartContainers(List<string> ids)
         {
-            Ids.ForEach(id => { _client.Containers.StartContainerAsync(id, new ContainerStartParameters()); });
+            ids.ForEach(id => { _client.Containers.StartContainerAsync(id, new ContainerStartParameters()); });
         }
 
-        public void StopContainers(List<string> Ids)
+        public void StopContainers(List<string> ids)
         {
-            Ids.ForEach(id => { _client.Containers.StopContainerAsync(id, new ContainerStopParameters()); });
+            ids.ForEach(id => { _client.Containers.StopContainerAsync(id, new ContainerStopParameters()); });
         }
     }
 }
