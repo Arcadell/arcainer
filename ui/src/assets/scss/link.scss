@@ -1,0 +1,24 @@
+.lnk {
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+
+    padding: 0.5rem 0.7rem;
+    border-radius: var(--border-radius);
+    font-size: var(--small-font-size);
+    cursor: pointer;
+
+    transition: all 0.15s ease-in-out;
+
+    &:hover {
+        background-color: var(--hover-colour);
+        color: var(--color-text);
+    }
+
+    &.lnk-active {
+        font-weight: 500;
+
+        background-color: var(--primary-colour);
+        color: var(--primary-text-colour);
+    }
+}

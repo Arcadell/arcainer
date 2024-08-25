@@ -70,6 +70,7 @@ namespace Api
 
             app.MapGroup("/container")
                 .MapContainerRoutes()
+                .RequireAuthorization()
                 .WithTags("Container");
 
             app.Run();
