@@ -13,6 +13,6 @@ namespace Application.Containers.Interfaces
         List<Container> GetContainers();
         void StopContainers(List<String> ids);
         void StartContainers(List<String> ids);
-        void CreateContainer(CreateContainerDto dto);
+        void CreateContainer(CreateContainerDto createContainerDto);
     }
 }

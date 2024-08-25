@@ -22,12 +22,12 @@ namespace Docker.Commands
             _logger = logger;
         }
 
-        public void CreateContainer(CreateContainerDto createContainerdto)
+        public void CreateContainer(CreateContainerDto createContainerDto)
         {
-            _client.Containers.CreateContainerAsync(new CreateContainerParameters() {
-                Image = createContainerdto.Image,
-                Name = createContainerdto.Name
-            });
+            CreateContainerResponse  container = _client.Containers.CreateContainerAsync(new CreateContainerParameters() {
+                Image = createContainerDto.Image,
+                Name = createContainerDto.Name
+            }).Result;
         }
 
         public List<Container> GetContainers()
