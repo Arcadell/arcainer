@@ -8,13 +8,19 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      children: [
+        {
+          path: 'containers',
+          component: () => import('../components/ContainersTable.vue')
+        }
+      ]
     },
     {
       path: '/login',
       name: 'login',
       component: () => import('../views/Login.vue')
-    }
+    },
   ]
 })
 

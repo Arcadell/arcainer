@@ -1,19 +1,21 @@
 <script setup lang="ts">
+import { RouterLink, RouterView } from 'vue-router';
 </script>
 
 <template>
   <div class="main">
     <div class="menu-bar">
-      <div class="menu-logo">
+      <div class="menu-header">
         <i class="ri-box-3-line"></i>
         <h1>Arcainer</h1>
       </div>
 
       <div class="menu-list">
-        <a class="lnk lnk-active"><i class="ri-instance-line"></i> Containers</a>
+        <RouterLink to="/containers"><a class="lnk lnk-active"><i class="ri-instance-line"></i> Containers</a>
+        </RouterLink>
         <a class="lnk"><i class="ri-cloud-line"></i> Images</a>
-        <a class="lnk"><i class="ri-global-line"></i> Volumes</a>
-        <a class="lnk"><i class="ri-archive-line"></i> Networks</a>
+        <a class="lnk"><i class="ri-archive-line"></i> Volumes</a>
+        <a class="lnk"><i class="ri-global-line"></i> Networks</a>
       </div>
 
       <div class="menu-list">
@@ -22,7 +24,11 @@
       </div>
     </div>
     <div class="content">
-
+      <div class="menu-header">
+        <i class="ri-instance-line"></i>
+        <h1>Containers</h1>
+      </div>
+      <RouterView />
     </div>
   </div>
 </template>
@@ -41,22 +47,24 @@
   width: 20%;
 
   border-right: solid 1px var(--border-colour);
+}
 
-  .menu-logo {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    padding: 0.5rem 1rem;
+.menu-header {
+  display: flex;
+  gap: 0.2rem;
+  align-items: center;
 
-    border-bottom: solid 1px var(--border-colour);
+  padding: 0.5rem 1rem;
+  height: 29px;
 
-    i {
-      font-size: 1.9rem;
-    }
+  border-bottom: solid 1px var(--border-colour);
 
-    h1 {
-      font-size: 1.3rem;
-    }
+  i {
+    font-size: 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.3rem;
   }
 }
 
@@ -75,6 +83,7 @@
 
 .content {
   display: flex;
+  flex-direction: column;
   width: 100%;
 }
 </style>
