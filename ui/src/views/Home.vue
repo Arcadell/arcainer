@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
+import { RouterLink, RouterView, useRoute } from 'vue-router';
+const route = useRoute();
 </script>
 
 <template>
@@ -25,10 +26,14 @@ import { RouterLink, RouterView } from 'vue-router';
     </div>
     <div class="content">
       <div class="menu-header">
-        <i class="ri-instance-line"></i>
-        <h1>Containers</h1>
+        <template v-if="route.name === 'containers'">
+          <i class="ri-instance-line"></i>
+          <h1>Containers</h1>
+        </template>
       </div>
-      <RouterView />
+      <div class="content-box">
+        <RouterView />
+      </div>
     </div>
   </div>
 </template>
@@ -85,5 +90,11 @@ import { RouterLink, RouterView } from 'vue-router';
   display: flex;
   flex-direction: column;
   width: 100%;
+
+  .content-box {
+    display: flex;
+    padding: 1rem;
+    height: 100dvh;
+  }
 }
 </style>

@@ -5,6 +5,11 @@ export const useAuthStore = defineStore("auth", {
     state: () => ({
         me: new Me(),
     }),
+    getters: {
+        getAccessToken(): string {
+            return '';
+        }
+    },
     actions: {
         checkLogin() {
             const auth = localStorage.getItem('auth');
@@ -12,7 +17,7 @@ export const useAuthStore = defineStore("auth", {
             const authObj = JSON.parse(auth) as IAuth;
 
             this.me.email = authObj.email;
-            this.me.accessToken = authObj.loginResponse.accessToken;
+            this.me.loginResponse = authObj.loginResponse;
             return true;
         },
         async login(loginDto: ILoginDto) {
@@ -48,7 +53,7 @@ export const useAuthStore = defineStore("auth", {
                 }
 
                 this.me.email = login.email;
-                this.me.accessToken = login.loginResponse.accessToken;
+                this.me.loginResponse = login.loginResponse;
 
                 localStorage.setItem('auth', JSON.stringify(login));
                 return { ok: true, error: null };

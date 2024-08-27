@@ -1,6 +1,6 @@
 export class Me {
     email: string | undefined;
-    accessToken: string | undefined;
+    loginResponse: ILoginResponse | undefined;
 }
 
 export interface IRegisterDto {
