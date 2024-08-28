@@ -22,6 +22,10 @@ export interface ILoginResponse {
     refreshToken: string
 }
 
+export interface IRefeshDto {
+    refreshToken: string;
+}
+
 export interface IAuth {
     email: string,
     loginResponse: ILoginResponse

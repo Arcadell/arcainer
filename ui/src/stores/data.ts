@@ -13,7 +13,7 @@ export const useDataStore = defineStore("data", {
                     method: 'GET',
                     headers: new Headers({
                         'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + auth.getAccessToken,
+                        'Authorization': 'Bearer ' + auth.getAccessToken(),
                     }),
                     mode: 'cors',
                 });

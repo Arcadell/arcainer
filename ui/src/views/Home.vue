@@ -60,7 +60,7 @@ const route = useRoute();
   align-items: center;
 
   padding: 0.5rem 1rem;
-  height: 29px;
+  min-height: 29px;
 
   border-bottom: solid 1px var(--border-colour);
 
