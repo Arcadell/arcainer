@@ -1,6 +1,7 @@
 export class Me {
     email: string | undefined;
     loginResponse: ILoginResponse | undefined;
+    loginTimeSave: number | undefined;
 }
 
 export interface IRegisterDto {
@@ -28,7 +29,8 @@ export interface IRefeshDto {
 
 export interface IAuth {
     email: string,
-    loginResponse: ILoginResponse
+    loginResponse: ILoginResponse | undefined
+    loginTimeSave: number | undefined;
 }
 
 export interface IAuthErrorResponse {

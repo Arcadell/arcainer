@@ -14,6 +14,8 @@ export const useAuthStore = defineStore("auth", {
 
             this.me.email = authObj.email;
             this.me.loginResponse = authObj.loginResponse;
+            this.me.loginTimeSave = authObj.loginTimeSave;
+
             return true;
         },
         async login(loginDto: ILoginDto) {
@@ -45,11 +47,13 @@ export const useAuthStore = defineStore("auth", {
                 const okResponse = await response.json() as ILoginResponse;
                 const login: IAuth = {
                     email: loginDto.email,
-                    loginResponse: okResponse
+                    loginResponse: okResponse,
+                    loginTimeSave: Date.now(),
                 }
 
                 this.me.email = login.email;
                 this.me.loginResponse = login.loginResponse;
+                this.me.loginTimeSave = login.loginTimeSave;
 
                 localStorage.setItem('auth', JSON.stringify(login));
                 return { ok: true, error: null };
@@ -115,7 +119,8 @@ export const useAuthStore = defineStore("auth", {
                 const okResponse = await response.json() as ILoginResponse;
                 const login: IAuth = {
                     email: this.me.email ?? '',
-                    loginResponse: okResponse
+                    loginResponse: okResponse,
+                    loginTimeSave: Date.now(),
                 }
 
                 this.me.email = login.email;
@@ -140,19 +145,12 @@ export const useAuthStore = defineStore("auth", {
             return this.me.loginResponse.accessToken;
         },
         isTokenExpired(): boolean {
-            if (!this.me.loginResponse) { return true; }
+            if (!this.me.loginResponse || !this.me.loginTimeSave) { return true; }
 
-            const accessToken = this.me.loginResponse.accessToken;
-            const tokenParts = accessToken.split('.');
-
-            if (tokenParts.length !== 3) { return true; }
-
-            const payload = JSON.parse(atob(tokenParts[1]));
-            if (!payload.exp) { return true; }
-
-            const exp = payload.exp * 1000;
             const now = Date.now();
-            return now >= exp;
+            const exp = this.me.loginTimeSave + this.me.loginResponse.expiresIn;
+
+            return now <= exp;
         }
     },
 });
