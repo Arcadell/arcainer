@@ -1,7 +1,7 @@
 export class Me {
     email: string | undefined;
-    loginResponse: ILoginResponse | undefined;
-    loginTimeSave: number | undefined;
+    loginResponse!: ILoginResponse;
+    loginTimeSave!: number;
 }
 
 export interface IRegisterDto {
