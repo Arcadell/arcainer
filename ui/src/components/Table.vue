@@ -12,11 +12,13 @@ defineProps({
 <template>
     <div class="table-main">
         <table>
-            <tr>
+            <tr class="tr-header">
                 <th v-for="field in fields" :key="field.key">{{ field.label }}</th>
+                <th></th>
             </tr>
             <tr v-for="item in data" :key="item.id">
                 <td v-for="field in fields" :key="field.key">{{ item[field.key] }}</td>
+                <td><i class="ri-arrow-right-line"></i></td>
             </tr>
         </table>
     </div>

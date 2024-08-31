@@ -8,7 +8,7 @@
     font-size: var(--small-font-size);
     cursor: pointer;
 
-    transition: all 0.1s ease-in-out;
+    transition: all var(--animation-duration);
 
     &:hover {
         background-color: var(--hover-colour);

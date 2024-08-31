@@ -3,14 +3,40 @@ table {
     border: 1px solid var(--border-colour);
     border-collapse: collapse;
     width: 100%;
+    box-shadow: var(--default-shadow);
 }
 
 th,
 td {
     display: table-cell;
     padding: 1em;
+    transition: all var(--animation-duration);
+}
+
+th {
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--hover-colour);
+    }
+
+    &:last-child {
+        width: 50px;
+    }
 }
 
 tr {
     border-bottom: 1px solid var(--border-colour);
+    cursor: pointer;
+    transition: all var(--animation-duration);
+
+    &:hover {
+        background-color: var(--hover-colour);
+    }
+
+    &.tr-header {
+        &:hover {
+            background-color: transparent;
+        }
+    }
 }
