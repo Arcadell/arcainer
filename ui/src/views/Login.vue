@@ -158,25 +158,25 @@ function switchToisLogin() {
 
   justify-content: center;
   text-align: center;
-  gap: 0.1rem;
+  gap: 0.1em;
 
   width: 300px;
 
   p {
     opacity: 0.5;
-    font-size: 0.95rem;
+    font-size: 0.95em;
   }
 
   form {
-    margin-top: 1rem;
+    margin-top: 1em;
     display: flex;
     flex-direction: column;
 
-    gap: 0.2rem;
+    gap: 0.2em;
   }
 
   .divider {
-    margin: 0.8rem 0;
+    margin: 0.8em 0;
   }
 }
 </style>

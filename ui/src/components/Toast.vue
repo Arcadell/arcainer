@@ -20,7 +20,7 @@ const toastStore = useToastStore();
 
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.5em;
 
     bottom: 10px;
     right: 10px;

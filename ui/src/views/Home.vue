@@ -56,28 +56,28 @@ const route = useRoute();
 
 .menu-header {
   display: flex;
-  gap: 0.2rem;
+  gap: 0.2em;
   align-items: center;
 
-  padding: 0.5rem 1rem;
+  padding: 0.5em 1em;
   min-height: 29px;
 
   border-bottom: solid 1px var(--border-colour);
 
   i {
-    font-size: 1.5rem;
+    font-size: 1.5em;
   }
 
   h1 {
-    font-size: 1.3rem;
+    font-size: 1.3em;
   }
 }
 
 .menu-list {
   display: flex;
   flex-direction: column;
-  padding: 0.4rem;
-  gap: 0.3rem;
+  padding: 0.4em;
+  gap: 0.3em;
 
   border-top: solid 1px var(--border-colour);
 
@@ -93,7 +93,7 @@ const route = useRoute();
 
   .content-box {
     display: flex;
-    padding: 1rem;
+    padding: 1em;
     height: 100dvh;
   }
 }
