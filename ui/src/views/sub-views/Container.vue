@@ -3,10 +3,10 @@ import Table from '@/components/Table.vue';
 import type { Container } from '@/models/data';
 import type { TableField } from '@/models/table';
 
-import { useDataStore } from '@/stores/data';
+import { useContainerStore } from '@/stores/data/container';
 import { onMounted, ref } from 'vue';
 
-const dataStore = useDataStore();
+const containerStore = useContainerStore();
 
 const fields: TableField[] = [
     { key: 'id', label: 'Name' },
@@ -18,7 +18,9 @@ let container: Container[] = [];
 let loadingContainer = ref(true);
 
 onMounted(async () => {
-    container = await dataStore.getContainers();
+    const res = await containerStore.getContainers();
+
+    container = res.data;
     loadingContainer.value = false;
 })
 </script>

@@ -1,17 +1,17 @@
 import { defineStore } from "pinia";
-import { useAuthStore } from "./auth";
-import { useToastStore } from "./utils";
+import { useAuthStore } from "../auth";
+import { useToastStore } from "../utils";
 import { Container } from "@/models/data";
 
-export const useDataStore = defineStore("data", {
+export const useContainerStore = defineStore("data", {
     state: () => ({
         containers: [] as Container[],
     }),
     actions: {
-        async getEntities(route: string, searchParams: string) {
+        async getContainers(searchParams: string = '') {
             try {
                 const auth = useAuthStore();
-                const response = await fetch('http://localhost:5210/' + route + '?' + searchParams, {
+                const response = await fetch('http://localhost:5210/container?' + searchParams, {
                     method: 'GET',
                     headers: new Headers({
                         'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export const useDataStore = defineStore("data", {
                     throw new Error(message);
                 }
 
-                const okResponse = await response.json();
+                const okResponse = await response.json() as Container[];
                 return { data: okResponse, error: null };
             } catch (e: Error | any) {
                 const toastStore = useToastStore();
@@ -35,12 +35,6 @@ export const useDataStore = defineStore("data", {
 
                 return { data: [], error: e.message };
             }
-        },
-        async getContainers() {
-            const data = await this.getEntities('container', '')
-            this.containers = data.data as Container[];
-
-            return this.containers;
         }
     }
 })
