@@ -14,7 +14,7 @@ const router = createRouter({
         {
           path: 'containers',
           name: 'containers',
-          component: () => import('../components/ContainersTable.vue')
+          component: () => import('../views/sub-views/Container.vue')
         }
       ]
     },
