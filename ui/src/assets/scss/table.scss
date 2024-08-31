@@ -1,10 +1,16 @@
 table {
     display: table;
     border: 1px solid var(--border-colour);
+    border-collapse: collapse;
+    width: 100%;
 }
 
 th,
 td {
     display: table-cell;
     padding: 1em;
+}
+
+tr {
+    border-bottom: 1px solid var(--border-colour);
 }

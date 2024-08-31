@@ -4,7 +4,7 @@ const route = useRoute();
 </script>
 
 <template>
-  <div class="main">
+  <div class="home-main">
     <div class="menu-bar">
       <div class="menu-header">
         <i class="ri-box-3-line"></i>
@@ -39,62 +39,62 @@ const route = useRoute();
 </template>
 
 <style scoped lang="scss">
-.main {
+.home-main {
   display: flex;
   flex-direction: row;
   width: 100%;
   height: 100dvh;
-}
 
-.menu-bar {
-  display: flex;
-  flex-direction: column;
-  width: 20%;
-
-  border-right: solid 1px var(--border-colour);
-}
-
-.menu-header {
-  display: flex;
-  gap: 0.2em;
-  align-items: center;
-
-  padding: 0.5em 1em;
-  min-height: 29px;
-
-  border-bottom: solid 1px var(--border-colour);
-
-  i {
-    font-size: 1.5em;
-  }
-
-  h1 {
-    font-size: 1.3em;
-  }
-}
-
-.menu-list {
-  display: flex;
-  flex-direction: column;
-  padding: 0.4em;
-  gap: 0.3em;
-
-  border-top: solid 1px var(--border-colour);
-
-  &:nth-of-type(2) {
-    border-top: none;
-  }
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-
-  .content-box {
+  .menu-bar {
     display: flex;
-    padding: 1em;
-    height: 100dvh;
+    flex-direction: column;
+    width: 20%;
+
+    border-right: solid 1px var(--border-colour);
+  }
+
+  .menu-header {
+    display: flex;
+    gap: 0.2em;
+    align-items: center;
+
+    padding: 0.5em 1em;
+    min-height: 29px;
+
+    border-bottom: solid 1px var(--border-colour);
+
+    i {
+      font-size: 1.5em;
+    }
+
+    h1 {
+      font-size: 1.3em;
+    }
+  }
+
+  .menu-list {
+    display: flex;
+    flex-direction: column;
+    padding: 0.4em;
+    gap: 0.3em;
+
+    border-top: solid 1px var(--border-colour);
+
+    &:nth-of-type(2) {
+      border-top: none;
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .content-box {
+      display: flex;
+      padding: 1em;
+      height: 100dvh;
+    }
   }
 }
 </style>

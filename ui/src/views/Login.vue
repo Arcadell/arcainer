@@ -90,7 +90,7 @@ function switchToisLogin() {
 </script>
 
 <template>
-  <div class="main">
+  <div class="login-main">
     <div class="left-box"></div>
 
     <div class="rigth-box">
@@ -130,53 +130,53 @@ function switchToisLogin() {
 </template>
 
 <style scoped lang="scss">
-.main {
+.login-main {
   display: flex;
 
   width: 100dvw;
   height: 100dvh;
-}
 
-.left-box {
-  background-color: black;
-  width: 100%;
-}
-
-.rigth-box {
-  display: flex;
-  flex-direction: column;
-
-  justify-content: center;
-  align-items: center;
-
-  width: 100%;
-}
-
-.mini-box {
-  display: flex;
-  flex-direction: column;
-
-  justify-content: center;
-  text-align: center;
-  gap: 0.1em;
-
-  width: 300px;
-
-  p {
-    opacity: 0.5;
-    font-size: 0.95em;
+  .left-box {
+    background-color: black;
+    width: 100%;
   }
 
-  form {
-    margin-top: 1em;
+  .rigth-box {
     display: flex;
     flex-direction: column;
 
-    gap: 0.2em;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
   }
 
-  .divider {
-    margin: 0.8em 0;
+  .mini-box {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    text-align: center;
+    gap: 0.1em;
+
+    width: 300px;
+
+    p {
+      opacity: 0.5;
+      font-size: 0.95em;
+    }
+
+    form {
+      margin-top: 1em;
+      display: flex;
+      flex-direction: column;
+
+      gap: 0.2em;
+    }
+
+    .divider {
+      margin: 0.8em 0;
+    }
   }
 }
 </style>

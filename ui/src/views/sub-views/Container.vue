@@ -24,9 +24,13 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div v-if="!loadingContainer">
+    <div class="container-main" v-if="!loadingContainer">
         <Table :fields="fields" :data="container" :loading="loadingContainer" />
     </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.container-main {
+    width: 100%;
+}
+</style>

@@ -10,7 +10,7 @@ defineProps({
 </script>
 
 <template>
-    <div>
+    <div class="table-main">
         <table>
             <tr>
                 <th v-for="field in fields" :key="field.key">{{ field.label }}</th>
@@ -22,4 +22,8 @@ defineProps({
     </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.table-main {
+    display: flex;
+}
+</style>
