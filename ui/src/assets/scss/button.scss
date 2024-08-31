@@ -27,4 +27,19 @@ button,
         box-shadow: inset 0px 0px 0px 2px var(--primary-colour);
         color: var(--primary-colour);
     }
+
+    &.btn-icon {
+        background-color: transparent;
+        border: none;
+
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+
+        color: var(--primary-colour);
+
+        i {
+            font-size: 18px !important;
+        }
+    }
 }

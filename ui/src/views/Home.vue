@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { RouterLink, RouterView, useRoute } from 'vue-router';
-const route = useRoute();
+import { RouterLink, RouterView } from 'vue-router';
 </script>
 
 <template>
   <div class="home-main">
     <div class="menu-bar">
       <div class="menu-header">
-        <i class="ri-box-3-line"></i>
-        <h1>Arcainer</h1>
+        <div class="left-header">
+          <i class="ri-box-3-line"></i>
+          <h1>Arcainer</h1>
+        </div>
       </div>
 
       <div class="menu-list">
@@ -25,15 +26,7 @@ const route = useRoute();
       </div>
     </div>
     <div class="content">
-      <div class="menu-header">
-        <template v-if="route.name === 'containers'">
-          <i class="ri-instance-line"></i>
-          <h1>Containers</h1>
-        </template>
-      </div>
-      <div class="content-box">
-        <RouterView />
-      </div>
+      <RouterView />
     </div>
   </div>
 </template>
@@ -51,25 +44,6 @@ const route = useRoute();
     width: 20%;
 
     border-right: solid 1px var(--border-colour);
-  }
-
-  .menu-header {
-    display: flex;
-    gap: 0.2em;
-    align-items: center;
-
-    padding: 0.5em 1em;
-    min-height: 29px;
-
-    border-bottom: solid 1px var(--border-colour);
-
-    i {
-      font-size: 1.5em;
-    }
-
-    h1 {
-      font-size: 1.3em;
-    }
   }
 
   .menu-list {
@@ -90,11 +64,7 @@ const route = useRoute();
     flex-direction: column;
     width: 100%;
 
-    .content-box {
-      display: flex;
-      padding: 1em;
-      height: 100dvh;
-    }
+    height: 100dvh;
   }
 }
 </style>
