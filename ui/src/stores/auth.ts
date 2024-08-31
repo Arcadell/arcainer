@@ -48,7 +48,7 @@ export const useAuthStore = defineStore("auth", {
                 const login: IAuth = {
                     email: loginDto.email,
                     loginResponse: okResponse,
-                    loginTimeSave: Date.now(),
+                    loginTimeSave: Math.floor(Date.now() / 1000),
                 }
 
                 this.me.email = login.email;
@@ -120,7 +120,7 @@ export const useAuthStore = defineStore("auth", {
                 const login: IAuth = {
                     email: this.me.email ?? '',
                     loginResponse: okResponse,
-                    loginTimeSave: Date.now(),
+                    loginTimeSave: Math.floor(Date.now() / 1000),
                 }
 
                 this.me.email = login.email;
@@ -147,10 +147,10 @@ export const useAuthStore = defineStore("auth", {
         isTokenExpired(): boolean {
             if (!this.me.loginResponse || !this.me.loginTimeSave) { return true; }
 
-            const now = Date.now();
+            const now = Math.floor(Date.now() / 1000);
             const exp = this.me.loginTimeSave + this.me.loginResponse.expiresIn;
 
-            return now <= exp;
+            return now >= exp;
         }
     },
 });

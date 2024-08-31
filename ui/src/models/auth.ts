@@ -29,8 +29,8 @@ export interface IRefeshDto {
 
 export interface IAuth {
     email: string,
-    loginResponse: ILoginResponse | undefined
-    loginTimeSave: number | undefined;
+    loginResponse: ILoginResponse
+    loginTimeSave: number;
 }
 
 export interface IAuthErrorResponse {
