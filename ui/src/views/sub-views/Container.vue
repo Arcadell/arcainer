@@ -9,8 +9,8 @@ import { onMounted, ref } from 'vue';
 const containerStore = useContainerStore();
 
 const fields: TableField[] = [
-    { key: 'id', label: 'Name' },
-    { key: 'name', label: 'Image' },
+    { key: 'id', label: 'Id' },
+    { key: 'name', label: 'Name' },
     { key: 'state', label: 'Status' },
 ]
 
