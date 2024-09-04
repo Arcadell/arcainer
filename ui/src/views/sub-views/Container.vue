@@ -23,6 +23,10 @@ onMounted(async () => {
     res.data.forEach((container: Container) => { containerTable.push({ selected: false, fields: container }); })
     loadingContainer.value = false;
 })
+
+const onRowSelected = () => {
+    console.log(containerTable);
+}
 </script>
 
 <template>
@@ -40,7 +44,7 @@ onMounted(async () => {
         </div>
 
         <div class="content">
-            <Table :fields="fields" :data="containerTable" :loading="loadingContainer" />
+            <Table :fields="fields" :data="containerTable" :loading="loadingContainer" @row-selected="onRowSelected" />
         </div>
     </div>
 </template>
