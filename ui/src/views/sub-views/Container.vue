@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Table from '@/components/Table.vue';
 import type { Container } from '@/models/data';
-import type { TableField } from '@/models/table';
+import type { TableField, TableRow } from '@/models/table';
 
 import { useContainerStore } from '@/stores/data/container';
 import { onMounted, ref } from 'vue';
@@ -14,13 +14,13 @@ const fields: TableField[] = [
     { key: 'state', label: 'Status' },
 ]
 
-let container: Container[] = [];
+let containerTable: TableRow[] = [];
 let loadingContainer = ref(true);
 
 onMounted(async () => {
     const res = await containerStore.getContainers();
 
-    container = res.data;
+    res.data.forEach((container: Container) => { containerTable.push({ selected: false, fields: container }); })
     loadingContainer.value = false;
 })
 </script>
@@ -40,7 +40,7 @@ onMounted(async () => {
         </div>
 
         <div class="content">
-            <Table :fields="fields" :data="container" :loading="loadingContainer" />
+            <Table :fields="fields" :data="containerTable" :loading="loadingContainer" />
         </div>
     </div>
 </template>
