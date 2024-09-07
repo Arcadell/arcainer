@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Table from '@/components/Table.vue';
-import type { Container } from '@/models/data';
+import { ContainerCommands, type Container } from '@/models/data';
 import type { TableField, TableRow } from '@/models/table';
 
 import { useContainerStore } from '@/stores/data/container';
@@ -17,6 +17,8 @@ const fields: TableField[] = [
 let containerTable: TableRow[] = [];
 let loadingContainer = ref(true);
 
+let enableControlButtons = ref(false);
+
 onMounted(async () => {
     const res = await containerStore.getContainers();
 
@@ -25,7 +27,13 @@ onMounted(async () => {
 })
 
 const onRowSelected = () => {
-    console.log(containerTable);
+    const rowSelected = containerTable.filter(row => row.selected);
+    enableControlButtons.value = rowSelected.length > 0;
+}
+
+const handleContainers = async (command: ContainerCommands) => {
+    const containerSelected = containerTable.filter(row => row.selected).map(row => row.fields) as Container[];
+    await containerStore.handleContainers(containerSelected, command);
 }
 </script>
 
@@ -38,6 +46,16 @@ const onRowSelected = () => {
             </div>
 
             <div class="right-header">
+                <div class="right-header-control" v-if="enableControlButtons">
+                    <button class="btn btn-icon btn-danger" v-on:click="handleContainers(ContainerCommands.Delete)"><i
+                            class="ri-delete-bin-6-line"></i></button>
+                    <button class="btn btn-icon btn-warning" v-on:click="handleContainers(ContainerCommands.Stop)"><i
+                            class="ri-stop-line"></i></button>
+                    <button class="btn btn-icon btn-success" v-on:click="handleContainers(ContainerCommands.Start)">
+                        <i class="ri-play-line"></i>
+                    </button>
+                </div>
+
                 <button class="btn btn-icon"><i class="ri-refresh-line"></i></button>
                 <button class="btn"><i class="ri-add-line"></i> Create container</button>
             </div>
