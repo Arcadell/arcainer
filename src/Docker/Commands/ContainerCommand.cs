@@ -2,7 +2,7 @@
 using Docker.DotNet;
 using Docker.DotNet.Models;
 using Domain.Dtos;
-using Domain.Entities;
+using Domain.Models;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
