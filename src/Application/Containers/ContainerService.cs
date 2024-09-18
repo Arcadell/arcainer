@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Dtos;
 using Domain.Models;
+using Domain.Filters;
 
 
 namespace Application.Containers
@@ -24,9 +25,9 @@ namespace Application.Containers
             _containerCommand.CreateContainer(createContainerDto);
         }
 
-        public List<Container> GetContainers()
+        public List<Container> GetContainers(ContainerFilter containerFilter)
         {
-            return _containerCommand.GetContainers();
+            return _containerCommand.GetContainers(containerFilter);
         }
 
         public void StartContainers(List<string> ids)

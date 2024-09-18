@@ -11,7 +11,7 @@ namespace Api.Routes
         {
             group.MapGet("/", ([FromServices] IContainerService containerService) =>
             {
-                var containers = containerService.GetContainers();
+                var containers = containerService.GetContainers(new Domain.Filters.ContainerFilter());
                 return Results.Ok(containers);
             });
 

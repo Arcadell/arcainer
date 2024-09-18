@@ -8,7 +8,7 @@ namespace Domain.Filters.SearchTypes
 {
     public class SearchString
     {
-        public SearchType? Type { get; set; }
-        public string? Value { get; set; }
+        public SearchType Type { get; set; }
+        public string Value { get; set; } = string.Empty;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Domain.Dtos;
+using Domain.Filters;
 using Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace Application.Containers.Interfaces
 {
     public interface IContainerCommand
     {
-        List<Container> GetContainers();
+        List<Container> GetContainers(ContainerFilter containerFilter);
         void StopContainers(List<String> ids);
         void StartContainers(List<String> ids);
         void CreateContainer(CreateContainerDto createContainerDto);
