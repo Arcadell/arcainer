@@ -41,14 +41,14 @@ namespace Docker.Commands
             return list;
         }
 
-        public void StartContainers(List<string> ids)
+        public async Task StartContainers(List<string> ids)
         {
-            ids.ForEach(id => { _client.Containers.StartContainerAsync(id, new ContainerStartParameters()); });
+            await Task.WhenAll(ids.Select(id => _client.Containers.StartContainerAsync(id, new ContainerStartParameters())));
         }
 
-        public void StopContainers(List<string> ids)
+        public async Task StopContainers(List<string> ids)
         {
-            ids.ForEach(id => { _client.Containers.StopContainerAsync(id, new ContainerStopParameters()); });
+            await Task.WhenAll(ids.Select(id => _client.Containers.StopContainerAsync(id, new ContainerStopParameters())));
         }
 
         #region PRIVATE FUNC

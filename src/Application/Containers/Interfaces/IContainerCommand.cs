@@ -12,8 +12,8 @@ namespace Application.Containers.Interfaces
     public interface IContainerCommand
     {
         List<Container> GetContainers(ContainerFilter containerFilter);
-        void StopContainers(List<String> ids);
-        void StartContainers(List<String> ids);
+        Task StopContainers(List<String> ids);
+        Task StartContainers(List<String> ids);
         void CreateContainer(CreateContainerDto createContainerDto);
     }
 }

@@ -13,7 +13,7 @@ namespace Application.Containers.Interfaces
     {
         List<Container> GetContainers(ContainerFilter containerFilter);
         void CreateContainer(CreateContainerDto createContainerDto);
-        void StopContainers(List<String> ids);
-        void StartContainers(List<String> ids);
+        List<Container> StopContainers(List<String> ids);
+        List<Container> StartContainers(List<String> ids);
     }
 }
