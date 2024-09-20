@@ -23,14 +23,14 @@ namespace Api.Routes
 
             group.MapPost("/start", ([FromBody] List<string> Ids, [FromServices] IContainerService containerService) =>
             {
-                var containers = containerService.StartContainers(Ids);
-                return Results.Ok(containers);
+                containerService.StartContainers(Ids);
+                return Results.Ok();
             });
 
             group.MapPost("/stop", ([FromBody] List<string> Ids, [FromServices] IContainerService containerService) =>
             {
-                var containers = containerService.StopContainers(Ids);
-                return Results.Ok(containers);
+                containerService.StopContainers(Ids);
+                return Results.Ok();
             });
 
             return group;
