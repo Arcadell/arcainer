@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import Table from '@/components/Table.vue';
+import SideBar from '@/components/SideBar.vue';
+
 import { ContainerCommands, type Container } from '@/models/data';
 import type { TableField, TableRow } from '@/models/table';
 
@@ -15,9 +17,10 @@ const fields: TableField[] = [
 ]
 
 let containerTable: TableRow[] = [];
-let loadingContainer = ref(true);
 
+let loadingContainer = ref(true);
 let enableControlButtons = ref(false);
+let openSideBar = ref(false);
 
 onMounted(async () => {
     const res = await containerStore.getContainers();
@@ -38,6 +41,7 @@ const handleContainers = async (command: ContainerCommands) => {
 </script>
 
 <template>
+    <SideBar :opened="openSideBar" @close-sidebar="openSideBar = false"></SideBar>
     <div class="container-main" v-if="!loadingContainer">
         <div class="menu-header">
             <div class="left-header">
@@ -47,17 +51,17 @@ const handleContainers = async (command: ContainerCommands) => {
 
             <div class="right-header">
                 <div class="right-header-control" v-if="enableControlButtons">
-                    <button class="btn btn-icon btn-danger" v-on:click="handleContainers(ContainerCommands.Delete)"><i
+                    <button class="btn btn-icon" v-on:click="handleContainers(ContainerCommands.Delete)"><i
                             class="ri-delete-bin-6-line"></i></button>
-                    <button class="btn btn-icon btn-warning" v-on:click="handleContainers(ContainerCommands.Stop)"><i
+                    <button class="btn btn-icon" v-on:click="handleContainers(ContainerCommands.Stop)"><i
                             class="ri-stop-line"></i></button>
-                    <button class="btn btn-icon btn-success" v-on:click="handleContainers(ContainerCommands.Start)">
+                    <button class="btn btn-icon" v-on:click="handleContainers(ContainerCommands.Start)">
                         <i class="ri-play-line"></i>
                     </button>
                 </div>
 
                 <button class="btn btn-icon"><i class="ri-refresh-line"></i></button>
-                <button class="btn"><i class="ri-add-line"></i> Create container</button>
+                <button class="btn" v-on:click="openSideBar = !openSideBar"><i class="ri-add-line"></i>Create container</button>
             </div>
         </div>
 
