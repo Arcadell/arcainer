@@ -14,19 +14,11 @@ using System.Threading.Tasks;
 
 namespace Docker.Commands
 {
-    public class ContainerCommand : IContainerCommand
+    public class ContainerCommand(IDockerClient client) : IContainerCommand
     {
-        private readonly ILogger<ContainerCommand> _logger;
-        DockerClient _client = new DockerClientConfiguration().CreateClient();
-
-        public ContainerCommand(ILogger<ContainerCommand> logger)
-        {
-            _logger = logger;
-        }
-
         public void CreateContainer(CreateContainerDto createContainerDto)
         {
-            CreateContainerResponse container = _client.Containers.CreateContainerAsync(new CreateContainerParameters()
+            CreateContainerResponse container = client.Containers.CreateContainerAsync(new CreateContainerParameters()
             {
                 Image = createContainerDto.Image,
                 Name = createContainerDto.Name
@@ -35,7 +27,7 @@ namespace Docker.Commands
 
         public List<Container> GetContainers(ContainerFilter containerFilter)
         {
-            IList<ContainerListResponse> containers = _client.Containers.ListContainersAsync(new ContainersListParameters() { Limit = 10 }).Result;
+            IList<ContainerListResponse> containers = client.Containers.ListContainersAsync(new ContainersListParameters() { Limit = 10 }).Result;
             List<Container> list = containers.Select(x => new Container() { Id = x.ID, Name = x.Names[0], State = x.State }).Where(x => FilterContainer(x, containerFilter)).ToList();
 
             return list;
@@ -43,12 +35,12 @@ namespace Docker.Commands
 
         public async Task StartContainers(List<string> ids)
         {
-            await Task.WhenAll(ids.Select(id => _client.Containers.StartContainerAsync(id, new ContainerStartParameters())));
+            await Task.WhenAll(ids.Select(id => client.Containers.StartContainerAsync(id, new ContainerStartParameters())));
         }
 
         public async Task StopContainers(List<string> ids)
         {
-            await Task.WhenAll(ids.Select(id => _client.Containers.StopContainerAsync(id, new ContainerStopParameters())));
+            await Task.WhenAll(ids.Select(id => client.Containers.StopContainerAsync(id, new ContainerStopParameters())));
         }
 
         #region PRIVATE FUNC
