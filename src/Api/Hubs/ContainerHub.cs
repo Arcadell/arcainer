@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Docker.DotNet.Models;
+using Docker.Monitors.Interfaces;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Api.Hubs
 {
     public class ContainerHub : Hub
     {
-        public async Task UpdateContainer(string user, string message)
-        {
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
-        }
+
     }
 }

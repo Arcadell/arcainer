@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using Api.Hubs;
+using Docker.Monitors.Interfaces;
+using Docker.Monitors;
+using Microsoft.AspNetCore.SignalR;
+using Docker.Models;
+using Docker.DotNet.Models;
 
 namespace Api
 {
@@ -78,7 +83,18 @@ namespace Api
 
             app.MapHub<ContainerHub>("/containerHub");
 
+            using var scope = app.Services.CreateAsyncScope();
+            var containerMonitorService = scope.ServiceProvider.GetRequiredService<IContainerMonitorService>();
+            containerMonitorService.OnMonitorMessageReceved += ContainerMonitorService_OnMonitorMessageReceved;
+
             app.Run();
+        }
+
+        private static void ContainerMonitorService_OnMonitorMessageReceved(object? sender, MessageRecevedEventArgs e)
+        {
+            var sd = sender as ContainerMonitorService;
+            var hubContext = sd.ServiceProvider.GetRequiredService<IHubContext<ContainerHub>>();
+            hubContext.Clients.All.SendAsync("Test", $"Event: {e.Message?.Action} for container {e.Message?.ID}");
         }
     }
 }
