@@ -73,14 +73,12 @@ export const useContainerStore = defineStore("data", {
                     throw new Error(message);
                 }
 
-                const okResponse = await response.json() as Container[];
-
-                return { data: okResponse, error: null };
+                return { data: null, error: null };
             } catch (e: Error | any) {
                 const toastStore = useToastStore();
                 toastStore.error({ message: e.message });
 
-                return { data: [], error: e.message };
+                return { data: null, error: e.message };
             }
         }
     }

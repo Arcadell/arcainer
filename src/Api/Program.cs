@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
+using Api.Hubs;
 
 namespace Api
 {
@@ -29,6 +30,8 @@ namespace Api
             builder.Services.AddAuthorization();
             builder.Services.AddIdentityApiEndpoints<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            builder.Services.AddSignalR();
 
             builder.Services.AddApiServices();
             builder.Services.AddApplicationServices();
@@ -72,6 +75,8 @@ namespace Api
                 .MapContainerRoutes()
                 .RequireAuthorization()
                 .WithTags("Container");
+
+            app.MapHub<ContainerHub>("/containerHub");
 
             app.Run();
         }

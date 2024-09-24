@@ -7,9 +7,6 @@ namespace Docker.Monitors
 {
     public class ContainerMonitorBackgroundService(ILogger<ContainerMonitorBackgroundService> logger, IDockerClient client) : BackgroundService
     {
-        private readonly DockerClient _client = new DockerClientConfiguration().CreateClient();
-        public event EventHandler? OnStatusReceved;
-
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)

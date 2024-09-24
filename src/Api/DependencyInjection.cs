@@ -12,7 +12,6 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddApiServices(this IServiceCollection services)
         {
-            Console.WriteLine("We are in ApiServices");
             return services;
         }
     }
