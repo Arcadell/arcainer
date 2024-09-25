@@ -4,8 +4,5 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace Api.Hubs
 {
-    public class ContainerHub : Hub
-    {
-
-    }
+    public class ContainerHub() : Hub { }
 }
