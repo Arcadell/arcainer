@@ -14,7 +14,6 @@ namespace Docker.Monitors
             {
                 var progress = new Progress<Message>(message =>
                 {
-                    Console.WriteLine($"Event: {message.Action} for container {message.ID}");
                     containerMonitorService.MonitorMessageReceved(message);
                 });
 
