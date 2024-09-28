@@ -5,7 +5,7 @@ namespace Docker.Monitors.Interfaces
 {
     public interface IContainerMonitorService
     {
-        public event EventHandler<MessageRecevedEventArgs>? OnMonitorMessageReceved;
-        public void MonitorMessageReceved(Message message);
+        public Task MonitorMessageReceived(Message message);
+        public void AddMessageHandler(Func<IServiceProvider, Message, Task> handler);
     }
 }

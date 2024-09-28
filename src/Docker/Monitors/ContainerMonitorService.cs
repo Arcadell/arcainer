@@ -6,18 +6,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
-namespace Docker.Monitors
+namespace Docker.Monitors;
+
+public class ContainerMonitorService(IOptions<DockerContainerMonitorOptions> options, IServiceProvider serviceProvider) : IContainerMonitorService
 {
-    public class ContainerMonitorService : IContainerMonitorService
-    {
-        public IServiceProvider ServiceProvider { get; set; }
-        public ContainerMonitorService(IServiceProvider serviceProvider)
-        {
-            ServiceProvider = serviceProvider;
-        }
-
-        public event EventHandler<MessageRecevedEventArgs>? OnMonitorMessageReceved;
-        public void MonitorMessageReceved(Message message) => OnMonitorMessageReceved?.Invoke(this, new MessageRecevedEventArgs(message));
-    }
+    
+    private readonly List<Func<IServiceProvider,Message, Task>> _messageHandlers = options.Value.MessageHandlers;
+    public Task MonitorMessageReceived(Message message) =>
+        Task.WhenAll(_messageHandlers.Select(x => x.Invoke(serviceProvider,message)));
+    public void AddMessageHandler(Func<IServiceProvider,Message,Task> handler) => _messageHandlers.Add(handler);
 }
+

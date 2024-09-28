@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.SignalR;
 using Docker.Models;
 using Docker.DotNet.Models;
 using Api.EventsListener;
+using Docker;
 
 namespace Api
 {
@@ -67,8 +68,6 @@ namespace Api
                 .WithTags("Volume");
 
             app.MapHub<ContainerHub>("/containerHub");
-
-            app.UseContainerStatusEventListener();
 
             app.Run();
         }

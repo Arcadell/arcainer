@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Api.EventsListener;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -20,7 +21,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddAuthorization();
             services.AddIdentityApiEndpoints<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
+            services.AddContainerStatusEventListener();
+            
             services.AddSignalR();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
