@@ -62,6 +62,10 @@ namespace Api
                 .MapImageRoutes()
                 .WithTags("Image");
 
+            app.MapGroup("/volume")
+                .MapVolumeRoutes()
+                .WithTags("Volume");
+
             app.MapHub<ContainerHub>("/containerHub");
 
             app.UseContainerStatusEventListener();
