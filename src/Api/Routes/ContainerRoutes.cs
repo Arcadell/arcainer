@@ -1,5 +1,4 @@
-﻿using Application.Containers;
-using Application.Containers.Interfaces;
+﻿using Docker.Commands.Interfaces;
 using Domain.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,27 +8,27 @@ namespace Api.Routes
     {        
         public static RouteGroupBuilder MapContainerRoutes(this RouteGroupBuilder group)
         {
-            group.MapGet("/", ([FromServices] IContainerService containerService) =>
+            group.MapGet("/", ([FromServices] IContainerCommand containerCommand) =>
             {
-                var containers = containerService.GetContainers(new Domain.Filters.ContainerFilter());
+                var containers = containerCommand.GetContainers(new Domain.Filters.ContainerFilter());
                 return Results.Ok(containers);
             });
 
-            group.MapPost("/create", ([FromBody] CreateContainerDto createContainerDto, [FromServices] IContainerService containerService) =>
+            group.MapPost("/create", ([FromBody] CreateContainerDto createContainerDto, [FromServices] IContainerCommand containerCommand) =>
             {
-                containerService.CreateContainer(createContainerDto);
+                containerCommand.CreateContainer(createContainerDto);
                 return Results.Ok();
             });
 
-            group.MapPost("/start", ([FromBody] List<string> Ids, [FromServices] IContainerService containerService) =>
+            group.MapPost("/start", ([FromBody] List<string> Ids, [FromServices] IContainerCommand containerCommand) =>
             {
-                containerService.StartContainers(Ids);
+                containerCommand.StartContainers(Ids);
                 return Results.Ok();
             });
 
-            group.MapPost("/stop", ([FromBody] List<string> Ids, [FromServices] IContainerService containerService) =>
+            group.MapPost("/stop", ([FromBody] List<string> Ids, [FromServices] IContainerCommand containerCommand) =>
             {
-                containerService.StopContainers(Ids);
+                containerCommand.StopContainers(Ids);
                 return Results.Ok();
             });
 

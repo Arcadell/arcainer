@@ -1,6 +1,5 @@
 
 using Api.Routes;
-using Application.Containers.Interfaces;
 using Persistence.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

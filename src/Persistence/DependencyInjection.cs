@@ -1,5 +1,4 @@
-﻿using Application.Containers.Interfaces;
-using Persistence.Data;
+﻿using Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
