@@ -58,6 +58,10 @@ namespace Api
                 .RequireAuthorization()
                 .WithTags("Container");
 
+            app.MapGroup("/image")
+                .MapImageRoutes()
+                .WithTags("Image");
+
             app.MapHub<ContainerHub>("/containerHub");
 
             app.UseContainerStatusEventListener();

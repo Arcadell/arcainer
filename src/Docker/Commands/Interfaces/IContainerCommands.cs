@@ -4,7 +4,7 @@ using Domain.Models;
 
 namespace Docker.Commands.Interfaces
 {
-    public interface IContainerCommand
+    public interface IContainerCommands
     {
         void CreateContainer(CreateContainerDto createContainerDto);
         List<Container> GetContainers(ContainerFilter containerFilter);

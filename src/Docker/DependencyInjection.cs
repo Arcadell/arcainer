@@ -14,7 +14,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<IDockerClient>(_ => new DockerClientConfiguration().CreateClient());
             services.AddSingleton<IContainerMonitorService, ContainerMonitorService>();
 
-            services.AddScoped<IContainerCommand, ContainerCommand>();
+            services.AddScoped<IContainerCommands, ContainerCommands>();
+            services.AddScoped<IImageCommands, ImageCommands>();
 
             services.AddHostedService<ContainerMonitorBackgroundService>();
             return services;

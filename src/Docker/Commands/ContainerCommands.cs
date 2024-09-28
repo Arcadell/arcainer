@@ -14,11 +14,11 @@ using System.Threading.Tasks;
 
 namespace Docker.Commands
 {
-    public class ContainerCommand(IDockerClient client) : IContainerCommand
+    public class ContainerCommands(IDockerClient client) : IContainerCommands
     {
         public void CreateContainer(CreateContainerDto createContainerDto)
         {
-            CreateContainerResponse container = client.Containers.CreateContainerAsync(new CreateContainerParameters()
+            var container = client.Containers.CreateContainerAsync(new CreateContainerParameters()
             {
                 Image = createContainerDto.Image,
                 Name = createContainerDto.Name
@@ -27,8 +27,8 @@ namespace Docker.Commands
 
         public List<Container> GetContainers(ContainerFilter containerFilter)
         {
-            IList<ContainerListResponse> containers = client.Containers.ListContainersAsync(new ContainersListParameters() { Limit = 10 }).Result;
-            List<Container> list = containers.Select(x => new Container() { Id = x.ID, Name = x.Names[0], State = x.State }).Where(x => FilterContainer(x, containerFilter)).ToList();
+            var containers = client.Containers.ListContainersAsync(new ContainersListParameters()).Result;
+            var list = containers.Select(x => new Container() { Id = x.ID, Name = x.Names[0], State = x.State }).Where(x => FilterContainer(x, containerFilter)).ToList();
 
             return list;
         }
@@ -43,7 +43,7 @@ namespace Docker.Commands
             await Task.WhenAll(ids.Select(id => client.Containers.StopContainerAsync(id, new ContainerStopParameters())));
         }
 
-        #region PRIVATE FUNC
+        #region PRIVATE FUNCTION
         private bool FilterContainer(Container container, ContainerFilter containerFilter)
         {
             bool result = true;
