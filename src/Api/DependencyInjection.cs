@@ -1,17 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Api.EventsListener;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 using Persistence.Data;
 using Swashbuckle.AspNetCore.Filters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Api.EventsListener;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Api
 {
     public static class DependencyInjection
     {

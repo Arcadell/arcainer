@@ -1,15 +1,17 @@
 ﻿using Docker.DotNet;
 using Docker.DotNet.Models;
-using Docker.Monitors.Interfaces;
+using Docker.Models;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Docker.Monitors
 {
     public class ContainerMonitorBackgroundService(
         ILogger<ContainerMonitorBackgroundService> logger,
         IDockerClient client,
-        IContainerMonitorService containerMonitorService) : BackgroundService
+        IServiceProvider serviceProvider,
+        IOptions<DockerContainerMonitorOptions> containerMonitorServiceOptions) : BackgroundService
     {
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -19,7 +21,9 @@ namespace Docker.Monitors
                 {
                     var progress = new Progress<Message>(message =>
                     {
-                        containerMonitorService.MonitorMessageReceived(message);
+                        Task.WhenAll(
+                            containerMonitorServiceOptions.Value.MessageHandlers.Select(x =>
+                                x.Invoke(serviceProvider, message))).ConfigureAwait(false);
                     });
 
                     try

@@ -15,19 +15,17 @@ namespace Api.EventsListener
                 {
                     var hub = sp.GetRequiredService<IHubContext<ContainerHub>>();
                     var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger("Container monitor");
+                    
+                    logger.LogTrace("Event: {action} for container {id}", message.Action, message.ID);
 
-                    switch (message.Action)
+                    return message.Action switch
                     {
-                        case "start":
-                            logger.LogTrace("Event: {action} for container {id}", message.Action, message.ID);
-                            return hub.Clients.All.SendAsync("NewContainerStatus", message.ID,
-                                ContainerStatusEvent.STARTED);
-                        case "die":
-                            logger.LogTrace("Event: {action} for container {id}", message.Action, message.ID);
-                            return hub.Clients.All.SendAsync("NewContainerStatus", message.ID,
-                                ContainerStatusEvent.DIED);
-                    }
-                    return Task.CompletedTask;
+                        "start" => hub.Clients.All.SendAsync("NewContainerStatus", message.ID,
+                            ContainerStatusEvent.STARTED),
+                        "stop" => hub.Clients.All.SendAsync("NewContainerStatus", message.ID,
+                            ContainerStatusEvent.DIED),
+                        _ => Task.CompletedTask
+                    };
                 });
             });
 
