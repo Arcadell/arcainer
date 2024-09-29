@@ -60,10 +60,17 @@ namespace Api
 
             app.MapGroup("/image")
                 .MapImageRoutes()
+                .RequireAuthorization()
                 .WithTags("Image");
+
+            app.MapGroup("/network")
+                .MapNetworkRoutes()
+                .RequireAuthorization()
+                .WithTags("Network");
 
             app.MapGroup("/volume")
                 .MapVolumeRoutes()
+                .RequireAuthorization()
                 .WithTags("Volume");
 
             app.MapHub<ContainerHub>("/containerHub");

@@ -16,6 +16,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddScoped<IContainerCommands, ContainerCommands>();
             services.AddScoped<IImageCommands, ImageCommands>();
+            services.AddScoped<INetworkCommands, NetworkCommands>();
             services.AddScoped<IVolumeCommands, VolumeCommands>();
 
             services.AddHostedService<ContainerMonitorBackgroundService>();
