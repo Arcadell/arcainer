@@ -12,3 +12,5 @@ export enum ContainerCommands {
     Stop,
     Delete
 }
+
+export class Image extends BaseEntity {}

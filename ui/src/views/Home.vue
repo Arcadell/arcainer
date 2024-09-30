@@ -13,9 +13,8 @@ import { RouterLink, RouterView } from 'vue-router';
       </div>
 
       <div class="menu-list">
-        <RouterLink to="/containers"><a class="lnk lnk-active"><i class="ri-instance-line"></i> Containers</a>
-        </RouterLink>
-        <a class="lnk"><i class="ri-cloud-line"></i> Images</a>
+        <RouterLink to="/containers"><a class="lnk lnk-active"><i class="ri-instance-line"></i> Containers</a></RouterLink>
+        <RouterLink to="/images"><a class="lnk"><i class="ri-cloud-line"></i> Images</a></RouterLink>
         <a class="lnk"><i class="ri-archive-line"></i> Volumes</a>
         <a class="lnk"><i class="ri-global-line"></i> Networks</a>
       </div>

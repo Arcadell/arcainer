@@ -3,7 +3,7 @@ import { useAuthStore } from "../auth";
 import { useToastStore } from "../utils";
 import { Container, ContainerCommands } from "@/models/data";
 
-export const useContainerStore = defineStore("data", {
+export const useContainerStore = defineStore("containerData", {
     state: () => ({}),
     actions: {
         async getContainers(searchParams: string = '') {
