@@ -14,3 +14,7 @@ export enum ContainerCommands {
 }
 
 export class Image extends BaseEntity {}
+
+export class Network extends BaseEntity {
+    name!: string;
+}
