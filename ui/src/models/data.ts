@@ -18,3 +18,7 @@ export class Image extends BaseEntity {}
 export class Network extends BaseEntity {
     name!: string;
 }
+
+export class Volume {
+    name!: string;
+}

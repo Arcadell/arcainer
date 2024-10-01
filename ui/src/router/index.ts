@@ -25,6 +25,11 @@ const router = createRouter({
           path: 'networks',
           name: 'networks',
           component: () => import('../views/sub-views/Network.vue')
+        },
+        {
+          path: 'volumes',
+          name: 'volumes',
+          component: () => import('../views/sub-views/Volume.vue')
         }
       ]
     },
