@@ -13,18 +13,23 @@ const fields: TableField[] = [
     { key: 'name', label: 'Name' },
 ]
 
-let networkTable: TableRow[] = [];
+let networkTable = ref<TableRow[]>([]);
 
 let loadingNetowrks = ref(true);
 let enableControlButtons = ref(false);
 
-networkStore.getNetworks().then(res => {
-    res.data.forEach((network: Network) => { networkTable.push({ selected: false, fields: network }); })
-    loadingNetowrks.value = false;
-});
+const refreshNetworks = () => {
+    networkStore.getNetworks().then(res => {
+        networkTable.value = [];
+        res.data.forEach((network: Network) => { networkTable.value.push({ selected: false, fields: network }); })
+        loadingNetowrks.value = false;
+    });
+}
+
+refreshNetworks();
 
 const onRowSelected = () => {
-    const rowSelected = networkTable.filter(row => row.selected);
+    const rowSelected = networkTable.value.filter(row => row.selected);
     enableControlButtons.value = rowSelected.length > 0;
 }
 </script>
@@ -42,7 +47,7 @@ const onRowSelected = () => {
 
                 </div>
 
-                <button class="btn btn-icon"><i class="ri-refresh-line"></i></button>
+                <button class="btn btn-icon" v-on:click="refreshNetworks"><i class="ri-refresh-line"></i></button>
             </div>
         </div>
 

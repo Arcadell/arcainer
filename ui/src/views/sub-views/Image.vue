@@ -13,18 +13,23 @@ const fields: TableField[] = [
     { key: 'id', label: 'Id' },
 ]
 
-let imageTable: TableRow[] = [];
+let imageTable = ref<TableRow[]>([]);
 
 let loadingImages = ref(true);
 let enableControlButtons = ref(false);
 
-imageStore.getImages().then(res => {
-    res.data.forEach((image: Image) => { imageTable.push({ selected: false, fields: image }); })
-    loadingImages.value = false;
-});
+const refreshImages = () => {
+    imageStore.getImages().then(res => {
+        imageTable.value = [];
+        res.data.forEach((image: Image) => { imageTable.value.push({ selected: false, fields: image }); })
+        loadingImages.value = false;
+    });
+}
+
+refreshImages();
 
 const onRowSelected = () => {
-    const rowSelected = imageTable.filter(row => row.selected);
+    const rowSelected = imageTable.value.filter(row => row.selected);
     enableControlButtons.value = rowSelected.length > 0;
 }
 
@@ -43,7 +48,7 @@ const onRowSelected = () => {
 
                 </div>
 
-                <button class="btn btn-icon"><i class="ri-refresh-line"></i></button>
+                <button class="btn btn-icon" v-on:click="refreshImages"><i class="ri-refresh-line"></i></button>
             </div>
         </div>
 

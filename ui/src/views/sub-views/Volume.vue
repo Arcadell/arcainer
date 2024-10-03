@@ -7,22 +7,27 @@ import { ref } from 'vue';
 
 const volumeStore = useVolumeStore();
 
-const fields: TableField[] =[
+const fields: TableField[] = [
     { key: 'name', label: 'Name' },
 ]
 
-let volumeTable: TableRow[] = [];
+let volumeTable = ref<TableRow[]>([]);
 
 let loadingVolumes = ref(true);
 let enableControlButtons = ref(false);
 
-volumeStore.getVolumes().then(res => {
-    res.data.forEach((network: Volume) => { volumeTable.push({ selected: false, fields: network }); })
-    loadingVolumes.value = false;
-});
+const refreshVolumes = () => {
+    volumeStore.getVolumes().then(res => {
+        volumeTable.value = [];
+        res.data.forEach((network: Volume) => { volumeTable.value.push({ selected: false, fields: network }); })
+        loadingVolumes.value = false;
+    });
+}
+
+refreshVolumes();
 
 const onRowSelected = () => {
-    const rowSelected = volumeTable.filter(row => row.selected);
+    const rowSelected = volumeTable.value.filter(row => row.selected);
     enableControlButtons.value = rowSelected.length > 0;
 }
 </script>
@@ -40,7 +45,7 @@ const onRowSelected = () => {
 
                 </div>
 
-                <button class="btn btn-icon"><i class="ri-refresh-line"></i></button>
+                <button class="btn btn-icon" v-on:click="refreshVolumes"><i class="ri-refresh-line"></i></button>
             </div>
         </div>
 

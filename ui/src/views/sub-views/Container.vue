@@ -16,24 +16,29 @@ const fields: TableField[] = [
     { key: 'state', label: 'Status' },
 ]
 
-let containerTable: TableRow[] = [];
+let containerTable = ref<TableRow[]>([]);
 
 let loadingContainers = ref(true);
 let enableControlButtons = ref(false);
 let openSideBar = ref(false);
 
-containerStore.getContainers().then(res => {
-    res.data.forEach((container: Container) => { containerTable.push({ selected: false, fields: container }); })
-    loadingContainers.value = false;
-});
+const refreshContainers = () => {
+    containerStore.getContainers().then(res => {
+        containerTable.value = [];
+        res.data.forEach((container: Container) => { containerTable.value.push({ selected: false, fields: container }); });
+        loadingContainers.value = false;
+    });
+}
+
+refreshContainers();
 
 const onRowSelected = () => {
-    const rowSelected = containerTable.filter(row => row.selected);
+    const rowSelected = containerTable.value.filter(row => row.selected);
     enableControlButtons.value = rowSelected.length > 0;
 }
 
 const handleContainers = async (command: ContainerCommands) => {
-    const containerSelected = containerTable.filter(row => row.selected).map(row => row.fields) as Container[];
+    const containerSelected = containerTable.value.filter(row => row.selected).map(row => row.fields) as Container[];
     await containerStore.handleContainers(containerSelected, command);
 }
 </script>
@@ -58,7 +63,7 @@ const handleContainers = async (command: ContainerCommands) => {
                     </button>
                 </div>
 
-                <button class="btn btn-icon"><i class="ri-refresh-line"></i></button>
+                <button class="btn btn-icon" v-on:click="refreshContainers"><i class="ri-refresh-line"></i></button>
                 <button class="btn" v-on:click="openSideBar = !openSideBar"><i class="ri-add-line"></i>Create
                     container</button>
             </div>
