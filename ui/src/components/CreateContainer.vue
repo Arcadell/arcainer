@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import CodeEditor from './CodeEditor.vue';
+</script>
 
 <template>
     <div class="main-container-create">
@@ -6,15 +8,18 @@
             <input type="text" placeholder="Docker run command">
             <button class="btn btn-outline">Convert</button>
         </div>
+
+        <h2>Compose</h2>
+        <CodeEditor />
     </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .main-container-create {
     display: flex;
     flex-direction: column;
 
-    gap: 0.5em;
+    gap: 1em;
 
     .generate-docker-compose {
         display: flex;
