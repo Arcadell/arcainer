@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Table from '@/components/Table.vue';
 import SideBar from '@/components/SideBar.vue';
+import CreateContainer from '@/components/CreateContainer.vue';
 
 import { ContainerCommands, type Container } from '@/models/data';
 import type { TableField, TableRow } from '@/models/table';
@@ -44,7 +45,9 @@ const handleContainers = async (command: ContainerCommands) => {
 </script>
 
 <template>
-    <SideBar :title="'Create container'" :opened="openSideBar" @close-sidebar="openSideBar = false"></SideBar>
+    <SideBar :title="'Create container'" :opened="openSideBar" @close-sidebar="openSideBar = false">
+        <CreateContainer />
+    </SideBar>
     <div class="sub-view-main" v-if="!loadingContainers">
         <div class="menu-header">
             <div class="left-header">

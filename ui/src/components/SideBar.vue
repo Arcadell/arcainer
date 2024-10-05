@@ -18,7 +18,7 @@ const emit = defineEmits(['close-sidebar']);
                     </button>
                 </div>
                 <div class="content">
-
+                    <slot></slot>
                 </div>
             </div>
         </div>
@@ -55,6 +55,13 @@ const emit = defineEmits(['close-sidebar']);
             padding: 0.5em 1em;
 
             border-bottom: solid 1px var(--border-colour);
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+
+            padding: 1em;
         }
     }
 }
