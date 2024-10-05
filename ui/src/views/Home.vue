@@ -13,10 +13,22 @@ import { RouterLink, RouterView } from 'vue-router';
       </div>
 
       <div class="menu-list">
-        <RouterLink to="/containers"><a class="lnk lnk-active"><i class="ri-instance-line"></i> Containers</a></RouterLink>
-        <RouterLink to="/images"><a class="lnk"><i class="ri-cloud-line"></i> Images</a></RouterLink>
-        <RouterLink to="/networks"><a class="lnk"><i class="ri-global-line"></i> Networks</a></RouterLink>
-        <RouterLink to="/volumes"><a class="lnk"><i class="ri-archive-line"></i> Volumes</a></RouterLink>
+        <RouterLink to="/containers">
+          <a class="lnk" v-bind:class="{ 'lnk-active': $route.path == '/containers' }">
+            <i class="ri-instance-line"></i> Containers </a>
+        </RouterLink>
+        <RouterLink to="/images">
+          <a class="lnk" v-bind:class="{ 'lnk-active': $route.path == '/images' }">
+            <i class="ri-cloud-line"></i> Images </a>
+        </RouterLink>
+        <RouterLink to="/networks">
+          <a class="lnk" v-bind:class="{ 'lnk-active': $route.path == '/networks' }">
+            <i class="ri-global-line"></i> Networks</a>
+        </RouterLink>
+        <RouterLink to="/volumes">
+          <a class="lnk" v-bind:class="{ 'lnk-active': $route.path == '/volumes' }">
+            <i class="ri-archive-line"></i> Volumes</a>
+        </RouterLink>
       </div>
 
       <div class="menu-list">

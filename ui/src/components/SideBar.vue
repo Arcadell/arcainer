@@ -9,23 +9,35 @@ const emit = defineEmits(['close-sidebar']);
 <template>
     <Transition name="sidebar">
         <div v-if="opened" class="main-sidebar">
-            <button v-on:click="emit('close-sidebar');">Close</button>
+            <div class="sidebar">
+                <button v-on:click="emit('close-sidebar');">Close</button>
+            </div>
         </div>
     </Transition>
 </template>
 
 <style lang="scss" scoped>
-.main-sidebar{
+.main-sidebar {
     position: absolute;
+    z-index: 1;
 
     display: flex;
-    flex-direction: column;
+    justify-content: flex-end;
 
-    background-color: var(--color-background);
+    background-color: #0000006c;
+
     height: 100dvh;
-    width: 40%;
+    width: 100dvw;
 
     right: 0;
+
+    .sidebar {
+        display: flex;
+        flex-direction: column;
+
+        background-color: var(--color-background);
+        width: 700px;
+    }
 }
 
 .sidebar-enter-active,
