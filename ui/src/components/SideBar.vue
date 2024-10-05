@@ -1,5 +1,6 @@
 <script setup lang="ts">
 defineProps({
+    title: { type: String, required: true },
     opened: { type: Boolean, required: true }
 });
 const emit = defineEmits(['close-sidebar']);
@@ -10,7 +11,15 @@ const emit = defineEmits(['close-sidebar']);
     <Transition name="sidebar">
         <div v-if="opened" class="main-sidebar">
             <div class="sidebar">
-                <button v-on:click="emit('close-sidebar');">Close</button>
+                <div class="header">
+                    <h1>{{ title }}</h1>
+                    <button class="btn btn-icon" v-on:click="emit('close-sidebar');">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+                <div class="content">
+
+                </div>
             </div>
         </div>
     </Transition>
@@ -37,6 +46,16 @@ const emit = defineEmits(['close-sidebar']);
 
         background-color: var(--color-background);
         width: 700px;
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+
+            align-items: center;
+            padding: 0.5em 1em;
+
+            border-bottom: solid 1px var(--border-colour);
+        }
     }
 }
 

@@ -12,10 +12,6 @@
         font-size: 1.5em;
     }
 
-    h1 {
-        font-size: 1.3em;
-    }
-
     .left-header,
     .right-header {
         display: flex;
@@ -46,4 +42,8 @@
 
         padding: 1em;
     }
+}
+
+h1 {
+    font-size: 1.3em;
 }

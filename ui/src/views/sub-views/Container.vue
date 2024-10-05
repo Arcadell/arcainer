@@ -44,7 +44,7 @@ const handleContainers = async (command: ContainerCommands) => {
 </script>
 
 <template>
-    <SideBar :opened="openSideBar" @close-sidebar="openSideBar = false"></SideBar>
+    <SideBar :title="'Create container'" :opened="openSideBar" @close-sidebar="openSideBar = false"></SideBar>
     <div class="sub-view-main" v-if="!loadingContainers">
         <div class="menu-header">
             <div class="left-header">
