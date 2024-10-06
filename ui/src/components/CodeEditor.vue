@@ -1,25 +1,33 @@
 <script setup lang="ts">
-import { EditorState } from "@codemirror/state"
-import { EditorView, keymap, lineNumbers } from "@codemirror/view"
-import { defaultKeymap } from "@codemirror/commands"
+import { Compartment, EditorState } from "@codemirror/state"
+import { EditorView, highlightActiveLine, keymap, lineNumbers } from "@codemirror/view"
+import { defaultKeymap, indentWithTab } from "@codemirror/commands"
 import { onMounted } from "vue";
+import { yaml } from "@codemirror/lang-yaml";
+import { defaultHighlightStyle, syntaxHighlighting } from "@codemirror/language";
 
 let editorRef = null;
-let editorView: EditorView;
+const language = new Compartment;
+
+const customKeymap = defaultKeymap.concat([indentWithTab]);
 
 let editorStartState = EditorState.create({
     doc: "",
     extensions: [
+        keymap.of(customKeymap),
+        language.of(yaml()),
+
         lineNumbers(),
-        keymap.of(defaultKeymap)
+        syntaxHighlighting(defaultHighlightStyle, { fallback: false }),
+        highlightActiveLine()
     ]
 });
 
 onMounted(() => {
     editorRef = document.getElementById('editor') as HTMLElement;
-    editorView = new EditorView({
+    new EditorView({
         state: editorStartState,
-        parent: editorRef,
+        parent: editorRef
     })
 })
 </script>
