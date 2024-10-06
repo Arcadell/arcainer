@@ -2,17 +2,21 @@
 import { Compartment, EditorState } from "@codemirror/state"
 import { EditorView, highlightActiveLine, keymap, lineNumbers } from "@codemirror/view"
 import { defaultKeymap, indentWithTab } from "@codemirror/commands"
-import { onMounted } from "vue";
+import { onMounted, watch } from "vue";
 import { yaml } from "@codemirror/lang-yaml";
 import { defaultHighlightStyle, syntaxHighlighting } from "@codemirror/language";
 
-let editorRef = null;
-const language = new Compartment;
+const props = defineProps({
+    value: { type: String, required: true },
+});
 
+const language = new Compartment;
 const customKeymap = defaultKeymap.concat([indentWithTab]);
 
+let editorRef = null;
+let editorView: EditorView;
 let editorStartState = EditorState.create({
-    doc: "",
+    doc: props.value,
     extensions: [
         keymap.of(customKeymap),
         language.of(yaml()),
@@ -25,11 +29,21 @@ let editorStartState = EditorState.create({
 
 onMounted(() => {
     editorRef = document.getElementById('editor') as HTMLElement;
-    new EditorView({
+    editorView = new EditorView({
         state: editorStartState,
         parent: editorRef
     })
-})
+});
+
+watch(() => props.value, (currentValue) => {
+    editorView.dispatch({
+        changes: {
+            from: 0,
+            to: editorView.state.doc.length,
+            insert: currentValue,
+        }
+    })
+});
 </script>
 
 <template>
