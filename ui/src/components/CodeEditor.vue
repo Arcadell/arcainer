@@ -53,5 +53,10 @@ watch(() => props.value, (currentValue) => {
 <style scoped lang="scss">
 #editor {
     font-size: var(--small-font-size);
+    display: flex;
+    flex-direction: column;
+
+    height: calc(100dvh - 240px);
+    overflow: auto;
 }
 </style>

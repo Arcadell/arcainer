@@ -46,6 +46,7 @@ const emit = defineEmits(['close-sidebar']);
 
         background-color: var(--color-background);
         width: 700px;
+        height: 100%;
 
         .header {
             display: flex;
@@ -62,6 +63,7 @@ const emit = defineEmits(['close-sidebar']);
             flex-direction: column;
 
             padding: 1em;
+            height: 100%;
         }
     }
 }

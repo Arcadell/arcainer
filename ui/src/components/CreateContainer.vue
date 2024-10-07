@@ -18,14 +18,20 @@ const createContainer = () => {
 
 <template>
     <div class="main-container-create">
-        <div class="generate-docker-compose">
-            <input type="text" placeholder="Docker run command" v-model="dockerRunCommand">
-            <button class="btn btn-outline" v-on:click="converContainer">Convert</button>
+        <div class="container-create-content">
+            <div class="generate-docker-compose">
+                <input type="text" placeholder="Docker run command" v-model="dockerRunCommand">
+                <button class="btn btn-outline" v-on:click="converContainer">Convert</button>
+            </div>
+
+            <h2>Compose</h2>
+            <CodeEditor :value="dockerComposeValue" />
         </div>
 
-        <h2>Compose</h2>
-        <CodeEditor :value="dockerComposeValue" />
-        <button v-on:click="createContainer">Create</button>
+        <div class="container-create-actions">
+            <button class="btn btn-outline" v-on:click="createContainer">Create</button>
+            <button v-on:click="createContainer">Create & run</button>
+        </div>
     </div>
 </template>
 
@@ -35,14 +41,33 @@ const createContainer = () => {
     flex-direction: column;
 
     gap: 1em;
+    justify-content: space-between;
+    height: 100%;
 
-    .generate-docker-compose {
+    .container-create-content {
         display: flex;
+        flex-direction: column;
 
-        align-items: center;
-        gap: 5px;
+        gap: 1em;
+        height: 100%;
 
-        input {
+        .generate-docker-compose {
+            display: flex;
+
+            align-items: center;
+            gap: 5px;
+
+            input {
+                width: 100%;
+            }
+        }
+    }
+
+    .container-create-actions {
+        display: flex;
+        gap: 0.5em;
+
+        button {
             width: 100%;
         }
     }
