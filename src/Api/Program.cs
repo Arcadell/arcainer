@@ -28,7 +28,7 @@ namespace Api
                 app.UseSwagger();
                 app.UseSwaggerUI();
                 // In development we don't care about CORS
-                app.UseCors(_ => _.AllowAnyOrigin().AllowAnyMethod());
+                app.UseCors(_ => _.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             }
             else
             {
