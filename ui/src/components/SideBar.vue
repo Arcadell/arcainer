@@ -1,5 +1,6 @@
 <script setup lang="ts">
 defineProps({
+    title: { type: String, required: true },
     opened: { type: Boolean, required: true }
 });
 const emit = defineEmits(['close-sidebar']);
@@ -9,23 +10,60 @@ const emit = defineEmits(['close-sidebar']);
 <template>
     <Transition name="sidebar">
         <div v-if="opened" class="main-sidebar">
-            <button v-on:click="emit('close-sidebar');">Close</button>
+            <div class="sidebar">
+                <div class="header">
+                    <h1>{{ title }}</h1>
+                    <button class="btn btn-icon" v-on:click="emit('close-sidebar');">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+                <div class="content">
+                    <slot></slot>
+                </div>
+            </div>
         </div>
     </Transition>
 </template>
 
 <style lang="scss" scoped>
-.main-sidebar{
+.main-sidebar {
     position: absolute;
+    z-index: 1;
 
     display: flex;
-    flex-direction: column;
+    justify-content: flex-end;
 
-    background-color: var(--color-background);
+    background-color: #0000006c;
+
     height: 100dvh;
-    width: 40%;
+    width: 100dvw;
 
     right: 0;
+
+    .sidebar {
+        display: flex;
+        flex-direction: column;
+
+        background-color: var(--color-background);
+        width: 700px;
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+
+            align-items: center;
+            padding: 0.5em 1em;
+
+            border-bottom: solid 1px var(--border-colour);
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+
+            padding: 1em;
+        }
+    }
 }
 
 .sidebar-enter-active,

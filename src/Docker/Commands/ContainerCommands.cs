@@ -27,7 +27,7 @@ namespace Docker.Commands
 
         public List<Container> GetContainers(ContainerFilter containerFilter)
         {
-            var containers = client.Containers.ListContainersAsync(new ContainersListParameters()).Result;
+            var containers = client.Containers.ListContainersAsync(new ContainersListParameters() { All = true }).Result;
             var list = containers.Select(x => new Container() { Id = x.ID, Name = x.Names[0], State = x.State }).Where(x => FilterContainer(x, containerFilter)).ToList();
 
             return list;

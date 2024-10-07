@@ -15,6 +15,7 @@ public static class DependencyInjection
         services.AddScoped<IContainerCommands, ContainerCommands>();
         services.AddScoped<IImageCommands, ImageCommands>();
         services.AddScoped<IVolumeCommands, VolumeCommands>();
+        services.AddScoped<INetworkCommands, NetworkCommands>();
         return services;
     }
 

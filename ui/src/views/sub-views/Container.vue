@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import Table from '@/components/Table.vue';
 import SideBar from '@/components/SideBar.vue';
+import CreateContainer from '@/components/CreateContainer.vue';
 
 import { ContainerCommands, type Container } from '@/models/data';
 import type { TableField, TableRow } from '@/models/table';
 
 import { useContainerStore } from '@/stores/data/container';
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 
 const containerStore = useContainerStore();
 
@@ -16,33 +17,38 @@ const fields: TableField[] = [
     { key: 'state', label: 'Status' },
 ]
 
-let containerTable: TableRow[] = [];
+let containerTable = ref<TableRow[]>([]);
 
-let loadingContainer = ref(true);
+let loadingContainers = ref(true);
 let enableControlButtons = ref(false);
 let openSideBar = ref(false);
 
-onMounted(async () => {
-    const res = await containerStore.getContainers();
+const refreshContainers = () => {
+    containerStore.getContainers().then(res => {
+        containerTable.value = [];
+        res.data.forEach((container: Container) => { containerTable.value.push({ selected: false, fields: container }); });
+        loadingContainers.value = false;
+    });
+}
 
-    res.data.forEach((container: Container) => { containerTable.push({ selected: false, fields: container }); })
-    loadingContainer.value = false;
-})
+refreshContainers();
 
 const onRowSelected = () => {
-    const rowSelected = containerTable.filter(row => row.selected);
+    const rowSelected = containerTable.value.filter(row => row.selected);
     enableControlButtons.value = rowSelected.length > 0;
 }
 
 const handleContainers = async (command: ContainerCommands) => {
-    const containerSelected = containerTable.filter(row => row.selected).map(row => row.fields) as Container[];
+    const containerSelected = containerTable.value.filter(row => row.selected).map(row => row.fields) as Container[];
     await containerStore.handleContainers(containerSelected, command);
 }
 </script>
 
 <template>
-    <SideBar :opened="openSideBar" @close-sidebar="openSideBar = false"></SideBar>
-    <div class="container-main" v-if="!loadingContainer">
+    <SideBar :title="'Create container'" :opened="openSideBar" @close-sidebar="openSideBar = false">
+        <CreateContainer />
+    </SideBar>
+    <div class="sub-view-main" v-if="!loadingContainers">
         <div class="menu-header">
             <div class="left-header">
                 <i class="ri-instance-line"></i>
@@ -60,29 +66,16 @@ const handleContainers = async (command: ContainerCommands) => {
                     </button>
                 </div>
 
-                <button class="btn btn-icon"><i class="ri-refresh-line"></i></button>
-                <button class="btn" v-on:click="openSideBar = !openSideBar"><i class="ri-add-line"></i>Create container</button>
+                <button class="btn btn-icon" v-on:click="refreshContainers"><i class="ri-refresh-line"></i></button>
+                <button class="btn" v-on:click="openSideBar = !openSideBar"><i class="ri-add-line"></i>Create
+                    container</button>
             </div>
         </div>
 
         <div class="content">
-            <Table :fields="fields" :data="containerTable" :loading="loadingContainer" @row-selected="onRowSelected" />
+            <Table :fields="fields" :data="containerTable" :loading="loadingContainers" @row-selected="onRowSelected" />
         </div>
     </div>
 </template>
 
-<style scoped lang="scss">
-.container-main {
-    display: flex;
-    flex-direction: column;
-
-    width: 100%;
-
-    .content {
-        display: flex;
-        flex-direction: column;
-
-        padding: 1em;
-    }
-}
-</style>
+<style scoped lang="scss"></style>

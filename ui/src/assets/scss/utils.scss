@@ -12,10 +12,6 @@
         font-size: 1.5em;
     }
 
-    h1 {
-        font-size: 1.3em;
-    }
-
     .left-header,
     .right-header {
         display: flex;
@@ -32,4 +28,26 @@
             align-items: center;
         }
     }
+}
+
+.sub-view-main {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+
+    .content {
+        display: flex;
+        flex-direction: column;
+
+        padding: 1em;
+    }
+}
+
+h1 {
+    font-size: 1.3em;
+}
+
+h2 {
+    font-size: 1.1em;
 }

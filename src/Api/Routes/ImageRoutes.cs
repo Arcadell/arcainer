@@ -1,5 +1,4 @@
 ﻿using Docker.Commands.Interfaces;
-using Domain.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Routes
