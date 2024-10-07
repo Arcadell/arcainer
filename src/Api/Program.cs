@@ -1,17 +1,7 @@
-
 using Api.Routes;
-using Persistence.Data;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Filters;
 using Api.Hubs;
-using Docker.Monitors.Interfaces;
-using Docker.Monitors;
-using Microsoft.AspNetCore.SignalR;
-using Docker.Models;
-using Docker.DotNet.Models;
-using Api.EventsListener;
+using Docker;
 
 namespace Api
 {
@@ -19,17 +9,11 @@ namespace Api
     {
         public static void Main(string[] args)
         {
-            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
             var builder = WebApplication.CreateBuilder(args);
-
             builder.Logging.ClearProviders();
             builder.Logging.AddConsole();
 
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy(name: MyAllowSpecificOrigins, policy => { policy.WithOrigins("http://localhost:5173").AllowAnyHeader().AllowAnyMethod(); });
-            });
+            builder.Services.AddCors();
 
             builder.Services.AddApiServices();
             builder.Services.AddApplicationServices();
@@ -43,14 +27,20 @@ namespace Api
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                // In development we don't care about CORS
+                app.UseCors(_ => _.AllowAnyOrigin().AllowAnyMethod());
+            }
+            else
+            {
+                //TODO set trusted origins in configuration 
+                // app.UseCors(_=> _.WithOrigins())
+                app.UseHttpsRedirection();
             }
 
             app.MapGroup("/identity")
                 .MapIdentityApi<IdentityUser>()
                 .WithTags("Identity");
 
-            app.UseHttpsRedirection();
-            app.UseCors(MyAllowSpecificOrigins);
             app.UseAuthorization();
 
             app.MapGroup("/container")
@@ -74,8 +64,6 @@ namespace Api
                 .WithTags("Volume");
 
             app.MapHub<ContainerHub>("/containerHub");
-
-            app.UseContainerStatusEventListener();
 
             app.Run();
         }

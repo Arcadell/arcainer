@@ -1,8 +1,5 @@
 ﻿using Api.Hubs;
-using Docker.DotNet.Models;
-using Docker.Models;
-using Docker.Monitors;
-using Docker.Monitors.Interfaces;
+using Docker;
 using Domain.Enums;
 using Microsoft.AspNetCore.SignalR;
 
@@ -10,29 +7,29 @@ namespace Api.EventsListener
 {
     public static class ContainerStatusEventListener
     {
-        public static void UseContainerStatusEventListener(this IApplicationBuilder app)
+        public static IServiceCollection AddContainerStatusEventListener(this IServiceCollection services)
         {
-            var containerMonitorService = app.ApplicationServices.GetRequiredService<IContainerMonitorService>();
-            containerMonitorService.OnMonitorMessageReceved += ContainerMonitorService_OnMonitorMessageReceved;
-        }
-
-        private static void ContainerMonitorService_OnMonitorMessageReceved(object? sender, MessageRecevedEventArgs e)
-        {
-            var sd = sender as ContainerMonitorService;
-            if (e.Message == null || sd == null) { return; }
-
-            var hubContext = sd.ServiceProvider.GetRequiredService<IHubContext<ContainerHub>>();
-            switch (e.Message.Action)
+            services.AddDockerContainerMonitor(opt =>
             {
-                case "start":
-                    Console.WriteLine($"Event: {e.Message.Action} for container {e.Message.ID}");
-                    hubContext.Clients.All.SendAsync("NewContainerStatus", e.Message.ID, ContainerStatusEvent.STARTED);
-                    break;
-                case "die":
-                    Console.WriteLine($"Event: {e.Message.Action} for container {e.Message.ID}");
-                    hubContext.Clients.All.SendAsync("NewContainerStatus", e.Message.ID, ContainerStatusEvent.DIED);
-                    break;
-            }
+                opt.AddMessageHandler((sp, message) =>
+                {
+                    var hub = sp.GetRequiredService<IHubContext<ContainerHub>>();
+                    var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger("Container monitor");
+                    
+                    logger.LogTrace("Event: {action} for container {id}", message.Action, message.ID);
+
+                    return message.Action switch
+                    {
+                        "start" => hub.Clients.All.SendAsync("NewContainerStatus", message.ID,
+                            ContainerStatusEvent.STARTED),
+                        "stop" => hub.Clients.All.SendAsync("NewContainerStatus", message.ID,
+                            ContainerStatusEvent.DIED),
+                        _ => Task.CompletedTask
+                    };
+                });
+            });
+
+            return services;
         }
     }
 }
