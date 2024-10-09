@@ -26,18 +26,21 @@ const onRowSelected = () => {
 <template>
     <div class="table-main">
         <table>
-            <tr class="tr-header">
-                <th>
-                    <input type="checkbox" v-model="selectAll" @input="onAllRowsSelected" v-on:change="onRowSelected">
-                </th>
-                <th v-for="field in fields" :key="field.key">{{ field.label }}</th>
-                <th></th>
-            </tr>
-            <tr v-for="row in data" :key="row.fields.id">
-                <td><input type="checkbox" v-model="row.selected" v-on:change="onRowSelected"></td>
-                <td v-for="field in fields" :key="field.key">{{ row.fields[field.key] }}</td>
-                <td><i class="ri-arrow-right-line"></i></td>
-            </tr>
+            <tbody>
+                <tr class="tr-header">
+                    <th>
+                        <input type="checkbox" v-model="selectAll" @input="onAllRowsSelected"
+                            v-on:change="onRowSelected">
+                    </th>
+                    <th v-for="field in fields" :key="field.key">{{ field.label }}</th>
+                    <th></th>
+                </tr>
+                <tr v-for="row in data" :key="row.fields.id">
+                    <td><input type="checkbox" v-model="row.selected" v-on:change="onRowSelected"></td>
+                    <td v-for="field in fields" :key="field.key">{{ row.fields[field.key] }}</td>
+                    <td><i class="ri-arrow-right-line"></i></td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </template>
