@@ -13,8 +13,10 @@ const selectAll = ref(false);
 
 const onAllRowsSelected = () => {
     if (!props.data) return;
+
+    selectAll.value = !selectAll.value;
     props.data.forEach((row: TableRow) => {
-        row.selected = !selectAll.value;
+        row.selected = selectAll.value;
     })
 }
 
