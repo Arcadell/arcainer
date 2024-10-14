@@ -3,7 +3,7 @@ defineProps({
     title: { type: String, required: true },
     opened: { type: Boolean, required: true }
 });
-const emit = defineEmits(['close-sidebar']);
+const emits = defineEmits(['close-sidebar']);
 
 </script>
 
@@ -13,7 +13,7 @@ const emit = defineEmits(['close-sidebar']);
             <div class="sidebar">
                 <div class="header">
                     <h1>{{ title }}</h1>
-                    <button class="btn btn-icon" v-on:click="emit('close-sidebar');">
+                    <button class="btn btn-icon" v-on:click="emits('close-sidebar');">
                         <i class="ri-close-line"></i>
                     </button>
                 </div>

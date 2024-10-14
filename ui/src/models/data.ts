@@ -13,7 +13,13 @@ export enum ContainerCommands {
     Delete
 }
 
-export class Image extends BaseEntity {}
+export class CreateContainerCommand {
+    name!: string;
+    compose!: string;
+    startOnCreate: boolean = false;
+}
+
+export class Image extends BaseEntity { }
 
 export class Network extends BaseEntity {
     name!: string;

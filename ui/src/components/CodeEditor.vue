@@ -10,6 +10,8 @@ const props = defineProps({
     value: { type: String, required: true },
 });
 
+const emits = defineEmits(['updated-compose']);
+
 const language = new Compartment;
 const customKeymap = defaultKeymap.concat([indentWithTab]);
 
@@ -23,7 +25,12 @@ let editorStartState = EditorState.create({
 
         lineNumbers(),
         syntaxHighlighting(defaultHighlightStyle, { fallback: false }),
-        highlightActiveLine()
+        highlightActiveLine(),
+
+        EditorView.updateListener.of((v) => {
+            if (!v.docChanged) { return; }
+            emits('updated-compose', v.state.doc.toString())
+        })
     ]
 });
 

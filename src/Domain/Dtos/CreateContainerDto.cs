@@ -8,7 +8,8 @@ namespace Domain.Dtos
 {
     public class CreateContainerDto
     {
-        public string Image { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
+        public string Compose { get; set; } = string.Empty;
+        public bool StartOnCreate { get; set; } = false;
     }
 }

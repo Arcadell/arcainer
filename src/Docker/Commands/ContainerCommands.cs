@@ -18,11 +18,7 @@ namespace Docker.Commands
     {
         public void CreateContainer(CreateContainerDto createContainerDto)
         {
-            var container = client.Containers.CreateContainerAsync(new CreateContainerParameters()
-            {
-                Image = createContainerDto.Image,
-                Name = createContainerDto.Name
-            }).Result;
+            Console.WriteLine(createContainerDto);
         }
 
         public List<Container> GetContainers(ContainerFilter containerFilter)

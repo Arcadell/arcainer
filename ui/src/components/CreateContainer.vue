@@ -3,16 +3,24 @@
 import composerize from 'composerize';
 import { ref } from 'vue';
 import CodeEditor from './CodeEditor.vue';
+import { useContainerStore } from '@/stores/data/container';
+
+const containerStore = useContainerStore();
 
 const dockerRunCommand = ref('');
 const dockerComposeValue = ref('');
+const localDockerComposeValue = ref('');
 
 const converContainer = () => {
     dockerComposeValue.value = composerize(dockerRunCommand.value)
 }
 
-const createContainer = () => {
-    console.log(dockerComposeValue.value)
+const createContainer = (startOnCreate: boolean) => {
+    containerStore.createContainer({ name: 'test', compose: localDockerComposeValue.value, startOnCreate })
+}
+
+const updateCompose = (value: string) => {
+    localDockerComposeValue.value = value;
 }
 </script>
 
@@ -25,12 +33,12 @@ const createContainer = () => {
             </div>
 
             <h2>Compose</h2>
-            <CodeEditor :value="dockerComposeValue" />
+            <CodeEditor :value="dockerComposeValue" @updated-compose="updateCompose" />
         </div>
 
         <div class="container-create-actions">
-            <button class="btn btn-outline" v-on:click="createContainer">Create</button>
-            <button v-on:click="createContainer">Create & run</button>
+            <button class="btn btn-outline" v-on:click="createContainer(false)">Create</button>
+            <button v-on:click="createContainer(true)">Create & run</button>
         </div>
     </div>
 </template>

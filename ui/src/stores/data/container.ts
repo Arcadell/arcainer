@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { useAuthStore } from "../auth";
 import { useToastStore } from "../utils";
-import { Container, ContainerCommands } from "@/models/data";
+import { Container, ContainerCommands, CreateContainerCommand } from "@/models/data";
 
 export const useContainerStore = defineStore("containerData", {
     state: () => ({}),
@@ -63,6 +63,34 @@ export const useContainerStore = defineStore("containerData", {
                         'Authorization': 'Bearer ' + await auth.getAccessToken(),
                     }),
                     body: JSON.stringify(ids),
+                    mode: 'cors',
+                });
+
+                if (response.status === 401) { throw new Error('Invalid credentials'); }
+
+                if (!response.ok) {
+                    const message = 'Generic error';
+                    throw new Error(message);
+                }
+
+                return { data: null, error: null };
+            } catch (e: Error | any) {
+                const toastStore = useToastStore();
+                toastStore.error({ message: e.message });
+
+                return { data: null, error: e.message };
+            }
+        },
+        async createContainer(createContainerCommand: CreateContainerCommand) {
+            try {
+                const auth = useAuthStore();
+                const response = await fetch('http://localhost:5210/container/create', {
+                    method: 'POST',
+                    headers: new Headers({
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + await auth.getAccessToken(),
+                    }),
+                    body: JSON.stringify(createContainerCommand),
                     mode: 'cors',
                 });
 

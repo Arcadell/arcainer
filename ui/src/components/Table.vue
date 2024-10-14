@@ -7,7 +7,7 @@ const props = defineProps({
     data: { type: Array<TableRow>, required: true },
     loading: { type: Boolean, default: false }
 });
-const emit = defineEmits(['row-selected']);
+const emits = defineEmits(['row-selected']);
 
 const selectAll = ref(false);
 
@@ -21,7 +21,7 @@ const onAllRowsSelected = () => {
 }
 
 const onRowSelected = () => {
-    emit('row-selected');
+    emits('row-selected');
 }
 </script>
 
