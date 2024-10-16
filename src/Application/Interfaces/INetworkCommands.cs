@@ -1,7 +1,7 @@
 ﻿using Domain.Filters;
 using Domain.Models;
 
-namespace Docker.Commands.Interfaces
+namespace Application.Interfaces
 {
     public interface INetworkCommands
     {

@@ -1,4 +1,4 @@
-﻿using Docker.Commands.Interfaces;
+﻿using Application.Interfaces;
 using Domain.Dtos;
 using Microsoft.AspNetCore.Mvc;
 

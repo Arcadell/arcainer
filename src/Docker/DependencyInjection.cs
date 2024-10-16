@@ -1,5 +1,5 @@
 ﻿using Docker.Commands;
-using Docker.Commands.Interfaces;
+using Application.Interfaces;
 using Docker.DotNet;
 using Docker.Models;
 using Docker.Monitors;

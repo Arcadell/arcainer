@@ -1,4 +1,4 @@
-﻿using Docker.Commands.Interfaces;
+﻿using Application.Interfaces;
 using Docker.DotNet;
 using Docker.DotNet.Models;
 using Domain.Filters;
