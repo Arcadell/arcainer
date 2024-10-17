@@ -19,6 +19,7 @@ namespace Api
             builder.Services.AddApplicationServices();
             builder.Services.AddPersistenceServices(builder.Configuration);
             builder.Services.AddDockerServices();
+            builder.Services.AddFluentDockerServices();
 
             var app = builder.Build();
 

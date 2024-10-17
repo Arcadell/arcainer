@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Docker\Docker.csproj" />
+    <ProjectReference Include="..\FluentDocker\FluentDocker.csproj" />
     <ProjectReference Include="..\Persistence\Persistence.csproj" />
   </ItemGroup>
 

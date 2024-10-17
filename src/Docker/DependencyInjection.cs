@@ -12,10 +12,10 @@ public static class DependencyInjection
     public static IServiceCollection AddDockerServices(this IServiceCollection services)
     {
         services.AddSingleton<IDockerClient>(_ => new DockerClientConfiguration().CreateClient());
-        services.AddScoped<IContainerCommands, ContainerCommands>();
-        services.AddScoped<IImageCommands, ImageCommands>();
-        services.AddScoped<IVolumeCommands, VolumeCommands>();
-        services.AddScoped<INetworkCommands, NetworkCommands>();
+        // services.AddScoped<IContainerCommands, ContainerCommands>();
+        // services.AddScoped<IImageCommands, ImageCommands>();
+        // services.AddScoped<IVolumeCommands, VolumeCommands>();
+        // services.AddScoped<INetworkCommands, NetworkCommands>();
         return services;
     }
 
