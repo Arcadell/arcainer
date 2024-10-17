@@ -5,6 +5,8 @@ using Domain.Filters.SearchTypes;
 using Domain.Models;
 using Ductus.FluentDocker.Services;
 using Ductus.FluentDocker.Commands;
+using System.IO;
+using System.Text;
 
 namespace Docker.Commands
 {
@@ -12,7 +14,32 @@ namespace Docker.Commands
     {
         public void CreateContainer(CreateContainerDto createContainerDto)
         {
-            Console.WriteLine(createContainerDto);
+            string currentPath = Directory.GetCurrentDirectory();
+            string composesPath = Path.Combine(currentPath, "composes");
+
+            try
+            {
+                if (!Directory.Exists(composesPath)) { Directory.CreateDirectory(composesPath); }
+
+                string newComposeDirectoryPath = Path.Combine(composesPath, createContainerDto.Name);
+
+                if (Directory.Exists(newComposeDirectoryPath)) { return; }
+                Directory.CreateDirectory(newComposeDirectoryPath);
+
+                string newComposePath = Path.Combine(newComposeDirectoryPath, "docker-compose.yml");
+
+                // Create the file, or overwrite if the file exists.
+                using (FileStream fs = File.Create(newComposePath))
+                {
+                    byte[] info = new UTF8Encoding(true).GetBytes(createContainerDto.Compose);
+                    fs.Write(info, 0, info.Length);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error saving docker compose file", e.ToString());
+            }
+            finally { }
         }
 
         public List<Container> GetContainers(ContainerFilter containerFilter)
