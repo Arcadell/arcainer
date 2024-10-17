@@ -9,18 +9,17 @@ const containerStore = useContainerStore();
 
 const dockerRunCommand = ref('');
 const dockerComposeValue = ref('');
-const localDockerComposeValue = ref('');
 
 const converContainer = () => {
     dockerComposeValue.value = composerize(dockerRunCommand.value)
 }
 
 const createContainer = (startOnCreate: boolean) => {
-    containerStore.createContainer({ name: 'test', compose: localDockerComposeValue.value, startOnCreate })
+    containerStore.createContainer({ name: 'test', compose: dockerComposeValue.value, startOnCreate })
 }
 
 const updateCompose = (value: string) => {
-    localDockerComposeValue.value = value;
+    dockerComposeValue.value = value;
 }
 </script>
 

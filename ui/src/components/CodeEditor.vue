@@ -50,7 +50,7 @@ watch(() => props.value, (currentValue) => {
             insert: currentValue,
         }
     })
-});
+}, { deep: true });
 </script>
 
 <template>
