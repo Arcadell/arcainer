@@ -5,8 +5,11 @@ using Domain.Filters.SearchTypes;
 using Domain.Models;
 using Ductus.FluentDocker.Services;
 using Ductus.FluentDocker.Commands;
+using Ductus.FluentDocker.Builders;
 using System.IO;
 using System.Text;
+using Ductus.FluentDocker.Extensions;
+using Ductus.FluentDocker.Model.Common;
 
 namespace Docker.Commands
 {
@@ -20,12 +23,9 @@ namespace Docker.Commands
             try
             {
                 if (!Directory.Exists(composesPath)) { Directory.CreateDirectory(composesPath); }
-
                 string newComposeDirectoryPath = Path.Combine(composesPath, createContainerDto.Name);
 
-                if (Directory.Exists(newComposeDirectoryPath)) { return; }
-                Directory.CreateDirectory(newComposeDirectoryPath);
-
+                if (!Directory.Exists(newComposeDirectoryPath)) { Directory.CreateDirectory(newComposeDirectoryPath); }
                 string newComposePath = Path.Combine(newComposeDirectoryPath, "docker-compose.yml");
 
                 // Create the file, or overwrite if the file exists.
@@ -34,12 +34,15 @@ namespace Docker.Commands
                     byte[] info = new UTF8Encoding(true).GetBytes(createContainerDto.Compose);
                     fs.Write(info, 0, info.Length);
                 }
+
+                var svc = new Builder()
+                    .UseContainer()
+                    .UseCompose()
+                    .FromFile(newComposePath)
+                    .RemoveOrphans()
+                    .Build().Start();
             }
-            catch (Exception e)
-            {
-                Console.WriteLine("Error saving docker compose file", e.ToString());
-            }
-            finally { }
+            catch (Exception e) { Console.WriteLine("Error saving docker compose file", e.ToString()); }
         }
 
         public List<Container> GetContainers(ContainerFilter containerFilter)
