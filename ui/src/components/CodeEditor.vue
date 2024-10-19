@@ -9,7 +9,6 @@ import { defaultHighlightStyle, syntaxHighlighting } from "@codemirror/language"
 const props = defineProps({
     value: { type: String, required: true },
 });
-
 const emits = defineEmits(['updated-compose']);
 
 const language = new Compartment;

@@ -9,17 +9,23 @@ const containerStore = useContainerStore();
 
 const dockerRunCommand = ref('');
 const dockerComposeValue = ref('');
+const _localDockerComposeValue = ref('');
 
 const converContainer = () => {
-    dockerComposeValue.value = composerize(dockerRunCommand.value)
+    const _dockerComposeValue = composerize(dockerRunCommand.value);
+    if (dockerComposeValue.value != _dockerComposeValue)
+        dockerComposeValue.value = _dockerComposeValue
+    else {
+        dockerComposeValue.value += ' '; // Idk what the f*#@! im doing
+    }
 }
 
 const createContainer = (startOnCreate: boolean) => {
-    containerStore.createContainer({ name: 'test', compose: dockerComposeValue.value, startOnCreate })
+    containerStore.createContainer({ name: 'test', compose: _localDockerComposeValue.value, startOnCreate })
 }
 
 const updateCompose = (value: string) => {
-    dockerComposeValue.value = value;
+    _localDockerComposeValue.value = value;
 }
 </script>
 
@@ -32,7 +38,7 @@ const updateCompose = (value: string) => {
             </div>
 
             <h2>Compose</h2>
-            <CodeEditor :value="dockerComposeValue" @updated-compose="updateCompose" />
+            <CodeEditor ref="codeEditor" :value="dockerComposeValue" @updated-compose="updateCompose" />
         </div>
 
         <div class="container-create-actions">
