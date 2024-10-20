@@ -6,6 +6,8 @@ import CodeEditor from './CodeEditor.vue';
 import { useContainerStore } from '@/stores/data/container';
 import { useToastStore } from '@/stores/utils';
 
+const emits = defineEmits(['created-compose'])
+
 const toastStore = useToastStore();
 const containerStore = useContainerStore();
 
@@ -37,6 +39,7 @@ const createContainer = async (startOnCreate: boolean) => {
     creatingCompose.value = true;
     await containerStore.createContainer({ name: stackName.value, compose: _localDockerComposeValue.value, startOnCreate })
     creatingCompose.value = false;
+    emits('created-compose');
 }
 
 const updateCompose = (value: string) => {
