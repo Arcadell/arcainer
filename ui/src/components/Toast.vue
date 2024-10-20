@@ -24,6 +24,8 @@ const toastStore = useToastStore();
 
     bottom: 10px;
     right: 10px;
+
+    z-index: 1000;
 }
 
 .toast {

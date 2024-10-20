@@ -4,8 +4,12 @@ import composerize from 'composerize';
 import { ref } from 'vue';
 import CodeEditor from './CodeEditor.vue';
 import { useContainerStore } from '@/stores/data/container';
+import { useToastStore } from '@/stores/utils';
 
+const toastStore = useToastStore();
 const containerStore = useContainerStore();
+
+const stackName = ref('');
 
 const dockerRunCommand = ref('');
 const dockerComposeValue = ref('');
@@ -21,7 +25,13 @@ const converContainer = () => {
 }
 
 const createContainer = (startOnCreate: boolean) => {
-    containerStore.createContainer({ name: 'test', compose: _localDockerComposeValue.value, startOnCreate })
+    if (!stackName.value || !dockerComposeValue.value) {
+        toastStore.error({
+            message: "Stack name and compose are required"
+        });
+        return;
+    }
+    containerStore.createContainer({ name: stackName.value, compose: _localDockerComposeValue.value, startOnCreate })
 }
 
 const updateCompose = (value: string) => {
@@ -32,6 +42,7 @@ const updateCompose = (value: string) => {
 <template>
     <div class="main-container-create">
         <div class="container-create-content">
+            <input type="text" placeholder="Stack name" v-model="stackName" required>
             <div class="generate-docker-compose">
                 <input type="text" placeholder="Docker run command" v-model="dockerRunCommand">
                 <button class="btn btn-outline" v-on:click="converContainer">Convert</button>

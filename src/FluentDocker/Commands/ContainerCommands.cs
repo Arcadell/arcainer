@@ -35,12 +35,15 @@ namespace Docker.Commands
                     fs.Write(info, 0, info.Length);
                 }
 
-                var svc = new Builder()
-                    .UseContainer()
-                    .UseCompose()
-                    .FromFile(newComposePath)
-                    .RemoveOrphans()
-                    .Build().Start();
+                if (createContainerDto.StartOnCreate)
+                {
+                    var svc = new Builder()
+                        .UseContainer()
+                        .UseCompose()
+                        .FromFile(newComposePath)
+                        .RemoveOrphans()
+                        .Build().Start();
+                }
             }
             catch (Exception e) { Console.WriteLine("Error saving docker compose file", e.ToString()); }
         }

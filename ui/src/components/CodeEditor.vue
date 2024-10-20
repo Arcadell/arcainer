@@ -62,7 +62,7 @@ watch(() => props.value, (currentValue) => {
     display: flex;
     flex-direction: column;
 
-    height: calc(100dvh - 240px);
+    height: calc(100dvh - 300px);
     overflow: auto;
 }
 </style>
