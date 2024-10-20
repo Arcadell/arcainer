@@ -82,6 +82,7 @@ export const useContainerStore = defineStore("containerData", {
             }
         },
         async createContainer(createContainerCommand: CreateContainerCommand) {
+            const toastStore = useToastStore();
             try {
                 const auth = useAuthStore();
                 const response = await fetch('http://localhost:5210/container/create', {
@@ -100,10 +101,10 @@ export const useContainerStore = defineStore("containerData", {
                     const message = 'Generic error';
                     throw new Error(message);
                 }
+                toastStore.success({ message: "Compose created/updated successfully" });
 
                 return { data: null, error: null };
             } catch (e: Error | any) {
-                const toastStore = useToastStore();
                 toastStore.error({ message: e.message });
 
                 return { data: null, error: e.message };

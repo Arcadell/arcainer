@@ -7,7 +7,7 @@ const toastStore = useToastStore();
 <template>
     <div class="toasts-container">
         <div class="toast"
-            :class="{ 'toast-error': toast.status === 'error', 'toast-warning': toast.status === 'warning', }"
+            :class="{ 'toast-success': toast.status === 'success', 'toast-error': toast.status === 'error', 'toast-warning': toast.status === 'warning', }"
             v-for="toast in toastStore.toasts" :key="toast.id">
             {{ toast.message }}
         </div>
@@ -43,6 +43,10 @@ const toastStore = useToastStore();
     box-shadow: var(--default-shadow);
 
     background-color: var(--color-background);
+
+    &.toast-success {
+        border: solid 2px var(--success-colour);
+    }
 
     &.toast-error {
         border: solid 2px var(--error-colour);

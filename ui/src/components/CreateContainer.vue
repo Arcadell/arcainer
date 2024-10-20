@@ -15,6 +15,8 @@ const dockerRunCommand = ref('');
 const dockerComposeValue = ref('');
 const _localDockerComposeValue = ref('');
 
+const creatingCompose = ref(false);
+
 const converContainer = () => {
     const _dockerComposeValue = composerize(dockerRunCommand.value);
     if (dockerComposeValue.value != _dockerComposeValue)
@@ -24,14 +26,17 @@ const converContainer = () => {
     }
 }
 
-const createContainer = (startOnCreate: boolean) => {
+const createContainer = async (startOnCreate: boolean) => {
     if (!stackName.value || !dockerComposeValue.value) {
         toastStore.error({
             message: "Stack name and compose are required"
         });
         return;
     }
-    containerStore.createContainer({ name: stackName.value, compose: _localDockerComposeValue.value, startOnCreate })
+
+    creatingCompose.value = true;
+    await containerStore.createContainer({ name: stackName.value, compose: _localDockerComposeValue.value, startOnCreate })
+    creatingCompose.value = false;
 }
 
 const updateCompose = (value: string) => {
@@ -53,8 +58,9 @@ const updateCompose = (value: string) => {
         </div>
 
         <div class="container-create-actions">
-            <button class="btn btn-outline" v-on:click="createContainer(false)">Create</button>
-            <button v-on:click="createContainer(true)">Create & run</button>
+            <button class="btn btn-outline" v-on:click="createContainer(false)"
+                :disabled="creatingCompose">Create</button>
+            <button v-on:click="createContainer(true)" :disabled="creatingCompose">Create & run</button>
         </div>
     </div>
 </template>
