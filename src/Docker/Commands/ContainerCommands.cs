@@ -29,6 +29,11 @@ namespace Docker.Commands
             return list;
         }
 
+        public List<ContainersStack> GetStacks(string? stackName = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task StartContainers(List<string> ids)
         {
             await Task.WhenAll(ids.Select(id => client.Containers.StartContainerAsync(id, new ContainerStartParameters())));

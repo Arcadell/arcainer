@@ -14,6 +14,12 @@ namespace Api.Routes
                 return Results.Ok(containers);
             });
 
+            group.MapGet("/stack/{name?}", (string? name, [FromServices] IContainerCommands containerCommand) =>
+            {
+                var containers = containerCommand.GetStacks(name);
+                return Results.Ok(containers);
+            });
+
             group.MapPost("/create", ([FromBody] CreateContainerDto createContainerDto, [FromServices] IContainerCommands containerCommand) =>
             {
                 containerCommand.CreateContainer(createContainerDto);

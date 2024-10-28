@@ -8,8 +8,6 @@ using Ductus.FluentDocker.Commands;
 using Ductus.FluentDocker.Builders;
 using System.IO;
 using System.Text;
-using Ductus.FluentDocker.Extensions;
-using Ductus.FluentDocker.Model.Common;
 
 namespace Docker.Commands
 {
@@ -52,6 +50,32 @@ namespace Docker.Commands
         {
             var containers = client.GetContainers(true);
             var list = containers.Select(x => new Container() { Id = x.Id, Name = x.Name, State = x.State.ToString() }).Where(x => FilterContainer(x, containerFilter)).ToList();
+
+            return list;
+        }
+
+        public List<ContainersStack> GetStacks(string? stackName = null)
+        {
+            string currentPath = Directory.GetCurrentDirectory();
+            string composesPath = Path.Combine(currentPath, "composes");
+
+            if(stackName != null && stackName != string.Empty)
+            {
+                string stackNameFolderPath = Path.Combine(composesPath, stackName);
+                string stackComposePath = Path.Combine(stackNameFolderPath, "docker-compose.yml");
+                if (!Directory.Exists(stackNameFolderPath)) { throw new Exception("Directory does not exists");  }
+                if (!File.Exists(stackComposePath)) { throw new Exception("Compose does not exists"); }
+
+                using StreamReader reader = new StreamReader(stackComposePath);
+                string composeValue = reader.ReadToEnd();
+
+                var _list = new List<ContainersStack>();
+                _list.Add(new ContainersStack() { Name = stackName, DockerCompose = composeValue });
+                return _list;
+            }
+
+            var composes = Directory.GetDirectories(composesPath).Select(x => new DirectoryInfo(x).Name);
+            var list = composes.Select(x => new ContainersStack() { Name = x, DockerCompose = string.Empty }).ToList();
 
             return list;
         }
