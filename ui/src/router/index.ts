@@ -9,8 +9,13 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
-      redirect: { name: 'containers' },
+      redirect: { name: 'stacks' },
       children: [
+        {
+          path: 'stacks',
+          name: 'stacks',
+          component: () => import('../views/sub-views/Stack.vue')
+        },
         {
           path: 'containers',
           name: 'containers',

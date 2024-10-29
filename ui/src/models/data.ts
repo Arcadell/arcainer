@@ -28,3 +28,8 @@ export class Network extends BaseEntity {
 export class Volume {
     name!: string;
 }
+
+export class Stack {
+    name!: string;
+    dockerCompose!: string;
+}

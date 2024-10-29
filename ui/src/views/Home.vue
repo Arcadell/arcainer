@@ -13,6 +13,10 @@ import { RouterLink, RouterView } from 'vue-router';
       </div>
 
       <div class="menu-list">
+        <RouterLink to="/stacks">
+          <a class="lnk" v-bind:class="{ 'lnk-active': $route.path == '/stacks' }">
+            <i class="ri-instance-line"></i> Stacks </a>
+        </RouterLink>
         <RouterLink to="/containers">
           <a class="lnk" v-bind:class="{ 'lnk-active': $route.path == '/containers' }">
             <i class="ri-instance-line"></i> Containers </a>
