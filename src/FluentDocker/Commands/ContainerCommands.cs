@@ -15,21 +15,21 @@ namespace Docker.Commands
     {
         public void CreateContainer(CreateContainerDto createContainerDto)
         {
-            string currentPath = Directory.GetCurrentDirectory();
-            string composesPath = Path.Combine(currentPath, "composes");
+            var currentPath = Directory.GetCurrentDirectory();
+            var composesPath = Path.Combine(currentPath, "composes");
 
             try
             {
                 if (!Directory.Exists(composesPath)) { Directory.CreateDirectory(composesPath); }
-                string newComposeDirectoryPath = Path.Combine(composesPath, createContainerDto.Name);
+                var newComposeDirectoryPath = Path.Combine(composesPath, createContainerDto.Name);
 
                 if (!Directory.Exists(newComposeDirectoryPath)) { Directory.CreateDirectory(newComposeDirectoryPath); }
-                string newComposePath = Path.Combine(newComposeDirectoryPath, "docker-compose.yml");
+                var newComposePath = Path.Combine(newComposeDirectoryPath, "docker-compose.yml");
 
                 // Create the file, or overwrite if the file exists.
-                using (FileStream fs = File.Create(newComposePath))
+                using (var fs = File.Create(newComposePath))
                 {
-                    byte[] info = new UTF8Encoding(true).GetBytes(createContainerDto.Compose);
+                    var info = new UTF8Encoding(true).GetBytes(createContainerDto.Compose);
                     fs.Write(info, 0, info.Length);
                 }
 
@@ -56,18 +56,18 @@ namespace Docker.Commands
 
         public List<ContainersStack> GetStacks(string? stackName = null)
         {
-            string currentPath = Directory.GetCurrentDirectory();
-            string composesPath = Path.Combine(currentPath, "composes");
+            var currentPath = Directory.GetCurrentDirectory();
+            var composesPath = Path.Combine(currentPath, "composes");
 
-            if(stackName != null && stackName != string.Empty)
+            if(!string.IsNullOrEmpty(stackName))
             {
-                string stackNameFolderPath = Path.Combine(composesPath, stackName);
-                string stackComposePath = Path.Combine(stackNameFolderPath, "docker-compose.yml");
+                var stackNameFolderPath = Path.Combine(composesPath, stackName);
+                var stackComposePath = Path.Combine(stackNameFolderPath, "docker-compose.yml");
                 if (!Directory.Exists(stackNameFolderPath)) { throw new Exception("Directory does not exists");  }
                 if (!File.Exists(stackComposePath)) { throw new Exception("Compose does not exists"); }
 
-                using StreamReader reader = new StreamReader(stackComposePath);
-                string composeValue = reader.ReadToEnd();
+                using var reader = new StreamReader(stackComposePath);
+                var composeValue = reader.ReadToEnd();
 
                 var _list = new List<ContainersStack>();
                 _list.Add(new ContainersStack() { Name = stackName, DockerCompose = composeValue });
