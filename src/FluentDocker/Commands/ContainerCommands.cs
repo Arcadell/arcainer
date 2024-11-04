@@ -19,17 +19,10 @@ namespace Docker.Commands
             {
                 var currentPath = Directory.GetCurrentDirectory();
                 var composesPath = Path.Combine(currentPath, "composes");
-                if (!Directory.Exists(composesPath))
-                {
-                    Directory.CreateDirectory(composesPath);
-                }
+                if (!Directory.Exists(composesPath)) {  Directory.CreateDirectory(composesPath);  }
 
                 var newComposeDirectoryPath = Path.Combine(composesPath, createContainerDto.Name);
-
-                if (!Directory.Exists(newComposeDirectoryPath))
-                {
-                    Directory.CreateDirectory(newComposeDirectoryPath);
-                }
+                if (!Directory.Exists(newComposeDirectoryPath)) { Directory.CreateDirectory(newComposeDirectoryPath); }
 
                 var newComposePath = Path.Combine(newComposeDirectoryPath, "docker-compose.yml");
 
