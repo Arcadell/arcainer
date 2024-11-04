@@ -11,5 +11,6 @@ namespace Application.Interfaces
         List<Container> GetContainers(ContainerFilter containerFilter);
         Task StartContainers(List<string> ids);
         Task StopContainers(List<string> ids);
+        Task DeleteContainers(List<string> ids);
     }
 }

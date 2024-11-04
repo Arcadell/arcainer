@@ -44,6 +44,11 @@ namespace Docker.Commands
             await Task.WhenAll(ids.Select(id => client.Containers.StopContainerAsync(id, new ContainerStopParameters())));
         }
 
+        public Task DeleteContainers(List<string> ids)
+        {
+            throw new NotImplementedException();
+        }
+
         #region PRIVATE FUNCTION
         private bool FilterContainer(Container container, ContainerFilter containerFilter)
         {

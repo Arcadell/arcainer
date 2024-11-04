@@ -95,6 +95,12 @@ namespace FluentDocker.Commands
             return Task.CompletedTask;
         }
 
+        public Task DeleteContainers(List<string> ids)
+        {
+            ids.ForEach(id => { client.Host.RemoveContainer(id, true, true, null, client.Certificates); });
+            return Task.CompletedTask;
+        }
+
         #region PRIVATE FUNCTION
         private bool FilterContainer(Container container, ContainerFilter containerFilter)
         {

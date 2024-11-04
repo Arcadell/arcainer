@@ -26,15 +26,21 @@ namespace Api.Routes
                 return Results.Ok();
             });
 
-            group.MapPost("/start", ([FromBody] List<string> Ids, [FromServices] IContainerCommands containerCommand) =>
+            group.MapPost("/start", ([FromBody] List<string> ids, [FromServices] IContainerCommands containerCommand) =>
             {
-                containerCommand.StartContainers(Ids);
+                containerCommand.StartContainers(ids);
                 return Results.Ok();
             });
 
-            group.MapPost("/stop", ([FromBody] List<string> Ids, [FromServices] IContainerCommands containerCommand) =>
+            group.MapPost("/stop", ([FromBody] List<string> ids, [FromServices] IContainerCommands containerCommand) =>
             {
-                containerCommand.StopContainers(Ids);
+                containerCommand.StopContainers(ids);
+                return Results.Ok();
+            });
+            
+            group.MapPost("/delete", ([FromBody] List<string> ids, [FromServices] IContainerCommands containerCommand) =>
+            {
+                containerCommand.DeleteContainers(ids);
                 return Results.Ok();
             });
 
