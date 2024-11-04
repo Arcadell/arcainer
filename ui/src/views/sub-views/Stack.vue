@@ -38,7 +38,7 @@ const onRowSelected = () => {
 </script>
 
 <template>
-    <SideBar :title="'Update stack'" :opened="openSideBar" @close-sidebar="openSideBar = false">
+    <SideBar :title="'Create container'" :opened="openSideBar" @close-sidebar="openSideBar = false">
         <CreateContainer v-on:created-compose="openSideBar = false" />
     </SideBar>
     <div class="sub-view-main" v-if="!loadingStacks">
@@ -50,6 +50,8 @@ const onRowSelected = () => {
 
             <div class="right-header">
                 <button class="btn btn-icon" v-on:click="refreshStacks"><i class="ri-refresh-line"></i></button>
+                <button class="btn" v-on:click="openSideBar = !openSideBar"><i class="ri-add-line"></i>Create
+                    stack</button>
             </div>
         </div>
 

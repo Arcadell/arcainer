@@ -67,8 +67,6 @@ const handleContainers = async (command: ContainerCommands) => {
                 </div>
 
                 <button class="btn btn-icon" v-on:click="refreshContainers"><i class="ri-refresh-line"></i></button>
-                <button class="btn" v-on:click="openSideBar = !openSideBar"><i class="ri-add-line"></i>Create
-                    container</button>
             </div>
         </div>
 
