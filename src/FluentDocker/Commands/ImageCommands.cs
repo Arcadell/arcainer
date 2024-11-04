@@ -10,7 +10,7 @@ namespace FluentDocker.Commands
     {
         public List<Image> GetImages(ImageFilter imageFilter)
         {
-            var images = client.GetImages(true);
+            var images = client.GetImages();
             var list = images.Select(x => new Image() { Id = x.Id }).Where(x => FilterImage(x, imageFilter)).ToList();
 
             return list;

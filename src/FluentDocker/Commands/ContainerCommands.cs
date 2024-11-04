@@ -34,7 +34,7 @@ namespace FluentDocker.Commands
 
                 if (createContainerDto.StartOnCreate)
                 {
-                    var svc = new Builder()
+                    new Builder()
                         .UseContainer()
                         .UseCompose()
                         .FromFile(newComposePath)
@@ -50,7 +50,7 @@ namespace FluentDocker.Commands
 
         public List<Container> GetContainers(ContainerFilter containerFilter)
         {
-            var containers = client.GetContainers(true);
+            var containers = client.GetContainers();
             var list = containers.Select(x => new Container() { Id = x.Id, Name = x.Name, State = x.State.ToString() }).Where(x => FilterContainer(x, containerFilter)).ToList();
 
             return list;
