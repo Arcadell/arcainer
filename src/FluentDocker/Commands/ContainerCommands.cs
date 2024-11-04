@@ -15,15 +15,22 @@ namespace Docker.Commands
     {
         public void CreateContainer(CreateContainerDto createContainerDto)
         {
-            var currentPath = Directory.GetCurrentDirectory();
-            var composesPath = Path.Combine(currentPath, "composes");
-
             try
             {
-                if (!Directory.Exists(composesPath)) { Directory.CreateDirectory(composesPath); }
+                var currentPath = Directory.GetCurrentDirectory();
+                var composesPath = Path.Combine(currentPath, "composes");
+                if (!Directory.Exists(composesPath))
+                {
+                    Directory.CreateDirectory(composesPath);
+                }
+
                 var newComposeDirectoryPath = Path.Combine(composesPath, createContainerDto.Name);
 
-                if (!Directory.Exists(newComposeDirectoryPath)) { Directory.CreateDirectory(newComposeDirectoryPath); }
+                if (!Directory.Exists(newComposeDirectoryPath))
+                {
+                    Directory.CreateDirectory(newComposeDirectoryPath);
+                }
+
                 var newComposePath = Path.Combine(newComposeDirectoryPath, "docker-compose.yml");
 
                 // Create the file, or overwrite if the file exists.
@@ -43,7 +50,10 @@ namespace Docker.Commands
                         .Build().Start();
                 }
             }
-            catch (Exception e) { Console.WriteLine("Error saving docker compose file", e.ToString()); }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public List<Container> GetContainers(ContainerFilter containerFilter)
@@ -58,6 +68,7 @@ namespace Docker.Commands
         {
             var currentPath = Directory.GetCurrentDirectory();
             var composesPath = Path.Combine(currentPath, "composes");
+            if (!Directory.Exists(composesPath)) { Directory.CreateDirectory(composesPath); }
 
             if(!string.IsNullOrEmpty(stackName))
             {
@@ -69,9 +80,9 @@ namespace Docker.Commands
                 using var reader = new StreamReader(stackComposePath);
                 var composeValue = reader.ReadToEnd();
 
-                var _list = new List<ContainersStack>();
-                _list.Add(new ContainersStack() { Name = stackName, DockerCompose = composeValue });
-                return _list;
+                var localList = new List<ContainersStack>();
+                localList.Add(new ContainersStack() { Name = stackName, DockerCompose = composeValue });
+                return localList;
             }
 
             var composes = Directory.GetDirectories(composesPath).Select(x => new DirectoryInfo(x).Name);
