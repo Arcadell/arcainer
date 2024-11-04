@@ -2,6 +2,7 @@ using Api.Routes;
 using Microsoft.AspNetCore.Identity;
 using Api.Hubs;
 using Docker;
+using FluentDocker;
 
 namespace Api
 {

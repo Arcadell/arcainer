@@ -1,15 +1,14 @@
-﻿using Application.Interfaces;
+﻿using System.Text;
+using Application.Interfaces;
 using Domain.Dtos;
 using Domain.Filters;
 using Domain.Filters.SearchTypes;
 using Domain.Models;
-using Ductus.FluentDocker.Services;
-using Ductus.FluentDocker.Commands;
 using Ductus.FluentDocker.Builders;
-using System.IO;
-using System.Text;
+using Ductus.FluentDocker.Commands;
+using Ductus.FluentDocker.Services;
 
-namespace Docker.Commands
+namespace FluentDocker.Commands
 {
     public class ContainerCommands(IHostService client) : IContainerCommands
     {

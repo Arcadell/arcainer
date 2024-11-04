@@ -4,7 +4,7 @@ using Domain.Filters.SearchTypes;
 using Domain.Models;
 using Ductus.FluentDocker.Services;
 
-namespace Docker.Commands
+namespace FluentDocker.Commands
 {
     public class VolumeCommands(IHostService client) : IVolumeCommands
     {

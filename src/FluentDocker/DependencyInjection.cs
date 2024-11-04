@@ -1,9 +1,9 @@
-﻿using Docker.Commands;
-using Application.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Application.Interfaces;
 using Ductus.FluentDocker.Services;
+using FluentDocker.Commands;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Docker;
+namespace FluentDocker;
 
 public static class DependencyInjection
 {
