@@ -11,8 +11,10 @@ import { useContainerStore } from '@/stores/data/container';
 
 import { ref } from 'vue';
 import { v7 as uuid } from 'uuid'
+import { useToastStore } from '@/stores/utils';
 
 const containerStore = useContainerStore();
+const toastStore = useToastStore();
 
 const fields: TableField[] = [
     { key: 'name', label: 'Name' },
@@ -22,6 +24,7 @@ let stackTable = ref<TableRow[]>([]);
 let selectedStack = ref<Stack>();
 
 let loadingStacks = ref(true);
+let loadingSingleStacks = ref(false);
 let enableControlButtons = ref(false);
 let openSideBarCreate = ref(false);
 let openSideBarEdit = ref(false);
@@ -42,8 +45,17 @@ const onRowSelected = () => {
 }
 
 const onRowPressed = (tableRow: TableRow) => {
-    console.log(tableRow);
-    selectedStack = tableRow.fields;
+    const stack = tableRow.fields as Stack;
+    loadingSingleStacks.value = true;
+    containerStore.getStacks(stack.name).then(res => {
+        if(res.data.length <= 0) {
+            toastStore.error({message: 'No stack found'});
+            return;
+        }
+
+        selectedStack.value = res.data[0];
+        loadingSingleStacks.value = false;
+    });
     openSideBarEdit.value = true;
 }
 </script>
@@ -54,7 +66,12 @@ const onRowPressed = (tableRow: TableRow) => {
     </SideBar>
 
     <SideBar :title="'Edit stack'" :opened="openSideBarEdit" @close-sidebar="openSideBarEdit = false">
-        <EditStack v-if="selectedStack" :stack="selectedStack" v-on:created-compose="openSideBarEdit = false" />
+        <template v-if="!loadingSingleStacks">
+            <EditStack v-if="selectedStack" :stack="selectedStack" v-on:created-compose="openSideBarEdit = false" />
+        </template>
+        <template v-else>
+            <h1>Loading</h1>
+        </template>
     </SideBar>
     <div class="sub-view-main" v-if="!loadingStacks">
         <div class="menu-header">

@@ -38,7 +38,7 @@ export const useContainerStore = defineStore("containerData", {
         async getStacks(stackName: string = '') {
             try {
                 const auth = useAuthStore();
-                const response = await fetch('http://localhost:5210/container/stack' + stackName, {
+                const response = await fetch('http://localhost:5210/container/stack/' + stackName, {
                     method: 'GET',
                     headers: new Headers({
                         'Content-Type': 'application/json',

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // @ts-ignore
 import composerize from 'composerize';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import CodeEditor from './CodeEditor.vue';
 import { useContainerStore } from '@/stores/data/container';
 import { useToastStore } from '@/stores/utils';
@@ -21,6 +21,10 @@ const dockerComposeValue = ref('');
 const _localDockerComposeValue = ref('');
 
 const creatingCompose = ref(false);
+
+onMounted(() => {
+    dockerComposeValue.value = prop.stack.dockerCompose;
+})
 
 const converContainer = () => {
     const _dockerComposeValue = composerize(dockerRunCommand.value);
