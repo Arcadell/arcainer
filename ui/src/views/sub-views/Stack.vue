@@ -40,6 +40,12 @@ const onRowSelected = () => {
     const rowSelected = stackTable.value.filter(row => row.selected);
     enableControlButtons.value = rowSelected.length > 0;
 }
+
+const onRowPressed = (tableRow: TableRow) => {
+    console.log(tableRow);
+    selectedStack = tableRow.fields;
+    openSideBarEdit.value = true;
+}
 </script>
 
 <template>
@@ -65,7 +71,7 @@ const onRowSelected = () => {
         </div>
 
         <div class="content">
-            <Table :fields="fields" :data="stackTable" :loading="loadingStacks" @row-selected="onRowSelected" />
+            <Table :fields="fields" :data="stackTable" :loading="loadingStacks" @row-selected="onRowSelected" @row-pressed="onRowPressed" />
         </div>
     </div>
 </template>
