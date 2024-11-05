@@ -5,7 +5,9 @@ import type { Image } from '@/models/data';
 import type { TableField, TableRow } from '@/models/table';
 
 import { useImageStore } from '@/stores/data/image';
+
 import { ref } from 'vue';
+import { v7 as uuid } from 'uuid'
 
 const imageStore = useImageStore();
 
@@ -21,7 +23,7 @@ let enableControlButtons = ref(false);
 const refreshImages = () => {
     imageStore.getImages().then(res => {
         imageTable.value = [];
-        res.data.forEach((image: Image) => { imageTable.value.push({ selected: false, fields: image }); })
+        res.data.forEach((image: Image) => { imageTable.value.push({ id: uuid(), selected: false, fields: image }); })
         loadingImages.value = false;
     });
 }

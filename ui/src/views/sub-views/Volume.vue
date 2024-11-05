@@ -2,8 +2,11 @@
 import Table from '@/components/Table.vue';
 import type { Volume } from '@/models/data';
 import type { TableField, TableRow } from '@/models/table';
+
 import { useVolumeStore } from '@/stores/data/volume';
+
 import { ref } from 'vue';
+import { v7 as uuid } from 'uuid'
 
 const volumeStore = useVolumeStore();
 
@@ -19,7 +22,7 @@ let enableControlButtons = ref(false);
 const refreshVolumes = () => {
     volumeStore.getVolumes().then(res => {
         volumeTable.value = [];
-        res.data.forEach((network: Volume) => { volumeTable.value.push({ selected: false, fields: network }); })
+        res.data.forEach((network: Volume) => { volumeTable.value.push({ id: uuid(), selected: false, fields: network }); })
         loadingVolumes.value = false;
     });
 }

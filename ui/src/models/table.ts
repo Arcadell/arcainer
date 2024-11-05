@@ -1,4 +1,5 @@
 export class TableRow {
+    id!: string;
     selected!: boolean;
     fields!: any
 }

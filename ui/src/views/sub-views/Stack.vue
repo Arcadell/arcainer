@@ -2,13 +2,15 @@
 import Table from '@/components/Table.vue';
 import SideBar from '@/components/SideBar.vue';
 import CreateContainer from '@/components/CreateStack.vue';
+import EditStack from '@/components/EditStack.vue';
 
 import { Stack, } from '@/models/data';
 import type { TableField, TableRow } from '@/models/table';
 
 import { useContainerStore } from '@/stores/data/container';
+
 import { ref } from 'vue';
-import EditStack from '@/components/EditStack.vue';
+import { v7 as uuid } from 'uuid'
 
 const containerStore = useContainerStore();
 
@@ -27,7 +29,7 @@ let openSideBarEdit = ref(false);
 const refreshStacks = () => {
     containerStore.getStacks().then(res => {
         stackTable.value = [];
-        res.data.forEach((stack: Stack) => { stackTable.value.push({ selected: false, fields: stack }); });
+        res.data.forEach((stack: Stack) => { stackTable.value.push({ id: uuid(), selected: false, fields: stack }); });
         loadingStacks.value = false;
     });
 }

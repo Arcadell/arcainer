@@ -7,7 +7,9 @@ import { ContainerCommands, type Container } from '@/models/data';
 import type { TableField, TableRow } from '@/models/table';
 
 import { useContainerStore } from '@/stores/data/container';
+
 import { ref } from 'vue';
+import { v7 as uuid } from 'uuid'
 
 const containerStore = useContainerStore();
 
@@ -26,7 +28,7 @@ let openSideBar = ref(false);
 const refreshContainers = () => {
     containerStore.getContainers().then(res => {
         containerTable.value = [];
-        res.data.forEach((container: Container) => { containerTable.value.push({ selected: false, fields: container }); });
+        res.data.forEach((container: Container) => { containerTable.value.push({ id: uuid(), selected: false, fields: container }); });
         loadingContainers.value = false;
     });
 }

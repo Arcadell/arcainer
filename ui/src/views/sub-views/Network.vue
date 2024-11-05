@@ -3,8 +3,11 @@ import Table from '@/components/Table.vue';
 
 import type { Network } from '@/models/data';
 import type { TableField, TableRow } from '@/models/table';
+
 import { useNetworkStore } from '@/stores/data/network';
+
 import { ref } from 'vue';
+import { v7 as uuid } from 'uuid'
 
 const networkStore = useNetworkStore();
 
@@ -21,7 +24,7 @@ let enableControlButtons = ref(false);
 const refreshNetworks = () => {
     networkStore.getNetworks().then(res => {
         networkTable.value = [];
-        res.data.forEach((network: Network) => { networkTable.value.push({ selected: false, fields: network }); })
+        res.data.forEach((network: Network) => { networkTable.value.push({ id: uuid(), selected: false, fields: network }); })
         loadingNetowrks.value = false;
     });
 }
