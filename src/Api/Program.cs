@@ -67,6 +67,7 @@ namespace Api
 
             app.MapHub<ContainerHub>("/containerHub");
 
+            app.HandleDbMigration();
             app.Run();
         }
     }

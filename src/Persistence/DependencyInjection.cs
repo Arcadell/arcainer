@@ -1,4 +1,5 @@
-﻿using Persistence.Data;
+﻿using Microsoft.AspNetCore.Builder;
+using Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +14,15 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionString));
 
             return services;
+        }
+        
+        public static void HandleDbMigration(this IApplicationBuilder app)
+        {
+            using var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            var db = scope.ServiceProvider.GetService<ApplicationDbContext>()?.Database;
+            if(db == null) { throw new NullReferenceException("No Database context was found."); }
+
+            db.EnsureCreated();
         }
     }
 }
