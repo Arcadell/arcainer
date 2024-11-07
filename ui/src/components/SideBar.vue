@@ -5,12 +5,19 @@ defineProps({
 });
 const emits = defineEmits(['close-sidebar']);
 
+const onEscPress = (event: KeyboardEvent) => {
+    if(event.key == 'Escape') {
+        emits('close-sidebar');
+    }
+}
+
+window.addEventListener('keydown', onEscPress)
 </script>
 
 <template>
     <Transition name="sidebar">
-        <div v-if="opened" class="main-sidebar">
-            <div class="sidebar">
+        <div v-if="opened" class="main-sidebar" v-on:click="emits('close-sidebar');">
+            <div class="sidebar" v-on:click="$event.stopPropagation()">
                 <div class="header">
                     <h1>{{ title }}</h1>
                     <button class="btn btn-icon" v-on:click="emits('close-sidebar');">
