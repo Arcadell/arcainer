@@ -43,6 +43,7 @@ const onRowSelected = () => {
 const handleContainers = async (command: ContainerCommands) => {
     const containerSelected = containerTable.value.filter(row => row.selected).map(row => row.fields) as Container[];
     await containerStore.handleContainers(containerSelected, command);
+    refreshContainers();
 }
 </script>
 
