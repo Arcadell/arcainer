@@ -29,22 +29,22 @@ namespace Docker.Commands
             return list;
         }
 
-        public List<ContainersStack> GetStacks(string? stackName = null)
+        public List<BaseResponse> StartContainers(List<string> ids)
         {
             throw new NotImplementedException();
         }
 
-        public async Task StartContainers(List<string> ids)
+        public List<BaseResponse> StopContainers(List<string> ids)
         {
-            await Task.WhenAll(ids.Select(id => client.Containers.StartContainerAsync(id, new ContainerStartParameters())));
+            throw new NotImplementedException();
         }
 
-        public async Task StopContainers(List<string> ids)
+        public List<BaseResponse> DeleteContainers(List<string> ids)
         {
-            await Task.WhenAll(ids.Select(id => client.Containers.StopContainerAsync(id, new ContainerStopParameters())));
+            throw new NotImplementedException();
         }
 
-        public Task DeleteContainers(List<string> ids)
+        public List<ContainersStack> GetStacks(string? stackName = null)
         {
             throw new NotImplementedException();
         }

@@ -9,8 +9,8 @@ namespace Application.Interfaces
         void CreateStack(CreateContainerDto createContainerDto);
         List<ContainersStack> GetStacks(string? stackName = null);
         List<Container> GetContainers(ContainerFilter containerFilter);
-        Task StartContainers(List<string> ids);
-        Task StopContainers(List<string> ids);
-        Task DeleteContainers(List<string> ids);
+        List<BaseResponse> StartContainers(List<string> ids);
+        List<BaseResponse> StopContainers(List<string> ids);
+        List<BaseResponse> DeleteContainers(List<string> ids);
     }
 }

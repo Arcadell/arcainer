@@ -97,43 +97,58 @@ namespace FluentDocker.Commands
             }
         }
 
-        public Task StartContainers(List<string> ids)
+        public List<BaseResponse> StartContainers(List<string> ids)
         {
-            try
+            var baseResponses = new List<BaseResponse>();
+            ids.ForEach(id =>
             {
-                ids.ForEach(id => { client.Host.Start(id, client.Certificates); });
-                return Task.CompletedTask;
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
+                try
+                {
+                    client.Host.Start(id, client.Certificates);
+                    baseResponses.Add(new BaseResponse() { Id = id });
+                }
+                catch (Exception e)
+                {
+                    baseResponses.Add(new BaseResponse() { Id = id, Error = true, ErrorMessage = e.Message });
+                }
+            });
+            return baseResponses;
         }
 
-        public Task StopContainers(List<string> ids)
+        public List<BaseResponse> StopContainers(List<string> ids)
         {
-            try
+            var baseResponses = new List<BaseResponse>();
+            ids.ForEach(id =>
             {
-                ids.ForEach(id => { client.Host.Stop(id, null, client.Certificates); });
-                return Task.CompletedTask;   
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
+                try
+                {
+                    client.Host.Stop(id, null, client.Certificates);
+                    baseResponses.Add(new BaseResponse() { Id = id });
+                }
+                catch (Exception e)
+                {
+                    baseResponses.Add(new BaseResponse() { Id = id, Error = true, ErrorMessage = e.Message });
+                }
+            });
+            return baseResponses;   
         }
 
-        public Task DeleteContainers(List<string> ids)
+        public List<BaseResponse> DeleteContainers(List<string> ids)
         {
-            try
+            var baseResponses = new List<BaseResponse>();
+            ids.ForEach(id =>
             {
-                ids.ForEach(id => { client.Host.RemoveContainer(id, true, true, null, client.Certificates); });
-                return Task.CompletedTask;
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
+                try
+                {
+                    client.Host.RemoveContainer(id, true, true, null, client.Certificates);
+                    baseResponses.Add(new BaseResponse() { Id = id });
+                }
+                catch (Exception e)
+                {
+                    baseResponses.Add(new BaseResponse() { Id = id, Error = true, ErrorMessage = e.Message });
+                }
+            });
+            return baseResponses;
         }
 
         #region PRIVATE FUNCTION
