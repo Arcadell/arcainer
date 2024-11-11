@@ -1,5 +1,4 @@
-﻿using Api.EventsListener;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 using Persistence.Data;
 using Swashbuckle.AspNetCore.Filters;
@@ -14,7 +13,6 @@ namespace Api
             services.AddAuthorization();
             services.AddIdentityApiEndpoints<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddContainerStatusEventListener();
             
             services.AddSignalR();
 

@@ -1,7 +1,5 @@
 using Api.Routes;
 using Microsoft.AspNetCore.Identity;
-using Api.Hubs;
-using Docker;
 using FluentDocker;
 
 namespace Api
@@ -19,7 +17,6 @@ namespace Api
             builder.Services.AddApiServices();
             builder.Services.AddApplicationServices();
             builder.Services.AddPersistenceServices(builder.Configuration);
-            builder.Services.AddDockerServices();
             builder.Services.AddFluentDockerServices();
 
             var app = builder.Build();
@@ -64,8 +61,6 @@ namespace Api
                 .MapVolumeRoutes()
                 .RequireAuthorization()
                 .WithTags("Volume");
-
-            app.MapHub<ContainerHub>("/containerHub");
 
             app.HandleDbMigration();
             app.Run();
