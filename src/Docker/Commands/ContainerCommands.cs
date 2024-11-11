@@ -16,7 +16,7 @@ namespace Docker.Commands
 {
     public class ContainerCommands(IDockerClient client) : IContainerCommands
     {
-        public void CreateContainer(CreateContainerDto createContainerDto)
+        public void CreateStack(CreateContainerDto createContainerDto)
         {
             Console.WriteLine(createContainerDto);
         }

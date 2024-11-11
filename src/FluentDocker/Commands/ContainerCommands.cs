@@ -12,7 +12,7 @@ namespace FluentDocker.Commands
 {
     public class ContainerCommands(IHostService client) : IContainerCommands
     {
-        public void CreateContainer(CreateContainerDto createContainerDto)
+        public void CreateStack(CreateContainerDto createContainerDto)
         {
             try
             {

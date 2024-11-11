@@ -22,7 +22,7 @@ namespace Api.Routes
 
             group.MapPost("/create", ([FromBody] CreateContainerDto createContainerDto, [FromServices] IContainerCommands containerCommand) =>
             {
-                containerCommand.CreateContainer(createContainerDto);
+                containerCommand.CreateStack(createContainerDto);
                 return Results.Ok();
             });
 
