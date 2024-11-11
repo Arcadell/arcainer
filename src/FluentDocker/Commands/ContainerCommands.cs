@@ -50,55 +50,90 @@ namespace FluentDocker.Commands
 
         public List<Container> GetContainers(ContainerFilter containerFilter)
         {
-            var containers = client.GetContainers();
-            var list = containers.Select(x => new Container() { Id = x.Id, Name = x.Name, State = x.State.ToString() }).Where(x => FilterContainer(x, containerFilter)).ToList();
+            try
+            {
+                var containers = client.GetContainers();
+                var list = containers.Select(x => new Container() { Id = x.Id, Name = x.Name, State = x.State.ToString() }).Where(x => FilterContainer(x, containerFilter)).ToList();
 
-            return list;
+                return list;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public List<ContainersStack> GetStacks(string? stackName = null)
         {
-            var currentPath = Directory.GetCurrentDirectory();
-            var composesPath = Path.Combine(currentPath, "composes");
-            if (!Directory.Exists(composesPath)) { Directory.CreateDirectory(composesPath); }
-
-            if(!string.IsNullOrEmpty(stackName))
+            try
             {
-                var stackNameFolderPath = Path.Combine(composesPath, stackName);
-                var stackComposePath = Path.Combine(stackNameFolderPath, "docker-compose.yml");
-                if (!Directory.Exists(stackNameFolderPath)) { throw new Exception("Directory does not exists");  }
-                if (!File.Exists(stackComposePath)) { throw new Exception("Compose does not exists"); }
+                var currentPath = Directory.GetCurrentDirectory();
+                var composesPath = Path.Combine(currentPath, "composes");
+                if (!Directory.Exists(composesPath)) { Directory.CreateDirectory(composesPath); }
 
-                using var reader = new StreamReader(stackComposePath);
-                var composeValue = reader.ReadToEnd();
+                if(!string.IsNullOrEmpty(stackName))
+                {
+                    var stackNameFolderPath = Path.Combine(composesPath, stackName);
+                    var stackComposePath = Path.Combine(stackNameFolderPath, "docker-compose.yml");
+                    if (!Directory.Exists(stackNameFolderPath)) { throw new Exception("Directory does not exists");  }
+                    if (!File.Exists(stackComposePath)) { throw new Exception("Compose does not exists"); }
 
-                var localList = new List<ContainersStack>();
-                localList.Add(new ContainersStack() { Name = stackName, DockerCompose = composeValue });
-                return localList;
+                    using var reader = new StreamReader(stackComposePath);
+                    var composeValue = reader.ReadToEnd();
+
+                    var localList = new List<ContainersStack>();
+                    localList.Add(new ContainersStack() { Name = stackName, DockerCompose = composeValue });
+                    return localList;
+                }
+
+                var composes = Directory.GetDirectories(composesPath).Select(x => new DirectoryInfo(x).Name);
+                var list = composes.Select(x => new ContainersStack() { Name = x, DockerCompose = string.Empty }).ToList();
+
+                return list;
             }
-
-            var composes = Directory.GetDirectories(composesPath).Select(x => new DirectoryInfo(x).Name);
-            var list = composes.Select(x => new ContainersStack() { Name = x, DockerCompose = string.Empty }).ToList();
-
-            return list;
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public Task StartContainers(List<string> ids)
         {
-            ids.ForEach(id => { client.Host.Start(id, client.Certificates); });
-            return Task.CompletedTask;
+            try
+            {
+                ids.ForEach(id => { client.Host.Start(id, client.Certificates); });
+                return Task.CompletedTask;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public Task StopContainers(List<string> ids)
         {
-            ids.ForEach(id => { client.Host.Stop(id, null, client.Certificates); });
-            return Task.CompletedTask;
+            try
+            {
+                ids.ForEach(id => { client.Host.Stop(id, null, client.Certificates); });
+                return Task.CompletedTask;   
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public Task DeleteContainers(List<string> ids)
         {
-            ids.ForEach(id => { client.Host.RemoveContainer(id, true, true, null, client.Certificates); });
-            return Task.CompletedTask;
+            try
+            {
+                ids.ForEach(id => { client.Host.RemoveContainer(id, true, true, null, client.Certificates); });
+                return Task.CompletedTask;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         #region PRIVATE FUNCTION
