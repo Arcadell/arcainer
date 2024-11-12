@@ -23,7 +23,9 @@ namespace FluentDocker.Commands
             {
                 try
                 {
-                    Ductus.FluentDocker.Commands.Network.NetworkRm(client.Host, client.Certificates, id);
+                    var response = Ductus.FluentDocker.Commands.Network.NetworkRm(client.Host, client.Certificates, id);
+                    if (response.Error != null) throw new Exception(response.Error);
+                    
                     baseResponse.Add(new BaseResponse() { Id = id });
                 }
                 catch (Exception e)

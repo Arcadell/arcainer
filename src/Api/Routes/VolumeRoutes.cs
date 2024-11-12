@@ -13,6 +13,12 @@ namespace Api.Routes
                 var volumes = volumeCommands.GetVolumes(new Domain.Filters.VolumeFilter());
                 return Results.Ok(volumes);
             });
+            
+            group.MapPost("/delete", ([FromBody] List<string> ids, [FromServices] IVolumeCommands volumeCommands) =>
+            {
+                var baseResponses = volumeCommands.DeleteVolume(ids);
+                return Results.Ok(baseResponses);
+            });
 
             return group;
         }

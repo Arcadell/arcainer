@@ -2,6 +2,7 @@
 using Domain.Filters;
 using Domain.Filters.SearchTypes;
 using Domain.Models;
+using Ductus.FluentDocker.Commands;
 using Ductus.FluentDocker.Services;
 
 namespace FluentDocker.Commands
@@ -14,6 +15,27 @@ namespace FluentDocker.Commands
             var list = volumes.Select(x => new Volume() { Name = x.Name }).Where(x => FilterVolume(x, volumeFilter)).ToList();
 
             return list;
+        }
+
+        public List<BaseResponse> DeleteVolume(List<string> ids)
+        {
+            var baseResponse = new List<BaseResponse>();
+            ids.ForEach(id =>
+            {
+                try
+                {
+                    var response = client.Host.VolumeRm(client.Certificates, false,id);
+                    if (response.Error != null) throw new Exception(response.Error);
+                    
+                    baseResponse.Add(new BaseResponse() { Id = id });
+                }
+                catch (Exception e)
+                {
+                    baseResponse.Add(new BaseResponse() { Id = id, Error = true, ErrorMessage = e.Message });
+                }
+            });
+
+            return baseResponse;
         }
 
         #region PRIVATE FUNCTION
