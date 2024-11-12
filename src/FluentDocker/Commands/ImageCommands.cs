@@ -15,36 +15,7 @@ namespace FluentDocker.Commands
 
             return list;
         }
-
-        public List<BaseResponse> DeleteImages(List<string> ids)
-        {
-            try
-            {
-                var images = client.GetImages();
-                var containerImageServices = images.Where(x => ids.Contains(x.Id));
-                
-                var baseResponse = new List<BaseResponse>();
-                foreach (var containerImageService in containerImageServices)
-                {
-                    try
-                    {
-                        containerImageService.Remove(false);
-                        baseResponse.Add(new BaseResponse { Id = containerImageService.Id });
-                    }
-                    catch (Exception e)
-                    {
-                        baseResponse.Add(new BaseResponse { Id = containerImageService.Id, Error = true, ErrorMessage = e.Message });
-                    }
-                }
-
-                return baseResponse;
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
-
+        
         #region PRIVATE FUNCTION
         private bool FilterImage(Image image, ImageFilter imageFilter) {
             bool result = true;
