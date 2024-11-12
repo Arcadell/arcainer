@@ -12,6 +12,12 @@ namespace Api.Routes
                 var images = networkCommands.GetNetworks(new Domain.Filters.NetworkFilter());
                 return Results.Ok(images);
             });
+            
+            group.MapPost("/delete", ([FromBody] List<string> ids, [FromServices] INetworkCommands networkCommands) =>
+            {
+                var baseResponses = networkCommands.DeleteNetworks(ids);
+                return Results.Ok(baseResponses);
+            });
 
             return group;
         }

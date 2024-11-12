@@ -16,6 +16,25 @@ namespace FluentDocker.Commands
             return list;
         }
 
+        public List<BaseResponse> DeleteNetworks(List<string> ids)
+        {
+            var baseResponse = new List<BaseResponse>();
+            ids.ForEach(id =>
+            {
+                try
+                {
+                    Ductus.FluentDocker.Commands.Network.NetworkRm(client.Host, client.Certificates, id);
+                    baseResponse.Add(new BaseResponse() { Id = id });
+                }
+                catch (Exception e)
+                {
+                    baseResponse.Add(new BaseResponse() { Id = id, Error = true, ErrorMessage = e.Message });
+                }
+            });
+
+            return baseResponse;
+        }
+
         #region PRIVATE FUNCTION
         private bool FilterNetwork(Network network, NetworkFilter networkFilter)
         {
