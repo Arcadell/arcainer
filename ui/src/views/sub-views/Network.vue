@@ -35,6 +35,12 @@ const onRowSelected = () => {
     const rowSelected = networkTable.value.filter(row => row.selected);
     enableControlButtons.value = rowSelected.length > 0;
 }
+
+const deleteNetworks = async () => {
+    const networksSelected = networkTable.value.filter(row => row.selected).map(row => row.fields) as Network[];
+    await networkStore.deleteNetworks(networksSelected)
+    refreshNetworks();
+}
 </script>
 
 <template>
@@ -47,9 +53,8 @@ const onRowSelected = () => {
 
             <div class="right-header">
                 <div class="right-header-control" v-if="enableControlButtons">
-
+                        <button class="btn btn-icon" v-on:click="deleteNetworks()"><i class="ri-delete-bin-6-line"></i></button>
                 </div>
-
                 <button class="btn btn-icon" v-on:click="refreshNetworks"><i class="ri-refresh-line"></i></button>
             </div>
         </div>

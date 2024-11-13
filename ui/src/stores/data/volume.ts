@@ -34,6 +34,36 @@ export const useVolumeStore = defineStore("volumeData", {
 
                 return { data: [], error: e.message };
             }
+        },
+        async deleteVolumes(volumes: Volume[]) {
+            try {
+                const ids = volumes.map(c => c.name);
+
+                const auth = useAuthStore();
+                const response = await fetch('http://localhost:5210/volume/delete', {
+                    method: 'POST',
+                    headers: new Headers({
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + await auth.getAccessToken(),
+                    }),
+                    body: JSON.stringify(ids),
+                    mode: 'cors',
+                });
+
+                if (response.status === 401) { throw new Error('Invalid credentials'); }
+
+                if (!response.ok) {
+                    const message = 'Generic error';
+                    throw new Error(message);
+                }
+
+                return { data: null, error: null };
+            } catch (e: Error | any) {
+                const toastStore = useToastStore();
+                toastStore.error({ message: e.message });
+
+                return { data: null, error: e.message };
+            }
         }
     }
 })

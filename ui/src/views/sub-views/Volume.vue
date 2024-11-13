@@ -33,6 +33,12 @@ const onRowSelected = () => {
     const rowSelected = volumeTable.value.filter(row => row.selected);
     enableControlButtons.value = rowSelected.length > 0;
 }
+
+const deleteVolumes = async () => {
+    const voluemsSeleted = volumeTable.value.filter(row => row.selected).map(row => row.fields) as Volume[];
+    await volumeStore.deleteVolumes(voluemsSeleted)
+    refreshVolumes();
+}
 </script>
 
 <template>
@@ -45,7 +51,7 @@ const onRowSelected = () => {
 
             <div class="right-header">
                 <div class="right-header-control" v-if="enableControlButtons">
-
+                    <button class="btn btn-icon" v-on:click="deleteVolumes()"><i class="ri-delete-bin-6-line"></i></button>
                 </div>
 
                 <button class="btn btn-icon" v-on:click="refreshVolumes"><i class="ri-refresh-line"></i></button>
