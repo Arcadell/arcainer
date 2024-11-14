@@ -27,7 +27,6 @@ namespace Api
                 app.UseSwagger();
                 app.UseSwaggerUI();
                 // In development we don't care about CORS
-                app.UseCors(_ => _.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             }
             else
             {
@@ -35,6 +34,9 @@ namespace Api
                 // app.UseCors(_=> _.WithOrigins())
                 app.UseHttpsRedirection();
             }
+            
+            // TODO FIX THIS
+            app.UseCors(_ => _.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost").AllowAnyHeader().AllowAnyMethod());
 
             app.MapGroup("/identity")
                 .MapIdentityApi<IdentityUser>()
