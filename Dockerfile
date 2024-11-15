@@ -14,10 +14,11 @@ RUN dotnet restore
 # copy everything else and build app
 COPY src/. ./src/
 WORKDIR /source/src/Api
-RUN dotnet publish -c release -o /app --no-restore
+RUN dotnet publish -c Release -o /app --no-restore --self-contained --runtime linux-x64
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 COPY --from=build /app ./
-ENTRYPOINT ["dotnet", "aspnetapp.dll"]
+EXPOSE 8080
+ENTRYPOINT ["./Api"]
