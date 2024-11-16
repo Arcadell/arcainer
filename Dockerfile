@@ -31,8 +31,10 @@ RUN pnpm run build
 FROM ubuntu/nginx
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        libicu-dev \
-    && rm -rf /var/lib/apt/lists/*
+        curl \
+        ca-certificates \
+        libicu-dev && \
+        curl -sSL https://get.docker.com/ | sh
 
 COPY --from=frontend-build /app/dist /usr/share/nginx/html
 COPY /nginx.conf /etc/nginx/nginx.conf

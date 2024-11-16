@@ -70,13 +70,13 @@ export const useContainerStore = defineStore("containerData", {
 
                 switch (command) {
                     case ContainerCommands.Start:
-                        url = 'http://localhost:5210/container/start';
+                        url = '/api/container/start';
                         break;
                     case ContainerCommands.Stop:
-                        url = 'http://localhost:5210/container/stop';
+                        url = '/api/container/stop';
                         break;
                     case ContainerCommands.Delete:
-                        url = 'http://localhost:5210/container/delete';
+                        url = '/api/container/delete';
                         break;
                     default:
                         throw new Error('Invalid command');
@@ -85,7 +85,7 @@ export const useContainerStore = defineStore("containerData", {
                 const ids = containers.map(c => c.id);
 
                 const auth = useAuthStore();
-                const response = await fetch(url, {
+                const response = await fetch((import.meta.env.DEV ? import.meta.env.VITE_API_URL : '') + url, {
                     method: 'POST',
                     headers: new Headers({
                         'Content-Type': 'application/json',
