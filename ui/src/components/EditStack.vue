@@ -57,7 +57,7 @@ const updateCompose = (value: string) => {
 <template>
     <div class="main-container-create">
         <div class="container-create-content">
-            <input type="text" placeholder="Stack name" v-model="stack.name" disabled>
+            <input type="text" placeholder="Stack name" v-model="stack.name!" disabled>
             <div class="generate-docker-compose">
                 <input type="text" placeholder="Docker run command" v-model="dockerRunCommand">
                 <button class="btn btn-outline" v-on:click="converContainer">Convert</button>

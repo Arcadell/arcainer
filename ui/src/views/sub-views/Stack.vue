@@ -48,12 +48,15 @@ const onRowPressed = (tableRow: TableRow) => {
     const stack = tableRow.fields as Stack;
     loadingSingleStacks.value = true;
     containerStore.getStacks(stack.name).then(res => {
-        if(res.data.length <= 0) {
-            toastStore.error({message: 'No stack found'});
+        if (res.data.length <= 0) {
+            toastStore.error({ message: 'No stack found' });
             return;
         }
 
-        selectedStack.value = res.data[0];
+        selectedStack.value = new Stack();
+        selectedStack.value.name = res.data[0].name
+        selectedStack.value.dockerCompose = res.data[0].dockerCompose
+
         loadingSingleStacks.value = false;
     });
     openSideBarEdit.value = true;
@@ -82,13 +85,15 @@ const onRowPressed = (tableRow: TableRow) => {
 
             <div class="right-header">
                 <button class="btn btn-icon" v-on:click="refreshStacks"><i class="ri-refresh-line"></i></button>
-                <button class="btn" v-on:click="openSideBarCreate = !openSideBarCreate"><i class="ri-add-line"></i>Create
+                <button class="btn" v-on:click="openSideBarCreate = !openSideBarCreate"><i
+                        class="ri-add-line"></i>Create
                     stack</button>
             </div>
         </div>
 
         <div class="content">
-            <Table :fields="fields" :data="stackTable" :loading="loadingStacks" @row-selected="onRowSelected" @row-pressed="onRowPressed" />
+            <Table :fields="fields" :data="stackTable" :loading="loadingStacks" @row-selected="onRowSelected"
+                @row-pressed="onRowPressed" />
         </div>
     </div>
 </template>
