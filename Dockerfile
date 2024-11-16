@@ -28,15 +28,20 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build
 
 # final stage/image
-FROM ubuntu:rolling
+FROM ubuntu/nginx
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         libicu-dev \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=frontend-build /app/dist /usr/share/nginx/html
-COPY /nginx.conf /etc/nginx/conf.d/default.conf
+COPY /nginx.conf /etc/nginx/nginx.conf
+COPY /start.sh /app/start.sh
+
 WORKDIR /app
 COPY --from=backend-build /app ./
 EXPOSE 80
-ENTRYPOINT ["./Api"]
+EXPOSE 5000
+
+RUN chmod +x ./Api ./start.sh
+ENTRYPOINT ["./start.sh"]

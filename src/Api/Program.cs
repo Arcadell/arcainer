@@ -38,28 +38,28 @@ namespace Api
             // TODO FIX THIS
             app.UseCors(_ => _.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost").AllowAnyHeader().AllowAnyMethod());
 
-            app.MapGroup("/identity")
+            app.MapGroup("/api/identity")
                 .MapIdentityApi<IdentityUser>()
                 .WithTags("Identity");
 
             app.UseAuthorization();
 
-            app.MapGroup("/container")
+            app.MapGroup("/api/container")
                 .MapContainerRoutes()
                 .RequireAuthorization()
                 .WithTags("Container");
 
-            app.MapGroup("/image")
+            app.MapGroup("/api/image")
                 .MapImageRoutes()
                 .RequireAuthorization()
                 .WithTags("Image");
 
-            app.MapGroup("/network")
+            app.MapGroup("/api/network")
                 .MapNetworkRoutes()
                 .RequireAuthorization()
                 .WithTags("Network");
 
-            app.MapGroup("/volume")
+            app.MapGroup("/api/volume")
                 .MapVolumeRoutes()
                 .RequireAuthorization()
                 .WithTags("Volume");
