@@ -9,7 +9,7 @@ export const useNetworkStore = defineStore("networkData", {
         async getNetworks(searchParams: string = '') {
             try {
                 const auth = useAuthStore();
-                const response = await fetch('http://localhost:5210/network?' + searchParams, {
+                const response = await fetch((import.meta.env.DEV ? import.meta.env.VITE_API_URL : '') + '/api/network?' + searchParams, {
                     method: 'GET',
                     headers: new Headers({
                         'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export const useNetworkStore = defineStore("networkData", {
                 const ids = networks.map(c => c.id);
 
                 const auth = useAuthStore();
-                const response = await fetch('http://localhost:5210/network/delete', {
+                const response = await fetch((import.meta.env.DEV ? import.meta.env.VITE_API_URL : '') + '/api/network/delete', {
                     method: 'POST',
                     headers: new Headers({
                         'Content-Type': 'application/json',

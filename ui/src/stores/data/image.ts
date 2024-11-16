@@ -9,7 +9,7 @@ export const useImageStore = defineStore("imageData", {
         async getImages(searchParams: string = '') {
             try {
                 const auth = useAuthStore();
-                const response = await fetch('http://localhost:5210/image?' + searchParams, {
+                const response = await fetch((import.meta.env.DEV ? import.meta.env.VITE_API_URL : '') + '/api/image?' + searchParams, {
                     method: 'GET',
                     headers: new Headers({
                         'Content-Type': 'application/json',

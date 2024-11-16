@@ -20,7 +20,7 @@ export const useAuthStore = defineStore("auth", {
         },
         async login(loginDto: ILoginDto) {
             try {
-                const response = await fetch('http://localhost:5210/identity/login', {
+                const response = await fetch((import.meta.env.DEV ? import.meta.env.VITE_API_URL : '') + '/api/identity/login', {
                     method: 'POST',
                     headers: new Headers({ 'Content-Type': 'application/json' }),
                     mode: 'cors',
@@ -66,7 +66,7 @@ export const useAuthStore = defineStore("auth", {
         },
         async register(registerDto: IRegisterDto) {
             try {
-                const response = await fetch('http://localhost:5210/identity/register', {
+                const response = await fetch((import.meta.env.DEV ? import.meta.env.VITE_API_URL : '') + '/api/identity/register', {
                     method: 'POST',
                     headers: new Headers({ 'Content-Type': 'application/json' }),
                     mode: 'cors',
@@ -94,7 +94,7 @@ export const useAuthStore = defineStore("auth", {
         },
         async refresh(refreshDto: IRefeshDto) {
             try {
-                const response = await fetch('http://localhost:5210/identity/refresh', {
+                const response = await fetch((import.meta.env.DEV ? import.meta.env.VITE_API_URL : '') + '/api/identity/refresh', {
                     method: 'POST',
                     headers: new Headers({ 'Content-Type': 'application/json' }),
                     mode: 'cors',

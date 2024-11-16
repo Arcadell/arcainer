@@ -9,7 +9,7 @@ export const useVolumeStore = defineStore("volumeData", {
         async getVolumes(searchParams: string = '') {
             try {
                 const auth = useAuthStore();
-                const response = await fetch('http://localhost:5210/volume?' + searchParams, {
+                const response = await fetch((import.meta.env.DEV ? import.meta.env.VITE_API_URL : '') + '/api/volume?' + searchParams, {
                     method: 'GET',
                     headers: new Headers({
                         'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export const useVolumeStore = defineStore("volumeData", {
                 const ids = volumes.map(c => c.name);
 
                 const auth = useAuthStore();
-                const response = await fetch('http://localhost:5210/volume/delete', {
+                const response = await fetch((import.meta.env.DEV ? import.meta.env.VITE_API_URL : '') + '/api/volume/delete', {
                     method: 'POST',
                     headers: new Headers({
                         'Content-Type': 'application/json',

@@ -9,7 +9,7 @@ export const useContainerStore = defineStore("containerData", {
         async getContainers(searchParams: string = '') {
             try {
                 const auth = useAuthStore();
-                const response = await fetch('http://localhost:5210/container?' + searchParams, {
+                const response = await fetch((import.meta.env.DEV ? import.meta.env.VITE_API_URL : '') + '/api/container?' + searchParams, {
                     method: 'GET',
                     headers: new Headers({
                         'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ export const useContainerStore = defineStore("containerData", {
         async getStacks(stackName: string = '') {
             try {
                 const auth = useAuthStore();
-                const response = await fetch('http://localhost:5210/container/stack/' + stackName, {
+                const response = await fetch((import.meta.env.DEV ? import.meta.env.VITE_API_URL : '') + '/api/container/stack/' + stackName, {
                     method: 'GET',
                     headers: new Headers({
                         'Content-Type': 'application/json',
@@ -114,7 +114,7 @@ export const useContainerStore = defineStore("containerData", {
             const toastStore = useToastStore();
             try {
                 const auth = useAuthStore();
-                const response = await fetch('http://localhost:5210/container/create', {
+                const response = await fetch((import.meta.env.DEV ? import.meta.env.VITE_API_URL : '') + '/api/container/create', {
                     method: 'POST',
                     headers: new Headers({
                         'Content-Type': 'application/json',
