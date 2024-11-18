@@ -37,8 +37,8 @@ RUN apt-get update \
         curl -sSL https://get.docker.com/ | sh
 
 COPY --from=frontend-build /app/dist /usr/share/nginx/html
-COPY /nginx.conf /etc/nginx/nginx.conf
-COPY /start.sh /app/start.sh
+COPY /docker/nginx.conf /etc/nginx/nginx.conf
+COPY /docker/start.sh /app/start.sh
 
 WORKDIR /app
 COPY --from=backend-build /app ./

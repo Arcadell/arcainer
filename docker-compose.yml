@@ -1,8 +1,9 @@
 services:
-  arciner-api:
+  arcainer:
+    container_name: arcainer
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ./
+      dockerfile: ./docker/Dockerfile
     ports:
       - 8080:80
     volumes:
