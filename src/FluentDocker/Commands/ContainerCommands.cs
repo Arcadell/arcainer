@@ -151,6 +151,34 @@ namespace FluentDocker.Commands
             return baseResponses;
         }
 
+        public List<BaseResponse> DeleteStacks(List<string> stackNames)
+        {
+            var currentPath = Directory.GetCurrentDirectory();
+            var composesPath = Path.Combine(currentPath, "composes");
+            if (!Directory.Exists(composesPath)) { Directory.CreateDirectory(composesPath); }
+            
+            var baseResponses = new List<BaseResponse>();
+            stackNames.ForEach(stackName =>
+            {
+                try
+                {
+                    var stackNameFolderPath = Path.Combine(composesPath, stackName);
+                    var stackComposePath = Path.Combine(stackNameFolderPath, "docker-compose.yml");
+                    if (!Directory.Exists(stackNameFolderPath)) { throw new Exception("Directory does not exists");  }
+                    if (!File.Exists(stackComposePath)) { throw new Exception("Compose does not exists"); }
+                
+                    Directory.Delete(stackNameFolderPath, true);
+                    baseResponses.Add(new BaseResponse() { Id = stackName });
+                }
+                catch (Exception e)
+                {
+                    baseResponses.Add(new BaseResponse() { Id = stackName, Error = true, ErrorMessage = e.Message });
+                }
+            });
+
+            return baseResponses;
+        }
+
         #region PRIVATE FUNCTION
         private bool FilterContainer(Container container, ContainerFilter containerFilter)
         {

@@ -74,8 +74,8 @@ const updateCompose = (value: string) => {
 
         <div class="container-create-actions">
             <button class="btn btn-outline" v-on:click="createContainer(false)"
-                :disabled="creatingCompose">Create</button>
-            <button v-on:click="createContainer(true)" :disabled="creatingCompose">Create & run</button>
+                :disabled="creatingCompose">Update file</button>
+            <button v-on:click="createContainer(true)" :disabled="creatingCompose">Update file & run</button>
         </div>
     </div>
 </template>

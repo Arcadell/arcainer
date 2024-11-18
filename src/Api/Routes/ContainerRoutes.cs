@@ -43,6 +43,12 @@ namespace Api.Routes
                 var baseResponses = containerCommand.DeleteContainers(ids);
                 return Results.Ok(baseResponses);
             });
+            
+            group.MapPost("/stack/delete", ([FromBody] List<string> ids, [FromServices] IContainerCommands containerCommand) =>
+            {
+                var baseResponses = containerCommand.DeleteStacks(ids);
+                return Results.Ok(baseResponses);
+            });
 
             return group;
         }

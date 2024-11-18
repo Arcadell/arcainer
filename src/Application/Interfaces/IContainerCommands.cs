@@ -12,5 +12,6 @@ namespace Application.Interfaces
         List<BaseResponse> StartContainers(List<string> ids);
         List<BaseResponse> StopContainers(List<string> ids);
         List<BaseResponse> DeleteContainers(List<string> ids);
+        List<BaseResponse> DeleteStacks(List<string> stackNames);
     }
 }
