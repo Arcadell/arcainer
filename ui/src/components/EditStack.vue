@@ -27,11 +27,16 @@ onMounted(() => {
 })
 
 const converContainer = () => {
-    const _dockerComposeValue = composerize(dockerRunCommand.value);
-    if (dockerComposeValue.value != _dockerComposeValue)
+    try {
+        let _dockerComposeValue = composerize(dockerRunCommand.value, null, 'latest', 2) as string;
+        _dockerComposeValue = _dockerComposeValue.substring(26);
+        if (dockerComposeValue.value != _dockerComposeValue)
         dockerComposeValue.value = _dockerComposeValue
     else {
         dockerComposeValue.value += ' '; // Idk what the f*#@! im doing
+    }
+    } catch {
+        toastStore.error({message: 'Invalid docker run command'});
     }
 }
 
