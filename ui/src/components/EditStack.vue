@@ -41,7 +41,7 @@ const converContainer = () => {
 }
 
 const createContainer = async (startOnCreate: boolean) => {
-    if (!dockerComposeValue.value) {
+    if (!_localDockerComposeValue.value) {
         toastStore.error({
             message: "Stack name and compose are required"
         });
@@ -64,7 +64,7 @@ const updateCompose = (value: string) => {
         <div class="container-create-content">
             <input type="text" placeholder="Stack name" v-model="stack.name!" disabled>
             <div class="generate-docker-compose">
-                <input type="text" placeholder="Docker run command" v-model="dockerRunCommand">
+                <input type="text" placeholder="Docker run command" v-model="dockerRunCommand" @keyup.enter="converContainer">
                 <button class="btn btn-outline" v-on:click="converContainer">Convert</button>
             </div>
 

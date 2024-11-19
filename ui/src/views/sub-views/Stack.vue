@@ -76,12 +76,12 @@ const deleteStacks = async () => {
 
 <template>
     <SideBar :title="'Create stack'" :opened="openSideBarCreate" @close-sidebar="onCloseSidebar">
-        <CreateContainer v-on:created-compose="openSideBarCreate = false" />
+        <CreateContainer v-on:created-compose="onCloseSidebar" />
     </SideBar>
 
     <SideBar :title="'Edit stack'" :opened="openSideBarEdit" @close-sidebar="onCloseSidebar(true)">
         <template v-if="!loadingSingleStacks">
-            <EditStack v-if="selectedStack" :stack="selectedStack" v-on:created-compose="openSideBarEdit = false" />
+            <EditStack v-if="selectedStack" :stack="selectedStack" v-on:created-compose="onCloseSidebar(true)" />
         </template>
         <template v-else>
             <h1>Loading</h1>
