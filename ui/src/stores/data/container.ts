@@ -138,6 +138,36 @@ export const useContainerStore = defineStore("containerData", {
 
                 return { data: null, error: e.message };
             }
+        },
+        async deleteStacks(stacks: Stack[]) {
+            const toastStore = useToastStore();
+            try {
+                const names = stacks.map(c => c.name);
+
+                const auth = useAuthStore();
+                const response = await fetch((import.meta.env.DEV ? import.meta.env.VITE_API_URL : '') + '/api/container/stack/delete', {
+                    method: 'POST',
+                    headers: new Headers({
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + await auth.getAccessToken(),
+                    }),
+                    body: JSON.stringify(names),
+                    mode: 'cors',
+                });
+
+                if (response.status === 401) { throw new Error('Invalid credentials'); }
+
+                if (!response.ok) {
+                    const message = 'Generic error';
+                    throw new Error(message);
+                }
+
+                return { data: null, error: null };
+            } catch (e: Error | any) {
+                toastStore.error({ message: e.message });
+
+                return { data: null, error: e.message };
+            }
         }
     }
 })

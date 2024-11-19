@@ -61,14 +61,25 @@ const onRowPressed = (tableRow: TableRow) => {
     });
     openSideBarEdit.value = true;
 }
+
+const onCloseSidebar = (edit: boolean = false) => {
+    edit ? openSideBarEdit.value = false: openSideBarCreate.value = false;
+    refreshStacks();
+}
+
+const deleteStacks = async () => {
+    const stacksSelected = stackTable.value.filter(row => row.selected).map(row => row.fields) as Stack[];
+    await containerStore.deleteStacks(stacksSelected)
+    refreshStacks();
+}
 </script>
 
 <template>
-    <SideBar :title="'Create stack'" :opened="openSideBarCreate" @close-sidebar="openSideBarCreate = false">
+    <SideBar :title="'Create stack'" :opened="openSideBarCreate" @close-sidebar="onCloseSidebar">
         <CreateContainer v-on:created-compose="openSideBarCreate = false" />
     </SideBar>
 
-    <SideBar :title="'Edit stack'" :opened="openSideBarEdit" @close-sidebar="openSideBarEdit = false">
+    <SideBar :title="'Edit stack'" :opened="openSideBarEdit" @close-sidebar="onCloseSidebar(true)">
         <template v-if="!loadingSingleStacks">
             <EditStack v-if="selectedStack" :stack="selectedStack" v-on:created-compose="openSideBarEdit = false" />
         </template>
@@ -84,6 +95,11 @@ const onRowPressed = (tableRow: TableRow) => {
             </div>
 
             <div class="right-header">
+                <div class="right-header-control" v-if="enableControlButtons">
+                    <button class="btn btn-icon" v-on:click="deleteStacks()"><i
+                            class="ri-delete-bin-6-line"></i></button>
+                </div>
+
                 <button class="btn btn-icon" v-on:click="refreshStacks"><i class="ri-refresh-line"></i></button>
                 <button class="btn" v-on:click="openSideBarCreate = !openSideBarCreate"><i
                         class="ri-add-line"></i>Create
