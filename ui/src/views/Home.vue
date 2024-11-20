@@ -36,7 +36,6 @@ import { RouterLink, RouterView } from 'vue-router';
       </div>
 
       <div class="menu-list">
-        <a class="lnk"><i class="ri-settings-3-line"></i> Coming soon ...</a>
       </div>
     </div>
     <div class="content">
