@@ -34,7 +34,9 @@ RUN apt-get update \
         curl \
         ca-certificates \
         libicu-dev && \
-        curl -sSL https://get.docker.com/ | sh
+        curl -sSL https://get.docker.com/ | sh && \
+        curl -SL https://github.com/docker/compose/releases/download/v2.30.3/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose && \
+        chmod +x /usr/local/bin/docker-compose
 
 COPY --from=frontend-build /app/dist /usr/share/nginx/html
 COPY /docker/nginx.conf /etc/nginx/nginx.conf

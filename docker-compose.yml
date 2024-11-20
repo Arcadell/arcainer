@@ -8,3 +8,9 @@ services:
       - 8080:80
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./composes:/app/composes                      # Folder with all the docker stacks
+      - arcainer_storage:/app/storage                 # Database
+
+volumes:
+    arcainer_storage:
+      name: arcainer_storage
