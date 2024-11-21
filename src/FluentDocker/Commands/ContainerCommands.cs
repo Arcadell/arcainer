@@ -230,7 +230,7 @@ namespace FluentDocker.Commands
 
         private string CheckStackPath()
         {
-            var composesPath = Environment.GetEnvironmentVariable("STACK_PATH");
+            var composesPath = Environment.GetEnvironmentVariable("STACKS_PATH");
             if (string.IsNullOrEmpty(composesPath))
             {
                 var currentPath = Directory.GetCurrentDirectory();

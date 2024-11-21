@@ -7,9 +7,15 @@ services:
     ports:
       - 8080:80
     volumes:
+      - arcainer_storage:/app/storage
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./composes:/app/composes                      # Folder with all the docker stacks
-      - arcainer_storage:/app/storage                 # Database
+
+      # 1- NO RELATIVE PATH (./stacks:./stacks ❌) (/opt/stacks:/opt/stacks ✅)
+      # 2- LEFT AND RIGHT PATH NEED TO BE THE SAME (/app/composes:/app/stacks ❌) (/app/stacks:/app/stacks ✅)
+      - /opt/stacks:/opt/stacks
+    environment:
+      # STACKS_PATH NEED TO BE THE SAME AS ABOVE IF YOU CHANGE THIS CHANGE THE ABOVE TO
+      - STACKS_PATH=/opt/stacks
 
 volumes:
     arcainer_storage:
