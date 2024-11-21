@@ -16,10 +16,7 @@ namespace FluentDocker.Commands
         {
             try
             {
-                var currentPath = Directory.GetCurrentDirectory();
-                var composesPath = Path.Combine(currentPath, "composes");
-                if (!Directory.Exists(composesPath)) {  Directory.CreateDirectory(composesPath);  }
-
+                var composesPath = CheckStackPath();
                 var newComposeDirectoryPath = Path.Combine(composesPath, createContainerDto.Name);
                 if (!Directory.Exists(newComposeDirectoryPath)) { Directory.CreateDirectory(newComposeDirectoryPath); }
 
@@ -67,10 +64,7 @@ namespace FluentDocker.Commands
         {
             try
             {
-                var currentPath = Directory.GetCurrentDirectory();
-                var composesPath = Path.Combine(currentPath, "composes");
-                if (!Directory.Exists(composesPath)) { Directory.CreateDirectory(composesPath); }
-
+                var composesPath = CheckStackPath();
                 if(!string.IsNullOrEmpty(stackName))
                 {
                     var stackNameFolderPath = Path.Combine(composesPath, stackName);
@@ -153,10 +147,7 @@ namespace FluentDocker.Commands
 
         public List<BaseResponse> DeleteStacks(List<string> stackNames)
         {
-            var currentPath = Directory.GetCurrentDirectory();
-            var composesPath = Path.Combine(currentPath, "composes");
-            if (!Directory.Exists(composesPath)) { Directory.CreateDirectory(composesPath); }
-            
+            var composesPath = CheckStackPath();
             var baseResponses = new List<BaseResponse>();
             stackNames.ForEach(stackName =>
             {
@@ -235,6 +226,31 @@ namespace FluentDocker.Commands
             }
 
             return result;
+        }
+
+        private string CheckStackPath()
+        {
+            var composesPath = Environment.GetEnvironmentVariable("STACK_PATH");
+            if (string.IsNullOrEmpty(composesPath))
+            {
+                var currentPath = Directory.GetCurrentDirectory();
+                composesPath = Path.Combine(currentPath, "composes");
+                if (!Directory.Exists(composesPath)) { Directory.CreateDirectory(composesPath); }
+                return composesPath;
+            }
+
+            if (Directory.Exists(composesPath))  { return composesPath; }
+
+            var directories =  composesPath.Split("/");
+            var completedDirectories = "/";
+            foreach (var directory in directories)
+            {
+                if(string.IsNullOrEmpty(directory)) {continue;}
+                
+                completedDirectories = Path.Combine(completedDirectories, directory);
+                if (!Directory.Exists(completedDirectories)) { Directory.CreateDirectory(completedDirectories); }
+            }
+            return completedDirectories;
         }
         #endregion
     }
