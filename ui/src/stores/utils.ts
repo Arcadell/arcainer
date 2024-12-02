@@ -17,9 +17,16 @@ export const useToastStore = defineStore("toast", {
 
             this.toasts.push(toast);
 
-            setTimeout(() => {
-                this.toasts = this.toasts.filter(t => t.id !== toast.id);
-            }, toast.timeout);
+            if (!payload.infinite_timeout) {
+                setTimeout(() => {
+                    this.toasts = this.toasts.filter(t => t.id !== toast.id);
+                }, toast.timeout);
+            }
+
+            return toast;
+        },
+        removeToast(toast: IToast) {
+            this.toasts = this.toasts.filter(t => t.id !== toast.id);
         },
         success(paylaod: TToastPayload) {
             this.addToast(paylaod, "success");

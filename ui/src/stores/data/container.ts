@@ -113,6 +113,7 @@ export const useContainerStore = defineStore("containerData", {
         async createContainer(createContainerCommand: CreateContainerCommand) {
             const toastStore = useToastStore();
             try {
+                const toast = toastStore.addToast({ message: `[${createContainerCommand.name}] Pulling image and creating/updating the container please wait...`, infinite_timeout: true }, 'warning')
                 const auth = useAuthStore();
                 const response = await fetch((import.meta.env.DEV ? import.meta.env.VITE_API_URL : '') + '/api/container/create', {
                     method: 'POST',
@@ -123,6 +124,7 @@ export const useContainerStore = defineStore("containerData", {
                     body: JSON.stringify(createContainerCommand),
                     mode: 'cors',
                 });
+                toastStore.removeToast(toast);
 
                 if (response.status === 401) { throw new Error('Invalid credentials'); }
 

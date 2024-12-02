@@ -10,4 +10,5 @@ export interface IToast {
 export interface TToastPayload {
     message: string;
     timeout?: number;
+    infinite_timeout?: boolean;
 }
