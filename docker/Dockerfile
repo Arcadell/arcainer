@@ -46,8 +46,10 @@ echo \
 $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
 tee /etc/apt/sources.list.d/docker.list > /dev/null ; \
 apt update ;                                          \
-apt install -y docker-ce-cli docker-compose-plugin ;  \
-echo 'alias docker-compose="docker compose"' >> ~/.bashrc ;
+apt install -y docker-ce-cli docker-compose-plugin ; \
+echo '#!/bin/bash\n\ndocker compose "$@"' > /usr/bin/docker-compose ; \
+chmod 755 /usr/bin/docker-compose ;
+
 
 
 
