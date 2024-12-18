@@ -33,8 +33,7 @@ RUN apt update;                             \
     apt install -y --no-install-recommends  \
         curl                                \
         ca-certificates                     \
-        libicu-dev;                         \
-        update-rc.d nginx disable
+        libicu-dev;                         
         
 # Let's install docker (only the CLI)
 RUN \
@@ -56,8 +55,7 @@ WORKDIR /app
 
 
 # Copy frontend and backend builds, Nginx config, and start script
-COPY --from=frontend-build /app/dist /usr/share/nginx/html
-COPY /docker/nginx.conf /etc/nginx/nginx.conf
+COPY --from=frontend-build /app/dist ./dist
 COPY /docker/start.sh /usr/bin/start.sh
 COPY --from=backend-build /app ./
 
@@ -67,7 +65,7 @@ VOLUME [ "/app/storage" ]
 
 
 RUN useradd -ms /bin/bash arcainer ; \
-chown -R arcainer /app /var/lib/nginx/ /var/log/nginx; \
+chown -R arcainer /app ; \
 chmod +x ./Api /usr/bin/start.sh ;
 
 
