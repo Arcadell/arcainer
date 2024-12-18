@@ -31,10 +31,10 @@ RUN pnpm run build
 FROM docker.io/debian:bookworm
 RUN apt update;                             \
     apt install -y --no-install-recommends  \
-        nginx                               \
         curl                                \
         ca-certificates                     \
-        libicu-dev;                         
+        libicu-dev;                         \
+        update-rc.d nginx disable
         
 # Let's install docker (only the CLI)
 RUN \
@@ -51,16 +51,27 @@ echo '#!/bin/bash\n\ndocker compose "$@"' > /usr/bin/docker-compose ; \
 chmod 755 /usr/bin/docker-compose ;
 
 
+# Set the working directory
+WORKDIR /app
 
 
+# Copy frontend and backend builds, Nginx config, and start script
 COPY --from=frontend-build /app/dist /usr/share/nginx/html
 COPY /docker/nginx.conf /etc/nginx/nginx.conf
-COPY /docker/start.sh /app/start.sh
-
-WORKDIR /app
+COPY /docker/start.sh /usr/bin/start.sh
 COPY --from=backend-build /app ./
-EXPOSE 80
-EXPOSE 5000
 
-RUN chmod +x ./Api ./start.sh
-ENTRYPOINT ["bash", "./start.sh"]
+
+VOLUME [ "/app/storage" ]
+
+
+
+RUN useradd -ms /bin/bash arcainer ; \
+chown -R arcainer /app /var/lib/nginx/ /var/log/nginx; \
+chmod +x ./Api /usr/bin/start.sh ;
+
+
+
+USER arcainer
+# Entry point for the container
+ENTRYPOINT ["start.sh"]

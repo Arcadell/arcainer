@@ -7,7 +7,7 @@ services:
     ports:
       - 8080:80
     volumes:
-      - arcainer_storage:/app/storage
+      - arcainer_storage:/storage
       - /var/run/docker.sock:/var/run/docker.sock
 
       - ./stacks:/opt/stacks
