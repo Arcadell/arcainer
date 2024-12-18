@@ -42,8 +42,13 @@ const onRowPressed = (row: TableRow) => {
                     <th></th>
                 </tr>
                 <tr v-for="row in data" :key="row.fields.id" v-on:click="onRowPressed(row)">
-                    <td><input type="checkbox" v-model="row.selected" v-on:click="$event.stopPropagation();" v-on:change="onRowSelected"></td>
-                    <td v-for="field in fields" :key="field.key">{{ row.fields[field.key] }}</td>
+                    <td>
+                        <input type="checkbox" v-model="row.selected" v-on:click="$event.stopPropagation();"
+                            v-on:change="onRowSelected">
+                    </td>
+                    <td v-for="field in fields" :key="field.key">
+                        <p class="">{{ row.fields[field.key] }}</p>
+                    </td>
                     <td><i class="ri-arrow-right-line"></i></td>
                 </tr>
             </tbody>

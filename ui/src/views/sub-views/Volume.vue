@@ -11,7 +11,7 @@ import { v7 as uuid } from 'uuid'
 const volumeStore = useVolumeStore();
 
 const fields: TableField[] = [
-    { key: 'name', label: 'Name' },
+    { isId: false, key: 'name', label: 'Name' },
 ]
 
 let volumeTable = ref<TableRow[]>([]);
@@ -51,7 +51,8 @@ const deleteVolumes = async () => {
 
             <div class="right-header">
                 <div class="right-header-control" v-if="enableControlButtons">
-                    <button class="btn btn-icon" v-on:click="deleteVolumes()"><i class="ri-delete-bin-6-line"></i></button>
+                    <button class="btn btn-icon" v-on:click="deleteVolumes()"><i
+                            class="ri-delete-bin-6-line"></i></button>
                 </div>
 
                 <button class="btn btn-icon" v-on:click="refreshVolumes"><i class="ri-refresh-line"></i></button>

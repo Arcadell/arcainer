@@ -14,9 +14,9 @@ import { v7 as uuid } from 'uuid'
 const containerStore = useContainerStore();
 
 const fields: TableField[] = [
-    { key: 'id', label: 'Id' },
-    { key: 'name', label: 'Name' },
-    { key: 'state', label: 'Status' },
+    { isId: true, key: 'id', label: 'Id' },
+    { isId: false, key: 'name', label: 'Name' },
+    { isId: false, key: 'state', label: 'Status' },
 ]
 
 let containerTable = ref<TableRow[]>([]);

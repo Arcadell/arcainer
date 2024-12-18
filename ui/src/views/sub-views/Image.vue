@@ -12,7 +12,7 @@ import { v7 as uuid } from 'uuid'
 const imageStore = useImageStore();
 
 const fields: TableField[] = [
-    { key: 'id', label: 'Id' },
+    { isId: true, key: 'id', label: 'Id' },
 ]
 
 let imageTable = ref<TableRow[]>([]);

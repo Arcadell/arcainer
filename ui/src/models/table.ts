@@ -5,6 +5,7 @@ export class TableRow {
 }
 
 export class TableField {
+    isId!: boolean;
     label!: string;
     key!: string;
 }

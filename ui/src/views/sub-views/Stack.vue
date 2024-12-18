@@ -17,7 +17,7 @@ const containerStore = useContainerStore();
 const toastStore = useToastStore();
 
 const fields: TableField[] = [
-    { key: 'name', label: 'Name' },
+    { isId: false, key: 'name', label: 'Name' },
 ]
 
 let stackTable = ref<TableRow[]>([]);
@@ -63,7 +63,7 @@ const onRowPressed = (tableRow: TableRow) => {
 }
 
 const onCloseSidebar = (edit: boolean = false) => {
-    edit ? openSideBarEdit.value = false: openSideBarCreate.value = false;
+    edit ? openSideBarEdit.value = false : openSideBarCreate.value = false;
     refreshStacks();
 }
 
