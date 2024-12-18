@@ -12,7 +12,8 @@ RUN dotnet restore
 # [BACKEND] copy everything else and build app
 COPY src/. ./src/
 WORKDIR /source/src/Api
-RUN dotnet publish -c Release -o /app --no-restore --self-contained --runtime linux-x64
+RUN dotnet publish -c Release -o /app --no-restore --self-contained --runtime linux-x64; \
+rm /app/wwwroot/index.html ;
 
 # [FRONTEND]
 FROM node:23-alpine AS frontend-base
@@ -28,24 +29,51 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build
 
 # final stage/image
-FROM ubuntu/nginx
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        curl \
-        ca-certificates \
-        libicu-dev && \
-        curl -sSL https://get.docker.com/ | sh && \
-        curl -SL https://github.com/docker/compose/releases/download/v2.30.3/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose && \
-        chmod +x /usr/local/bin/docker-compose
+FROM docker.io/debian:bookworm
+RUN apt update;                             \
+    apt install -y --no-install-recommends  \
+        curl                                \
+        ca-certificates                     \
+        libicu-dev;                         
+        
+# Let's install docker (only the CLI)
+RUN \
+install -m 0755 -d /etc/apt/keyrings ; \ 
+curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc ; \
+chmod a+r /etc/apt/keyrings/docker.asc ; \
+echo \
+"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+$(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+tee /etc/apt/sources.list.d/docker.list > /dev/null ; \
+apt update ;                                          \
+apt install -y docker-ce-cli docker-compose-plugin ; \
+echo '#!/bin/bash\n\ndocker compose "$@"' > /usr/bin/docker-compose ; \
+chmod 755 /usr/bin/docker-compose ;
 
-COPY --from=frontend-build /app/dist /usr/share/nginx/html
-COPY /docker/nginx.conf /etc/nginx/nginx.conf
-COPY /docker/start.sh /app/start.sh
 
+# Set the working directory
 WORKDIR /app
-COPY --from=backend-build /app ./
-EXPOSE 80
-EXPOSE 5000
 
-RUN chmod +x ./Api ./start.sh
-ENTRYPOINT ["bash", "./start.sh"]
+
+# Copy frontend and backend builds, Nginx config, and start script
+COPY --from=frontend-build /app/dist ./wwwroot
+COPY /docker/start.sh /usr/bin/start.sh
+COPY --from=backend-build /app ./
+
+
+VOLUME [ "/app/storage" ]
+
+
+
+RUN useradd -ms /bin/bash arcainer ; \
+groupadd docker ; \
+usermod -aG docker arcainer ; \
+chown -R arcainer /app /opt/ ; \
+chmod +x ./Api /usr/bin/start.sh ;
+
+# TODO: run with non root user
+#USER arcainer
+
+EXPOSE 5000
+# Entry point for the container
+ENTRYPOINT ["./Api"]
