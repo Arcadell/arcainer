@@ -12,7 +12,8 @@ RUN dotnet restore
 # [BACKEND] copy everything else and build app
 COPY src/. ./src/
 WORKDIR /source/src/Api
-RUN dotnet publish -c Release -o /app --no-restore --self-contained --runtime linux-x64
+RUN dotnet publish -c Release -o /app --no-restore --self-contained --runtime linux-x64; \
+rm /app/wwwroot/index.html ;
 
 # [FRONTEND]
 FROM node:23-alpine AS frontend-base
@@ -65,10 +66,13 @@ VOLUME [ "/app/storage" ]
 
 
 RUN useradd -ms /bin/bash arcainer ; \
-chown -R arcainer /app ; \
+groupadd docker ; \
+usermod -aG docker arcainer ; \
+chown -R arcainer /app /opt/ ; \
 chmod +x ./Api /usr/bin/start.sh ;
 
-USER root
+# TODO: run with non root user
+#USER arcainer
 
 EXPOSE 5000
 # Entry point for the container

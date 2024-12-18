@@ -77,7 +77,7 @@ namespace Api
                 !File.Exists(Path.Combine(app.Environment.WebRootPath, ctx.Request.Path.Value.TrimStart('/')))
                 )
                 {
-                    ctx.Response.Redirect("index.html");
+                    await ctx.Response.SendFileAsync(Path.Combine(app.Environment.WebRootPath,"index.html"));
                 }
                 else
                 {

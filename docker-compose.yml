@@ -5,12 +5,12 @@ services:
       context: ./
       dockerfile: ./docker/Dockerfile
     ports:
-      - 5000:5000
+      - "8080:5000"
     volumes:
       - arcainer_storage:/storage
       - /var/run/docker.sock:/var/run/docker.sock
 
-      - ./stacks:/opt/stacks
+      - ./stacks:/opt/stacks:rw
     environment:
       # STACKS_PATH NEED TO BE THE SAME AS ABOVE IF YOU CHANGE THIS CHANGE THE ABOVE TOO
       - STACKS_PATH=/opt/stacks
