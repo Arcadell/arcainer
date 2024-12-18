@@ -34,7 +34,7 @@ namespace Api
                 // app.UseCors(_=> _.WithOrigins())
                 app.UseHttpsRedirection();
             }
-            
+
             // TODO FIX THIS
             app.UseCors(_ => _.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost").AllowAnyHeader().AllowAnyMethod());
 
@@ -63,6 +63,29 @@ namespace Api
                 .MapVolumeRoutes()
                 .RequireAuthorization()
                 .WithTags("Volume");
+
+            // Single page application provider
+
+            app.UseStaticFiles();
+
+            app.Use(async (ctx, next) =>
+            {
+                // Handle single page application routing
+                if (
+                ctx.Request.Path.Value != null &&
+                !ctx.Request.Path.Value.StartsWith("/api") &&
+                !File.Exists(Path.Combine(app.Environment.WebRootPath, ctx.Request.Path.Value.TrimStart('/')))
+                )
+                {
+                    ctx.Response.Redirect("index.html");
+                }
+                else
+                {
+                    await next();
+                }
+
+            });
+
 
             app.HandleDbMigration();
             app.Run();

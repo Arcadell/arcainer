@@ -55,7 +55,7 @@ WORKDIR /app
 
 
 # Copy frontend and backend builds, Nginx config, and start script
-COPY --from=frontend-build /app/dist ./dist
+COPY --from=frontend-build /app/dist ./wwwroot
 COPY /docker/start.sh /usr/bin/start.sh
 COPY --from=backend-build /app ./
 
@@ -68,8 +68,8 @@ RUN useradd -ms /bin/bash arcainer ; \
 chown -R arcainer /app ; \
 chmod +x ./Api /usr/bin/start.sh ;
 
+USER root
 
-
-USER arcainer
+EXPOSE 5000
 # Entry point for the container
-ENTRYPOINT ["start.sh"]
+ENTRYPOINT ["./Api"]
