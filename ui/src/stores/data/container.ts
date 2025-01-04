@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { useAuthStore } from "../auth";
 import { useToastStore } from "../utils";
 import { Container, ContainerCommands, CreateContainerCommand, Stack } from "@/models/data";
+import router from '@/router';
 
 export const useContainerStore = defineStore("containerData", {
     state: () => ({}),
@@ -18,7 +19,10 @@ export const useContainerStore = defineStore("containerData", {
                     mode: 'cors',
                 });
 
-                if (response.status === 401) { throw new Error('Invalid credentials'); }
+                if (response.status === 401) {
+                    router.push({ name: 'login' });
+                    throw new Error('Invalid credentials');
+                }
 
                 if (!response.ok) {
                     const message = 'Generic error';
@@ -47,7 +51,10 @@ export const useContainerStore = defineStore("containerData", {
                     mode: 'cors',
                 });
 
-                if (response.status === 401) { throw new Error('Invalid credentials'); }
+                if (response.status === 401) {
+                    router.push({ name: 'login' });
+                    throw new Error('Invalid credentials');
+                }
 
                 if (!response.ok) {
                     const message = 'Generic error';
@@ -95,7 +102,10 @@ export const useContainerStore = defineStore("containerData", {
                     mode: 'cors',
                 });
 
-                if (response.status === 401) { throw new Error('Invalid credentials'); }
+                if (response.status === 401) {
+                    router.push({ name: 'login' });
+                    throw new Error('Invalid credentials');
+                }
 
                 if (!response.ok) {
                     const message = 'Generic error';
@@ -126,7 +136,10 @@ export const useContainerStore = defineStore("containerData", {
                 });
                 toastStore.removeToast(toast);
 
-                if (response.status === 401) { throw new Error('Invalid credentials'); }
+                if (response.status === 401) {
+                    router.push({ name: 'login' });
+                    throw new Error('Invalid credentials');
+                }
 
                 if (!response.ok) {
                     const message = 'Generic error';
@@ -157,7 +170,10 @@ export const useContainerStore = defineStore("containerData", {
                     mode: 'cors',
                 });
 
-                if (response.status === 401) { throw new Error('Invalid credentials'); }
+                if (response.status === 401) {
+                    router.push({ name: 'login' });
+                    throw new Error('Invalid credentials');
+                }
 
                 if (!response.ok) {
                     const message = 'Generic error';

@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { useAuthStore } from "../auth";
 import { useToastStore } from "../utils";
 import type { Volume } from "@/models/data";
+import router from "@/router";
 
 export const useVolumeStore = defineStore("volumeData", {
     state: () => ({}),
@@ -18,7 +19,10 @@ export const useVolumeStore = defineStore("volumeData", {
                     mode: 'cors',
                 });
 
-                if (response.status === 401) { throw new Error('Invalid credentials'); }
+                if (response.status === 401) {
+                    router.push({ name: 'login' });
+                    throw new Error('Invalid credentials');
+                }
 
                 if (!response.ok) {
                     const message = 'Generic error';
@@ -50,7 +54,10 @@ export const useVolumeStore = defineStore("volumeData", {
                     mode: 'cors',
                 });
 
-                if (response.status === 401) { throw new Error('Invalid credentials'); }
+                if (response.status === 401) {
+                    router.push({ name: 'login' });
+                    throw new Error('Invalid credentials');
+                }
 
                 if (!response.ok) {
                     const message = 'Generic error';
