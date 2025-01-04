@@ -142,14 +142,15 @@ export const useContainerStore = defineStore("containerData", {
                 }
 
                 if (!response.ok) {
-                    const message = 'Generic error';
+                    const errorResponse = await response.json();
+                    const message = JSON.stringify(errorResponse);
                     throw new Error(message);
                 }
                 toastStore.success({ message: "Compose created/updated successfully" });
 
                 return { data: null, error: null };
             } catch (e: Error | any) {
-                toastStore.error({ message: e.message });
+                toastStore.error({ message: e.message, timeout: 20000 });
 
                 return { data: null, error: e.message };
             }

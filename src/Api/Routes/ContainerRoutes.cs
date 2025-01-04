@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Routes
 {
     public static class ContainerRoutes
-    {        
+    {
         public static RouteGroupBuilder MapContainerRoutes(this RouteGroupBuilder group)
         {
             group.MapGet("/", ([FromServices] IContainerCommands containerCommand) =>
@@ -22,8 +22,15 @@ namespace Api.Routes
 
             group.MapPost("/create", ([FromBody] CreateContainerDto createContainerDto, [FromServices] IContainerCommands containerCommand) =>
             {
-                containerCommand.CreateStack(createContainerDto);
-                return Results.Ok();
+                try
+                {
+                    containerCommand.CreateStack(createContainerDto);
+                    return Results.Ok();
+                }
+                catch(Exception ex)
+                {
+                    return Results.BadRequest(ex.Message);
+                }
             });
 
             group.MapPost("/start", ([FromBody] List<string> ids, [FromServices] IContainerCommands containerCommand) =>
@@ -37,13 +44,13 @@ namespace Api.Routes
                 var baseResponses = containerCommand.StopContainers(ids);
                 return Results.Ok(baseResponses);
             });
-            
+
             group.MapPost("/delete", ([FromBody] List<string> ids, [FromServices] IContainerCommands containerCommand) =>
             {
                 var baseResponses = containerCommand.DeleteContainers(ids);
                 return Results.Ok(baseResponses);
             });
-            
+
             group.MapPost("/stack/delete", ([FromBody] List<string> ids, [FromServices] IContainerCommands containerCommand) =>
             {
                 var baseResponses = containerCommand.DeleteStacks(ids);
