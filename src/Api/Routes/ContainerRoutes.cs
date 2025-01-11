@@ -10,14 +10,28 @@ namespace Api.Routes
         {
             group.MapGet("/", ([FromServices] IContainerCommands containerCommand) =>
             {
-                var containers = containerCommand.GetContainers(new Domain.Filters.ContainerFilter());
-                return Results.Ok(containers);
+                try
+                {
+                    var containers = containerCommand.GetContainers(new Domain.Filters.ContainerFilter());
+                    return Results.Ok(containers);
+                }
+                catch (Exception ex)
+                {
+                    return Results.BadRequest(ex.Message);
+                }
             });
 
             group.MapGet("/stack/{name?}", (string? name, [FromServices] IContainerCommands containerCommand) =>
             {
-                var containers = containerCommand.GetStacks(name);
-                return Results.Ok(containers);
+                try
+                {
+                    var containers = containerCommand.GetStacks(name);
+                    return Results.Ok(containers);
+                }
+                catch (Exception ex)
+                {
+                    return Results.BadRequest(ex.Message);
+                }
             });
 
             group.MapPost("/create", ([FromBody] CreateContainerDto createContainerDto, [FromServices] IContainerCommands containerCommand) =>
@@ -27,7 +41,7 @@ namespace Api.Routes
                     containerCommand.CreateStack(createContainerDto);
                     return Results.Ok();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return Results.BadRequest(ex.Message);
                 }
@@ -35,26 +49,54 @@ namespace Api.Routes
 
             group.MapPost("/start", ([FromBody] List<string> ids, [FromServices] IContainerCommands containerCommand) =>
             {
-                var baseResponses = containerCommand.StartContainers(ids);
-                return Results.Ok(baseResponses);
+                try
+                {
+                    var baseResponses = containerCommand.StartContainers(ids);
+                    return Results.Ok(baseResponses);
+                }
+                catch (Exception ex)
+                {
+                    return Results.BadRequest(ex.Message);
+                }
             });
 
             group.MapPost("/stop", ([FromBody] List<string> ids, [FromServices] IContainerCommands containerCommand) =>
             {
-                var baseResponses = containerCommand.StopContainers(ids);
-                return Results.Ok(baseResponses);
+                try
+                {
+                    var baseResponses = containerCommand.StopContainers(ids);
+                    return Results.Ok(baseResponses);
+                }
+                catch (Exception ex)
+                {
+                    return Results.BadRequest(ex.Message);
+                }
             });
 
             group.MapPost("/delete", ([FromBody] List<string> ids, [FromServices] IContainerCommands containerCommand) =>
             {
-                var baseResponses = containerCommand.DeleteContainers(ids);
-                return Results.Ok(baseResponses);
+                try
+                {
+                    var baseResponses = containerCommand.DeleteContainers(ids);
+                    return Results.Ok(baseResponses);
+                }
+                catch (Exception ex)
+                {
+                    return Results.BadRequest(ex.Message);
+                }
             });
 
             group.MapPost("/stack/delete", ([FromBody] List<string> ids, [FromServices] IContainerCommands containerCommand) =>
             {
-                var baseResponses = containerCommand.DeleteStacks(ids);
-                return Results.Ok(baseResponses);
+                try
+                {
+                    var baseResponses = containerCommand.DeleteStacks(ids);
+                    return Results.Ok(baseResponses);
+                }
+                catch (Exception ex)
+                {
+                    return Results.BadRequest(ex.Message);
+                }
             });
 
             return group;

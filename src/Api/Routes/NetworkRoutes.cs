@@ -9,14 +9,28 @@ namespace Api.Routes
         {
             group.MapGet("/", ([FromServices] INetworkCommands networkCommands) =>
             {
-                var images = networkCommands.GetNetworks(new Domain.Filters.NetworkFilter());
-                return Results.Ok(images);
+                try
+                {
+                    var images = networkCommands.GetNetworks(new Domain.Filters.NetworkFilter());
+                    return Results.Ok(images);
+                }
+                catch (Exception ex)
+                {
+                    return Results.BadRequest(ex.Message);
+                }
             });
-            
+
             group.MapPost("/delete", ([FromBody] List<string> ids, [FromServices] INetworkCommands networkCommands) =>
             {
-                var baseResponses = networkCommands.DeleteNetworks(ids);
-                return Results.Ok(baseResponses);
+                try
+                {
+                    var baseResponses = networkCommands.DeleteNetworks(ids);
+                    return Results.Ok(baseResponses);
+                }
+                catch (Exception ex)
+                {
+                    return Results.BadRequest(ex.Message);
+                }
             });
 
             return group;

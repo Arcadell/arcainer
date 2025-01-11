@@ -9,8 +9,15 @@ namespace Api.Routes
         {
             group.MapGet("/", ([FromServices] IImageCommands imageCommands) =>
             {
-                var images = imageCommands.GetImages(new Domain.Filters.ImageFilter());
-                return Results.Ok(images);
+                try
+                {
+                    var images = imageCommands.GetImages(new Domain.Filters.ImageFilter());
+                    return Results.Ok(images);
+                }
+                catch (Exception ex)
+                {
+                    return Results.BadRequest(ex.Message);
+                }
             });
 
             return group;

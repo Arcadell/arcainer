@@ -64,6 +64,11 @@ namespace Api
                 .RequireAuthorization()
                 .WithTags("Volume");
 
+            app.MapGroup("/api/setting")
+                .MapSettingRoutes()
+                .RequireAuthorization()
+                .WithTags("Setting");
+
             // Single page application provider
 
             app.UseStaticFiles();
