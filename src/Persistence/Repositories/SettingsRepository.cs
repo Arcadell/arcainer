@@ -1,11 +1,6 @@
 ﻿using Application.Interfaces.Repositories;
 using Domain.Entities;
 using Persistence.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence.Repositories
 {
@@ -15,6 +10,13 @@ namespace Persistence.Repositories
         {
             var settings = context.Settings.ToList();
             return settings;
+        }
+
+        public Setting CreateSetting(Setting setting)
+        {
+            var settingEntity = context.Settings.Add(setting);
+            context.SaveChanges();
+            return settingEntity.Entity;
         }
     }
 }

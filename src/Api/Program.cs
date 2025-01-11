@@ -82,7 +82,7 @@ namespace Api
                 !File.Exists(Path.Combine(app.Environment.WebRootPath, ctx.Request.Path.Value.TrimStart('/')))
                 )
                 {
-                    await ctx.Response.SendFileAsync(Path.Combine(app.Environment.WebRootPath,"index.html"));
+                    await ctx.Response.SendFileAsync(Path.Combine(app.Environment.WebRootPath, "index.html"));
                 }
                 else
                 {

@@ -11,7 +11,7 @@ namespace Application.Services
             var settings = settingRepository.GetSettings();
 
             Setting? setting = settings.FirstOrDefault();
-            if (setting == null) throw new Exception("Settings not found");
+            if (setting == null) setting = settingRepository.CreateSetting(new Setting());
 
             return setting;
         }

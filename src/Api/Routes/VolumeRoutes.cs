@@ -1,5 +1,4 @@
 ﻿using Application.Interfaces.Commands;
-using Domain.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Routes
