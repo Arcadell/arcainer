@@ -2,6 +2,8 @@
 using Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Application.Interfaces.Repositories;
+using Persistence.Repositories;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -11,6 +13,8 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionString));
+
+            services.AddScoped<ISettingRepository, SettingsRepository>();
 
             return services;
         }

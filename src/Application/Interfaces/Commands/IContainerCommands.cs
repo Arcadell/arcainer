@@ -2,7 +2,7 @@
 using Domain.Filters;
 using Domain.Models;
 
-namespace Application.Interfaces
+namespace Application.Interfaces.Commands
 {
     public interface IContainerCommands
     {

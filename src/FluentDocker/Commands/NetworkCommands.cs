@@ -1,4 +1,4 @@
-﻿using Application.Interfaces;
+﻿using Application.Interfaces.Commands;
 using Domain.Filters;
 using Domain.Filters.SearchTypes;
 using Domain.Models;

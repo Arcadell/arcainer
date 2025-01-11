@@ -1,4 +1,4 @@
-﻿using Application.Interfaces;
+﻿using Application.Interfaces.Commands;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Routes

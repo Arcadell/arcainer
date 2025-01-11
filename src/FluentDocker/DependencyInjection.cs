@@ -1,4 +1,4 @@
-﻿using Application.Interfaces;
+﻿using Application.Interfaces.Commands;
 using Ductus.FluentDocker.Services;
 using FluentDocker.Commands;
 using Microsoft.Extensions.DependencyInjection;

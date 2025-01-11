@@ -1,4 +1,4 @@
-﻿using Application.Interfaces;
+﻿using Application.Interfaces.Commands;
 using Domain.Dtos;
 using Microsoft.AspNetCore.Mvc;
 

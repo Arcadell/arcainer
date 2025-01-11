@@ -1,10 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Application.Interfaces.Services;
+using Application.Services;
+
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -12,6 +8,8 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddScoped<ISettingService, SettingService>();
+
             return services;
         }
     }

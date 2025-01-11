@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using Application.Interfaces;
+using Application.Interfaces.Commands;
 using Domain.Dtos;
 using Domain.Filters;
 using Domain.Filters.SearchTypes;
