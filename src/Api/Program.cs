@@ -1,6 +1,7 @@
 using Api.Routes;
 using Microsoft.AspNetCore.Identity;
 using FluentDocker;
+using Api.Models;
 
 namespace Api
 {
@@ -39,7 +40,15 @@ namespace Api
             app.UseCors(_ => _.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost").AllowAnyHeader().AllowAnyMethod());
 
             app.MapGroup("/api/identity")
-                .MapIdentityApi<IdentityUser>()
+                .MapIdentityApiCustom<IdentityUser>(new IdentityApiEndpointRouteBuilderOptions() {
+                    ExcludeConfirmEmailGet = true,
+                    ExcludeResendConfirmationPost = true,
+                    ExcludeForgotPasswordPost = true,
+                    ExcludeResetPasswordPost = true,
+                    Exclude2faPost = true,
+                    ExcludeInfoGet = true,
+                    ExcludeInfoPost = true
+                })
                 .WithTags("Identity");
 
             app.UseAuthorization();
