@@ -1,13 +1,13 @@
-@import 'reset.scss';
-@import 'variables.scss';
-@import 'fonts.scss';
-@import 'icons.scss';
-@import 'form.scss';
-@import 'button.scss';
-@import 'custom.scss';
-@import 'link.scss';
-@import 'table.scss';
-@import 'utils.scss';
+@use 'reset.scss';
+@use 'variables.scss';
+@use 'fonts.scss';
+@use 'icons.scss';
+@use 'form.scss';
+@use 'button.scss';
+@use 'custom.scss';
+@use 'link.scss';
+@use 'table.scss';
+@use 'utils.scss';
 
 body {
     font-family: "Source Sans 3", sans-serif;
