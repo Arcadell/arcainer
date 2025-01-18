@@ -6,7 +6,7 @@ namespace Application.Services
 {
     public class SettingService(ISettingRepository settingRepository) : ISettingService
     {
-        public Setting GetSetting()
+        public Setting GetDefaultSetting()
         {
             var settings = settingRepository.GetSettings();
 

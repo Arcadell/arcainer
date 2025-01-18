@@ -53,6 +53,11 @@ namespace Api
 
             app.UseAuthorization();
 
+            app.MapGroup("/api/user")
+                .MapUserRoutes()
+                .RequireAuthorization()
+                .WithTags("User");
+
             app.MapGroup("/api/container")
                 .MapContainerRoutes()
                 .RequireAuthorization()

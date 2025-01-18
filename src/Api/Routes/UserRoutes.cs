@@ -3,16 +3,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Routes
 {
-    public static class SettingRoutes
+    public static class UserRoutes
     {
-        public static RouteGroupBuilder MapSettingRoutes(this RouteGroupBuilder group)
+        public static RouteGroupBuilder MapUserRoutes(this RouteGroupBuilder group)
         {
-            group.MapGet("/", ([FromServices] ISettingService settingService) =>
+            group.MapGet("/", ([FromServices] IUserService userService) =>
             {
                 try
                 {
-                    var setting = settingService.GetDefaultSetting();
-                    return Results.Ok(setting);
+                    var users = userService.GetUsers();
+                    return Results.Ok(users);
                 }
                 catch (Exception ex)
                 {

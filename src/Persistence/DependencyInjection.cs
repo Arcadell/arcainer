@@ -15,6 +15,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionString));
 
             services.AddScoped<ISettingRepository, SettingsRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
         }

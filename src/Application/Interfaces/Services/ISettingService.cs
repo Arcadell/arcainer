@@ -4,6 +4,6 @@ namespace Application.Interfaces.Services
 {
     public interface ISettingService
     {
-        Setting GetSetting();
+        Setting GetDefaultSetting();
     }
 }

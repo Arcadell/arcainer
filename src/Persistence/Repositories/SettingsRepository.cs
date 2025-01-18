@@ -6,7 +6,8 @@ namespace Persistence.Repositories
 {
     public class SettingsRepository(ApplicationDbContext context) : ISettingRepository
     {
-        public List<Setting> GetSettings(string? useranme = null)
+        // TODO: Add username filter
+        public List<Setting> GetSettings(string? username = null)
         {
             var settings = context.Settings.ToList();
             return settings;
