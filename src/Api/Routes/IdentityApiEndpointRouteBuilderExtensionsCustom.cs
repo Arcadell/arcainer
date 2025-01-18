@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 using Api.Models;
+using Application.Interfaces.Services;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -58,8 +59,17 @@ public static class IdentityApiEndpointRouteBuilderExtensionsCustom
         if (!configurationOptions.ExcludeRegisterPost)
         {
             routeGroup.MapPost("/register", async Task<Results<Ok, ValidationProblem>>
-                ([FromBody] RegisterRequest registration, HttpContext context, [FromServices] IServiceProvider sp) =>
+                ([FromBody] RegisterRequest registration, HttpContext context, [FromServices] IServiceProvider sp, [FromServices] ISettingService settingService) =>
             {
+                var settings = settingService.GetDefaultSetting();
+                if (settings.DisableRegistration)
+                {
+                    return TypedResults.ValidationProblem(new Dictionary<string, string[]>
+                    {
+                        { "Registration", new[] { "Registration is disabled." } }
+                    });
+                }
+
                 var userManager = sp.GetRequiredService<UserManager<TUser>>();
 
                 if (!userManager.SupportsUserEmail)

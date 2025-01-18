@@ -11,8 +11,8 @@ namespace Api.Routes
             {
                 try
                 {
-                    var users = userService.GetUsers();
-                    return Results.Ok(users);
+                    throw new NotImplementedException();
+                    return Results.Ok();
                 }
                 catch (Exception ex)
                 {

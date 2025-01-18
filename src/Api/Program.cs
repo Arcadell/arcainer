@@ -41,7 +41,6 @@ namespace Api
 
             app.MapGroup("/api/identity")
                 .MapIdentityApiCustom<IdentityUser>(new IdentityApiEndpointRouteBuilderOptions() {
-                    ExcludeConfirmEmailGet = true,
                     ExcludeResendConfirmationPost = true,
                     ExcludeForgotPasswordPost = true,
                     ExcludeResetPasswordPost = true,
