@@ -36,6 +36,10 @@ import { RouterLink, RouterView } from 'vue-router';
       </div>
 
       <div class="menu-list">
+        <RouterLink to="/settings">
+          <a class="lnk" v-bind:class="{ 'lnk-active': $route.path == '/settings' }">
+            <i class="ri-settings-3-line"></i> Settings</a>
+        </RouterLink>
       </div>
     </div>
     <div class="content">

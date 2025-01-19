@@ -46,7 +46,7 @@ const deleteVolumes = async () => {
         <div class="menu-header">
             <div class="left-header">
                 <i class="ri-archive-line"></i>
-                <h1>Volume</h1>
+                <h1>Volumes</h1>
             </div>
 
             <div class="right-header">

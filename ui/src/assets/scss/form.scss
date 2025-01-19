@@ -18,6 +18,7 @@ input[type="email"] {
 }
 
 input[type="checkbox"] {
+    -webkit-appearance: none;
     appearance: none;
     background-color: transparent;
     margin: 0;
@@ -31,6 +32,7 @@ input[type="checkbox"] {
 
     display: grid;
     place-content: center;
+    cursor: pointer;
 }
 
 input[type="checkbox"]::before {
@@ -39,10 +41,14 @@ input[type="checkbox"]::before {
     height: 0.65em;
     transform: scale(0);
     transition: 0.1s transform ease-in-out;
-    box-shadow: inset 1em 1em var(--primary-colour);
+    box-shadow: inset 1em 1em var(--primary-text-colour);
 
     transform-origin: bottom left;
     clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+input[type="checkbox"]:checked {
+    background-color: var(--primary-colour);
 }
 
 input[type="checkbox"]:checked::before {

@@ -35,6 +35,11 @@ const router = createRouter({
           path: 'volumes',
           name: 'volumes',
           component: () => import('../views/sub-views/Volume.vue')
+        },
+        {
+          path: 'settings',
+          name: 'settings',
+          component: () => import('../views/sub-views/Setting.vue')
         }
       ]
     },
