@@ -1,8 +1,14 @@
 <script setup lang="ts">
+import ActionToast from '@/components/ActionToast.vue';
+import { ref } from 'vue';
 
+let somethingChanged = ref(false);
+let disableLogin = ref(false);
 </script>
 
 <template>
+    <ActionToast v-model="somethingChanged" :message="'Save settings'" :button-text-cancel="'Cancel'"
+        :button-text-ok="'Save'" v-on:button-cancel="somethingChanged = false" />
     <div class="sub-view-main" v-if="true">
         <div class="menu-header">
             <div class="left-header">
@@ -15,7 +21,7 @@
             <div class="settings-container">
                 <div class="settings-field">
                     <p>Disable signup</p>
-                    <input type="checkbox">
+                    <input type="checkbox" v-model="disableLogin" @input="somethingChanged = true">
                 </div>
             </div>
         </div>
