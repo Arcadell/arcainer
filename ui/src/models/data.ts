@@ -33,3 +33,8 @@ export class Stack {
     name!: string;
     dockerCompose!: string;
 }
+
+export class Settings {
+    id!: string;
+    disableRegistration!: boolean
+}

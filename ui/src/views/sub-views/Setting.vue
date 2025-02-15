@@ -1,9 +1,20 @@
 <script setup lang="ts">
 import ActionToast from '@/components/ActionToast.vue';
+import type { Settings } from '@/models/data';
+import { useSettingStore } from '@/stores/data/settings';
 import { ref } from 'vue';
 
+const settingsStore = useSettingStore()
+
 let somethingChanged = ref(false);
-let disableLogin = ref(false);
+let settingsObj = ref<Settings>({
+    id: '',
+    disableRegistration: false
+});
+
+settingsStore.getNetworks().then(res => {
+    if (res.data) { settingsObj.value = res.data; }
+});
 </script>
 
 <template>
@@ -21,7 +32,7 @@ let disableLogin = ref(false);
             <div class="settings-container">
                 <div class="settings-field">
                     <p>Disable signup</p>
-                    <input type="checkbox" v-model="disableLogin" @input="somethingChanged = true">
+                    <input type="checkbox" v-model="settingsObj.disableRegistration" @input="somethingChanged = true">
                 </div>
             </div>
         </div>
