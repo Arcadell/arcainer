@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const enable = defineModel()
+const enable = defineModel('enable', { required: true })
 enable.value = false;
 
 const props = defineProps({

@@ -7,7 +7,7 @@ let disableLogin = ref(false);
 </script>
 
 <template>
-    <ActionToast v-model="somethingChanged" :message="'Save settings'" :button-text-cancel="'Cancel'"
+    <ActionToast v-model:enable="somethingChanged" :message="'Save settings'" :button-text-cancel="'Cancel'"
         :button-text-ok="'Save'" v-on:button-cancel="somethingChanged = false" />
     <div class="sub-view-main" v-if="true">
         <div class="menu-header">
