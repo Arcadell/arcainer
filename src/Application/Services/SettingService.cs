@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
+using Domain.Dtos;
 using Domain.Entities;
 
 namespace Application.Services
@@ -14,6 +15,11 @@ namespace Application.Services
             if (setting == null) setting = settingRepository.CreateSetting(new Setting());
 
             return setting;
+        }
+
+        public Setting UpdateSetting(UpdateSettingDto setting)
+        {
+            throw new NotImplementedException();
         }
     }
 }

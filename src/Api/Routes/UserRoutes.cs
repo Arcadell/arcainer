@@ -12,7 +12,6 @@ namespace Api.Routes
                 try
                 {
                     throw new NotImplementedException();
-                    return Results.Ok();
                 }
                 catch (Exception ex)
                 {

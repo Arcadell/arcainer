@@ -6,5 +6,6 @@ namespace Application.Interfaces.Repositories
     {
         List<Setting> GetSettings(string? username = null);
         Setting CreateSetting(Setting setting);
+        Setting UpdateSetting(Setting setting);
     }
 }

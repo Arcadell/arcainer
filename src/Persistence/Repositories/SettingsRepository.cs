@@ -19,5 +19,10 @@ namespace Persistence.Repositories
             context.SaveChanges();
             return settingEntity.Entity;
         }
+
+        public Setting UpdateSetting(Setting setting)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
