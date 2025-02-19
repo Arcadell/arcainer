@@ -22,7 +22,13 @@ namespace Persistence.Repositories
 
         public Setting UpdateSetting(Setting setting)
         {
-            throw new NotImplementedException();
+            var findedSetting = context.Settings.FirstOrDefault(x => x.Id == setting.Id);
+            if (findedSetting == null) { throw new KeyNotFoundException("Setting not found"); }
+
+            context.Entry(findedSetting).CurrentValues.SetValues(setting);
+            context.SaveChanges();
+
+            return findedSetting;
         }
     }
 }

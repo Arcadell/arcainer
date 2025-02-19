@@ -17,9 +17,13 @@ namespace Application.Services
             return setting;
         }
 
-        public Setting UpdateSetting(UpdateSettingDto setting)
+        public Setting UpdateSetting(UpdateSettingDto updateSettingDto)
         {
-            throw new NotImplementedException();
+            var setting = new Setting();
+            setting.Id = updateSettingDto.Id;
+            setting.DisableRegistration = updateSettingDto.DisableRegistration;
+
+            return settingRepository.UpdateSetting(setting);
         }
     }
 }
