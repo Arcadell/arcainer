@@ -1,5 +1,5 @@
 # [BACKEND]
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS backend-build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS backend-build
 WORKDIR /source
 # [BACKEND] copy csproj and restore as distinct layers
 COPY *.sln .
