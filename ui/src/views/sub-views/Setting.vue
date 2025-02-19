@@ -18,6 +18,10 @@ const getSetting = () => {
     });
 }
 
+const updateSetting = () => {
+    settingsStore.updateSetting(settingsObj.value)
+}
+
 const resetSetting = () => {
     somethingChanged.value = false;
     getSetting();
@@ -28,7 +32,7 @@ getSetting();
 
 <template>
     <ActionToast v-model:enable="somethingChanged" :message="'Save settings'" :button-text-cancel="'Cancel'"
-        :button-text-ok="'Save'" v-on:button-cancel="resetSetting" />
+        :button-text-ok="'Save'" v-on:button-cancel="resetSetting" v-on:button-ok="updateSetting" />
     <div class="sub-view-main" v-if="true">
         <div class="menu-header">
             <div class="left-header">
