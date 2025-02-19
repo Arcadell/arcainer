@@ -10,6 +10,10 @@ const props = defineProps({
 
 const emits = defineEmits(['button-cancel', 'button-ok']);
 
+const buttonPressed = (ok: boolean) => {
+    enable.value = false;
+    ok ? emits('button-ok') : emits('button-cancel')
+}
 </script>
 
 <template>
@@ -17,9 +21,10 @@ const emits = defineEmits(['button-cancel', 'button-ok']);
         <div class="action-toast" v-if="enable">
             <p> {{ message }} </p>
             <div class="action-toast-button">
-                <button v-on:click="enable = false" v-if="buttonTextCancel" class="btn-outline">{{ buttonTextCancel
+                <button v-on:click="buttonPressed(false)" v-if="buttonTextCancel" class="btn-outline">{{
+                    buttonTextCancel
                     }}</button>
-                <button v-on:click="enable = false">{{ buttonTextOk }}</button>
+                <button v-on:click="buttonPressed(true)">{{ buttonTextOk }}</button>
             </div>
         </div>
     </div>

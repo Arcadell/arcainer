@@ -12,14 +12,23 @@ let settingsObj = ref<Settings>({
     disableRegistration: false
 });
 
-settingsStore.getNetworks().then(res => {
-    if (res.data) { settingsObj.value = res.data; }
-});
+const getSetting = () => {
+    settingsStore.getSetting().then(res => {
+        if (res.data) { settingsObj.value = res.data; }
+    });
+}
+
+const resetSetting = () => {
+    somethingChanged.value = false;
+    getSetting();
+}
+
+getSetting();
 </script>
 
 <template>
     <ActionToast v-model:enable="somethingChanged" :message="'Save settings'" :button-text-cancel="'Cancel'"
-        :button-text-ok="'Save'" v-on:button-cancel="somethingChanged = false" />
+        :button-text-ok="'Save'" v-on:button-cancel="resetSetting" />
     <div class="sub-view-main" v-if="true">
         <div class="menu-header">
             <div class="left-header">

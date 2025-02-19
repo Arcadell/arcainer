@@ -7,7 +7,7 @@ import router from "@/router";
 export const useSettingStore = defineStore("networkData", {
     state: () => ({}),
     actions: {
-        async getNetworks() {
+        async getSetting() {
             try {
                 const auth = useAuthStore();
                 const response = await fetch((import.meta.env.DEV ? import.meta.env.VITE_API_URL : '') + '/api/setting', {
