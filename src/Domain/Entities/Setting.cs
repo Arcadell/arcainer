@@ -2,6 +2,6 @@
 {
     public class Setting : BaseEntity
     {
-        public bool DisableRegistration { get; set; } = true;
+        public bool DisableRegistration { get; set; } = false;
     }
 }
