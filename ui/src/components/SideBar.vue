@@ -1,7 +1,8 @@
 <script setup lang="ts">
 defineProps({
     title: { type: String, required: true },
-    opened: { type: Boolean, required: true }
+    opened: { type: Boolean, required: true },
+    width: { type: String, default: '700px' }
 });
 const emits = defineEmits(['close-sidebar']);
 
@@ -17,7 +18,7 @@ window.addEventListener('keydown', onEscPress)
 <template>
     <Transition name="sidebar">
         <div v-if="opened" class="main-sidebar" v-on:click="emits('close-sidebar');">
-            <div class="sidebar" v-on:click="$event.stopPropagation()">
+            <div class="sidebar" v-on:click="$event.stopPropagation()" :style="{ width }">
                 <div class="header">
                     <h1>{{ title }}</h1>
                     <button class="btn btn-icon" v-on:click="emits('close-sidebar');">
@@ -52,7 +53,6 @@ window.addEventListener('keydown', onEscPress)
         flex-direction: column;
 
         background-color: var(--color-background);
-        width: 700px;
         height: 100%;
 
         .header {

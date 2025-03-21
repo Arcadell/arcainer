@@ -11,8 +11,8 @@ let loadingContainerLogs = ref(true);
 let containerLogs = ref('');
 
 const logTerminal = new Terminal({
-    rows: 30,
-    cols: 100,
+    rows: 50,
+    cols: 117,
     fontSize: 15,
     disableStdin: true,
     fontFamily: 'monospace',

@@ -60,7 +60,7 @@ const handleContainers = async (command: ContainerCommands) => {
         <CreateContainer v-on:created-compose="openSideBar = false" />
     </SideBar>
 
-    <SideBar :title="'Container Logs'" :opened="openLogsSideBar" @close-sidebar="openLogsSideBar = false">
+    <SideBar :title="'Container Logs'" :opened="openLogsSideBar" @close-sidebar="openLogsSideBar = false" :width="'1000px'">
         <ContainerLog v-if="selectedContainerId" :idContainer="selectedContainerId" />
     </SideBar>
     <div class="sub-view-main" v-if="!loadingContainers">
