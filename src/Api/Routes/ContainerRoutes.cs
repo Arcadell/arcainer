@@ -99,6 +99,19 @@ namespace Api.Routes
                 }
             });
 
+            group.MapGet("/log", ([FromQuery] string id, [FromServices] IContainerCommands containerCommand) =>
+            {
+                try
+                {
+                    var logs = containerCommand.GetLogContainer(id);
+                    return Results.Ok(logs);
+                }
+                catch (Exception ex)
+                {
+                    return Results.BadRequest(ex.Message);
+                }
+            });
+
             return group;
         }
     }

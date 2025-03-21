@@ -13,5 +13,6 @@ namespace Application.Interfaces.Commands
         List<BaseResponse> StopContainers(List<string> ids);
         List<BaseResponse> DeleteContainers(List<string> ids);
         List<BaseResponse> DeleteStacks(List<string> stackNames);
+        string GetLogContainer(string id);
     }
 }

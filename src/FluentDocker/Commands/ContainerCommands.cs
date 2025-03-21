@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Application.Interfaces.Commands;
+﻿using Application.Interfaces.Commands;
 using Domain.Dtos;
 using Domain.Filters;
 using Domain.Filters.SearchTypes;
@@ -7,6 +6,7 @@ using Domain.Models;
 using Ductus.FluentDocker.Builders;
 using Ductus.FluentDocker.Commands;
 using Ductus.FluentDocker.Services;
+using System.Text;
 
 namespace FluentDocker.Commands
 {
@@ -168,6 +168,26 @@ namespace FluentDocker.Commands
             });
 
             return baseResponses;
+        }
+
+        public string GetLogContainer(string id)
+        {
+            var logStr = string.Empty;
+            using (var logs = client.Host.Logs(id))
+            {
+                while (!logs.IsFinished)
+                {
+                    var line = logs.TryRead(5000); // Do a read with timeout
+                    if (null == line)
+                    {
+                        break;
+                    }
+
+                    logStr += line + "\n";
+                }
+            }
+
+            return logStr;
         }
 
         #region PRIVATE FUNCTION
