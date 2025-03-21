@@ -46,6 +46,7 @@ const refreshContainers = () => {
     containerStore.getContainerLogs(prop.idContainer).then(res => {
         containerLogs.value = res.data.replace(/\n/g, '\r\n');
         loadingContainerLogs.value = false;
+        logTerminal.clear();
         logTerminal.write(containerLogs.value);
     });
 }
@@ -59,6 +60,11 @@ onMounted(() => {
 
 <template>
     <div class="container-log">
+        <div class="controls">
+            <button class="btn btn-icon" v-on:click="refreshContainers">
+                <i class="ri-refresh-line"></i>
+            </button>
+        </div>
         <div class="terminal-container">
             <div id="terminal" ref="terminal"></div>
         </div>
@@ -71,6 +77,14 @@ onMounted(() => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    gap: .5em;
+}
+
+.controls {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
 }
 
 .terminal-container {
