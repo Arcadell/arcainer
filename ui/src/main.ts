@@ -1,4 +1,5 @@
 import './assets/scss/main.scss'
+import "@xterm/xterm/css/xterm.css";
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
