@@ -16,7 +16,28 @@ const logTerminal = new Terminal({
     fontSize: 15,
     disableStdin: true,
     fontFamily: 'monospace',
-    scrollback: 0,
+    theme: {
+        background: '#1a1b26',
+        black: '#32344a',
+        blue: '#7aa2f7',
+        brightBlack: '#444b6a',
+        brightBlue: '#7da6ff',
+        brightCyan: '#7dcfff',
+        brightGreen: '#b9f27c',
+        brightMagenta: '#bb9af7',
+        brightRed: '#ff7a93',
+        brightWhite: '#c0caf5',
+        brightYellow: '#ff9e64',
+        cursor: '#c0caf5',
+        cursorAccent: '#1a1b26',
+        cyan: '#7dcfff',
+        foreground: '#c0caf5',
+        green: '#9ece6a',
+        magenta: '#bb9af7',
+        red: '#f7768e',
+        white: '#a9b1d6',
+        yellow: '#e0af68',
+    }
 });
 
 const containerStore = useContainerStore();
@@ -55,7 +76,7 @@ onMounted(() => {
 .terminal-container {
     width: 100%;
     height: 100%;
-    background-color: #000000;
+    background-color: #1a1b26;
     border-radius: var(--border-radius);
     padding: 10px;
 }
