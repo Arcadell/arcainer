@@ -2,6 +2,7 @@
 import Table from '@/components/Table.vue';
 import SideBar from '@/components/SideBar.vue';
 import CreateContainer from '@/components/CreateStack.vue';
+import ContainerLog from '@/components/ContainerLog.vue';
 
 import { ContainerCommands, type Container } from '@/models/data';
 import type { TableField, TableRow } from '@/models/table';
@@ -24,6 +25,8 @@ let containerTable = ref<TableRow[]>([]);
 let loadingContainers = ref(true);
 let enableControlButtons = ref(false);
 let openSideBar = ref(false);
+let openLogsSideBar = ref(false);
+let selectedContainerId = ref('');
 
 const refreshContainers = () => {
     containerStore.getContainers().then(res => {
@@ -40,6 +43,11 @@ const onRowSelected = () => {
     enableControlButtons.value = rowSelected.length > 0;
 }
 
+const onRowPressed = (tableRow: TableRow) => {
+    selectedContainerId.value = tableRow.fields.id;
+    openLogsSideBar.value = true;
+}
+
 const handleContainers = async (command: ContainerCommands) => {
     const containerSelected = containerTable.value.filter(row => row.selected).map(row => row.fields) as Container[];
     await containerStore.handleContainers(containerSelected, command);
@@ -50,6 +58,10 @@ const handleContainers = async (command: ContainerCommands) => {
 <template>
     <SideBar :title="'Create container'" :opened="openSideBar" @close-sidebar="openSideBar = false">
         <CreateContainer v-on:created-compose="openSideBar = false" />
+    </SideBar>
+
+    <SideBar :title="'Container Logs'" :opened="openLogsSideBar" @close-sidebar="openLogsSideBar = false">
+        <ContainerLog v-if="selectedContainerId" :idContainer="selectedContainerId" />
     </SideBar>
     <div class="sub-view-main" v-if="!loadingContainers">
         <div class="menu-header">
@@ -74,7 +86,7 @@ const handleContainers = async (command: ContainerCommands) => {
         </div>
 
         <div class="content">
-            <Table :fields="fields" :data="containerTable" :loading="loadingContainers" @row-selected="onRowSelected" />
+            <Table :fields="fields" :data="containerTable" :loading="loadingContainers" @row-selected="onRowSelected" @row-pressed="onRowPressed" />
         </div>
     </div>
 </template>
