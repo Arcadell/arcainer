@@ -1,10 +1,14 @@
 <script setup lang="ts">
+import { useContainerStore } from '@/stores/data/container';
 import { Terminal } from '@xterm/xterm';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const prop = defineProps({
     idContainer: { type: String, required: true },
 });
+
+let loadingContainerLogs = ref(true);
+let containerLogs = ref('');
 
 const logTerminal = new Terminal({
     rows: 30,
@@ -15,19 +19,25 @@ const logTerminal = new Terminal({
     scrollback: 0,
 });
 
+const containerStore = useContainerStore();
+
+const refreshContainers = () => {
+    containerStore.getContainerLogs(prop.idContainer).then(res => {
+        containerLogs.value = res.data.replace(/\n/g, '\r\n');
+        loadingContainerLogs.value = false;
+        logTerminal.write(containerLogs.value);
+    });
+}
+
+refreshContainers();
+
 onMounted(() => {
     logTerminal.open(document.getElementById('terminal')!);
-    let testString = 'test line 1\r\n'
-    testString += 'test line 2\r\n'
-    testString += 'test line 3\r\n'
-    logTerminal.write(testString)
 });
-
 </script>
 
 <template>
     <div class="container-log">
-        <h1>{{ prop.idContainer }}</h1>
         <div class="terminal-container">
             <div id="terminal" ref="terminal"></div>
         </div>

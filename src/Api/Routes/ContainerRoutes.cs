@@ -99,7 +99,7 @@ namespace Api.Routes
                 }
             });
 
-            group.MapGet("/log", ([FromQuery] string id, [FromServices] IContainerCommands containerCommand) =>
+            group.MapGet("/logs", ([FromQuery] string id, [FromServices] IContainerCommands containerCommand) =>
             {
                 try
                 {
