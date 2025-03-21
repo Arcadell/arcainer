@@ -24,6 +24,10 @@ dist
 **/obj
 **/secrets.dev.yaml
 **/values.dev.yaml
+**/composes
+**/storage
+**/stacks
+**/*WX02.db*
 LICENSE
 !**/.gitignore
 !.git/HEAD
