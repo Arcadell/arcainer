@@ -41,7 +41,7 @@ services:
       
       # 1- NO RELATIVE PATH (./stacks:./stacks ❌) (/opt/stacks:/opt/stacks ✅)
       # 2- LEFT AND RIGHT PATH NEED TO BE THE SAME (/app/composes:/app/stacks ❌) (/app/stacks:/app/stacks ✅)
-      - /opt/stacks:/opt/stacks
+      - /opt/stacks:/opt/stacks # REMOVE THIS LINE IF YOU'RE USING WINDOWS
     environment:
       # STACKS_PATH NEED TO BE THE SAME AS ABOVE IF YOU CHANGE THIS CHANGE THE ABOVE TOO
       - STACKS_PATH=/opt/stacks
